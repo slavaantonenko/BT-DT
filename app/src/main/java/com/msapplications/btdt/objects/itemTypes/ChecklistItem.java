@@ -1,6 +1,11 @@
-package com.msapplications.btdt;
+package com.msapplications.btdt.objects.itemTypes;
 
-public class CheckListItem extends ItemInCategory
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class ChecklistItem extends ItemInCategory
 {
     Boolean isChecked;
 }

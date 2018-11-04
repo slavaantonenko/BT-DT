@@ -1,4 +1,17 @@
 <resources>
     <string name="app_name">BT;DT</string>
     <string name="action_settings">Settings</string>
+
+    <!-- Menus -->
+    <string name="menu_category_rename">Rename</string>
+    <string name="menu_category_delete">Delete</string>
+    <string name="category_deleted">Category deleted</string>
+
+    <!-- Dialog New Category -->
+    <string name="category_type_prompt">Choose category type</string>
+    <string-array name="category_types">
+        <item>Checklist</item>
+        <item>Note</item>
+        <item>Collection</item>
+    </string-array>
 </resources>

@@ -1,3 +1,17 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+
+    <!-- Category Card View -->
+    <dimen name="cc_cv_margin">5dp</dimen>
+    <dimen name="cc_cv_category_radius">0dp</dimen>
+    <dimen name="cc_category_cover_height">160dp</dimen>
+    <dimen name="cc_category_title_padding">10dp</dimen>
+    <dimen name="cc_category_title">15sp</dimen>
+    <dimen name="cc_category_items_count_padding_bottom">5dp</dimen>
+    <dimen name="cc_category_items_count">12sp</dimen>
+    <dimen name="cc_ic_category_overflow_width">20dp</dimen>
+    <dimen name="cc_ic_category_overflow_height">30dp</dimen>
+    <dimen name="cc_ic_category_overflow_margin_top">10dp</dimen>
+
+
 </resources>

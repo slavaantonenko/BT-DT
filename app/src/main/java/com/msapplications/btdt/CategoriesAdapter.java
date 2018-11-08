@@ -1,6 +1,7 @@
 package com.msapplications.btdt;
 
 import android.content.Context;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,16 +30,16 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
 
         public MyViewHolder(View view) {
             super(view);
-            title = view.findViewById(R.id.title);
+            title = view.findViewById(R.id.tv_category_title);
             thumbnail = view.findViewById(R.id.thumbnail);
             overflow = view.findViewById(R.id.overflow);
         }
     }
 
-    public CategoriesAdapter(Context mContext, List<Category> albumList)
+    public CategoriesAdapter(Context mContext)
     {
         this.mContext = mContext;
-        this.categoryList = albumList;
+        this.categoryList = CategoryList.getCategories(mContext);
     }
 
     @Override
@@ -77,7 +78,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
         PopupMenu popup = new PopupMenu(mContext, view);
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.category_menu, popup.getMenu());
-        popup.setOnMenuItemClickListener(new MyMenuItemClickListener());
+        popup.setOnMenuItemClickListener(new MyMenuItemClickListener(view));
         popup.show();
     }
 
@@ -86,7 +87,11 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
      */
     class MyMenuItemClickListener implements PopupMenu.OnMenuItemClickListener
     {
-        public MyMenuItemClickListener() {}
+        View view;
+        public MyMenuItemClickListener(View view)
+        {
+            this.view = view;
+        }
 
         @Override
         public boolean onMenuItemClick(MenuItem menuItem)
@@ -94,9 +99,15 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
             switch (menuItem.getItemId())
             {
                 case R.id.action_rename:
-                    Toast.makeText(mContext, "rename", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "rename", Toast.LENGTH_SHORT).show();
+
                     return true;
                 case R.id.action_delete:
+                    String categoryName = ((TextView) ((ConstraintLayout)view.getParent()).findViewById(R.id.tv_category_title)).getText().toString();
+                    CategoryList.deleteCategory(mContext, categoryName);
+                    //refresh adapter
+                    notifyDataSetChanged();
+
                     Toast.makeText(mContext, mContext.getString(R.string.category_deleted), Toast.LENGTH_SHORT).show();
                     return true;
                 default:

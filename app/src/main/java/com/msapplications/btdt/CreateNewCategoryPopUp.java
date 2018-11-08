@@ -21,7 +21,7 @@ public class CreateNewCategoryPopUp
 
     }
 
-    public void dissmis()
+    public void dismiss()
     {
         this.dialogCreateCategory.dismiss();
     }

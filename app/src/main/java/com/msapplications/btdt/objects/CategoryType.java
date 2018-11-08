@@ -1,6 +1,8 @@
 package com.msapplications.btdt.objects;
 
-public enum CategoryType
+import java.io.Serializable;
+
+public enum CategoryType implements Serializable
 {
     CHECKLIST, NOTES, COLLECTION;
 }

@@ -10,9 +10,9 @@
         android:id="@+id/tvNewCategoryTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:text="Create New Category"
-        android:textSize="30sp"
+        android:layout_marginStart="@dimen/dnc_tv_nc_title_margin_start"
+        android:text="@string/dnc_tv_nc_title"
+        android:textSize="@dimen/dnc_tv_nct_text_size"
         android:textStyle="bold"
         android:textColor="@color/colorPrimary"
         app:layout_constraintTop_toTopOf="parent"
@@ -22,33 +22,33 @@
         android:id="@+id/tvNewCategoryName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="15dp"
-        android:text="Name: "
-        android:textSize="20sp"
+        android:layout_marginTop="@dimen/dnc_tv_margin_top"
+        android:layout_marginStart="@dimen/dnc_tv_margin_start"
+        android:text="@string/dnc_tv_ncn_text"
+        android:textSize="@dimen/dnc_tv_nc_text_size"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/tvNewCategoryTitle"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/et_new_category_name"
+        android:id="@+id/etNewCategoryName"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:textSize="20sp"
+        android:layout_marginStart="@dimen/dnc_et_ncn_margin_start"
+        android:textSize="@dimen/dnc_et_ncn_text_size"
         android:maxLength="25"
         android:maxLines="1"
         app:layout_constraintTop_toTopOf="@id/tvNewCategoryName"
         app:layout_constraintBottom_toBottomOf="@id/tvNewCategoryName"
-        app:layout_constraintStart_toStartOf="@id/tvNewCategoryName" />
+        app:layout_constraintStart_toEndOf="@id/tvNewCategoryName" />
 
     <TextView
         android:id="@+id/tvNewCategoryType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="Type: "
-        android:textSize="20sp"
+        android:layout_marginTop="@dimen/dnc_tv_margin_top"
+        android:text="@string/dnc_tv_nct_text"
+        android:textSize="@dimen/dnc_tv_nc_text_size"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@id/tvNewCategoryName"
         app:layout_constraintTop_toBottomOf="@id/tvNewCategoryName" />
@@ -59,25 +59,25 @@
         android:layout_height="30dp"
         android:entries="@array/category_types"
         android:prompt="@string/category_type_prompt"
-        app:layout_constraintStart_toStartOf="@id/et_new_category_name"
+        app:layout_constraintStart_toStartOf="@id/etNewCategoryName"
         app:layout_constraintTop_toTopOf="@id/tvNewCategoryType" />
 
     <Button
         android:id="@+id/button_save"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:text="Save"
+        android:text="@string/dnc_btn"
         android:textColor="@color/colorPrimary"
-        android:background="@color/viewBg"
-        android:layout_marginTop="15dp"
-        app:layout_constraintRight_toRightOf="@id/et_new_category_name"
+        android:background="@color/viewBackground"
+        android:layout_marginTop="@dimen/dnc_btn_margin_top"
+        app:layout_constraintRight_toRightOf="@id/etNewCategoryName"
         app:layout_constraintTop_toBottomOf="@id/choose_category_type" />
 
     <Space
         android:id="@+id/bottomSpacer"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/dnc_space_margin_top"
         android:layout_centerHorizontal="true"
         android:visibility="invisible"
         app:layout_constraintTop_toBottomOf="@id/button_save" />

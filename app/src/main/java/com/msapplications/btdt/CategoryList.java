@@ -1,5 +1,8 @@
 package com.msapplications.btdt;
 
+import android.app.Activity;
+import android.content.Context;
+
 import com.msapplications.btdt.objects.Category;
 import com.msapplications.btdt.objects.CategoryType;
 import com.msapplications.btdt.objects.itemTypes.ItemInCategory;
@@ -10,48 +13,68 @@ public class CategoryList
 {
     private static ArrayList<Category> categories = null;
 
-    private CategoryList()
+    private CategoryList(Context mContext)
     {
-        categories = new ArrayList<>();
-        createDemoInfo();
+
+        categories = (ArrayList<Category>) Utils.getListFromCache(mContext.getCacheDir(), CommonValues.CACHE_CATEGORIES_KEY);
+
+        if (categories == null)
+            categories = new ArrayList<>();
+
     }
 
-    public static ArrayList<Category> getCategories()
+    public static ArrayList<Category> getCategories(Context mContext)
     {
-        if(categories == null)
-            new CategoryList();
+        if (categories == null)
+            new CategoryList(mContext);
 
         return categories;
     }
 
-    public static void addCategory(Category newCategory)
+    public static void addCategory(Context mContext, Category newCategory)
     {
-        if(categories == null)
-            new CategoryList();
+        if (categories == null)
+            new CategoryList(mContext);
 
         categories.add(newCategory);
+        updateCategoriesCacheExtras(mContext, categories);
     }
 
-    public static void deleteCategory(Category category)
+    public static ArrayList<Category> deleteCategory(Context mContext, final String categoryName)
     {
-        if(categories == null) {
-            new CategoryList();
-            return;
+        if (categories == null) {
+            new CategoryList(mContext);
+            return categories;
         }
 
-        categories.remove(category);
+        for(Category category : categories)
+            if(category.getName().equals(categoryName))
+                categories.remove(category);
+
+        updateCategoriesCacheExtras(mContext, categories);
+        return categories;
     }
 
     public static boolean categoryNameExists(String newName)
     {
-        for(Category category : categories) {
-            if(category.getName().equals(newName))
+        for (Category category : categories)
+            if (category.getName().equals(newName))
                 return true;
-        }
+
         return false;
     }
 
-    private void createDemoInfo()
+    private static void updateCategoriesCacheExtras(Context mContext, ArrayList<Category> categories)
+    {
+        Utils.saveListToCache(mContext.getCacheDir(), categories, CommonValues.CACHE_CATEGORIES_KEY); // save categories to cache for next time
+        //new CategoryList(mContext);
+    }
+
+
+
+
+    //TEMP
+    private static void createDemoInfo()
     {
         int[] covers = new int[]{
                 R.drawable.album8,

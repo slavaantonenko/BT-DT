@@ -16,6 +16,11 @@
     <string name="dnc_tv_ncn_text">Name:</string>
     <string name="dnc_tv_nct_text">Type:</string>
     <string name="dnc_btn">Save</string>
+    <string name="category_renamed">Category renamed</string>
+
+    <!-- Dialog Rename Category -->
+    <string name="drc_tv_rc_title">Rename Category</string>
+    <string name="drc_btn">Save</string>
 
     <string-array name="category_types">
         <item>Checklist</item>

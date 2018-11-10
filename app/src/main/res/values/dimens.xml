@@ -30,4 +30,8 @@
     <dimen name="dnc_space_margin_top">20dp</dimen>
     <dimen name="cc_ic_category_overflow_margin_end">5dp</dimen>
 
+    <!-- Dialog Rename Category-->
+    <dimen name="drc_main_padding">20dp</dimen>
+    <dimen name="drc_btn_margin_start">10dp</dimen>
+
 </resources>

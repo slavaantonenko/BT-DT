@@ -40,19 +40,38 @@ public class CategoryList
         updateCategoriesCacheExtras(mContext, categories);
     }
 
-    public static ArrayList<Category> deleteCategory(Context mContext, final String categoryName)
+    public static void deleteCategory(Context mContext, String categoryName)
     {
-        if (categories == null) {
+        if (categories == null)
             new CategoryList(mContext);
-            return categories;
+
+        for (Category category : categories)
+        {
+            if (category.getName().equals(categoryName))
+            {
+                categories.remove(category);
+                break;
+            }
         }
 
-        for(Category category : categories)
-            if(category.getName().equals(categoryName))
-                categories.remove(category);
+        updateCategoriesCacheExtras(mContext, categories);
+    }
+
+    public static void renameCategory(Context mContext, String categoryName, String newCategoryName)
+    {
+        if (categories == null)
+            new CategoryList(mContext);
+
+        for (Category category : categories)
+        {
+            if (category.getName().equals(categoryName))
+            {
+                category.setName(newCategoryName);
+                break;
+            }
+        }
 
         updateCategoriesCacheExtras(mContext, categories);
-        return categories;
     }
 
     public static boolean categoryNameExists(String newName)
@@ -69,9 +88,6 @@ public class CategoryList
         Utils.saveListToCache(mContext.getCacheDir(), categories, CommonValues.CACHE_CATEGORIES_KEY); // save categories to cache for next time
         //new CategoryList(mContext);
     }
-
-
-
 
     //TEMP
     private static void createDemoInfo()

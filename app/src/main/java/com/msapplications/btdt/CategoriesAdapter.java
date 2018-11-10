@@ -1,5 +1,8 @@
 package com.msapplications.btdt;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.PopupMenu;
@@ -9,6 +12,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -96,14 +101,50 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
         @Override
         public boolean onMenuItemClick(MenuItem menuItem)
         {
+            final String categoryName = ((TextView) ((ConstraintLayout)view.getParent()).findViewById(R.id.tv_category_title)).getText().toString();
+
             switch (menuItem.getItemId())
             {
                 case R.id.action_rename:
-//                    Toast.makeText(mContext, "rename", Toast.LENGTH_SHORT).show();
+                    LayoutInflater inflater = LayoutInflater.from(mContext);
+                    final View dialogView = inflater.inflate(R.layout.dialog_rename_category, null);
+                    EditText oldName = dialogView.findViewById(R.id.etRenameCategory);
+                    oldName.setHint(categoryName);
+                    oldName.requestFocus();
+
+                    final CreateCategoryDialog createCategoryDialog = new CreateCategoryDialog (
+                            new AlertDialog.Builder(mContext).setCancelable(true), dialogView);
+
+                    (dialogView.findViewById(R.id.btnSaveRename)).setOnClickListener(new View.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(View v)
+                        {
+                            String newName = ((EditText) dialogView.findViewById(R.id.etRenameCategory)).getText().toString();
+                            if (newName.equals("")) {
+                                ((EditText) dialogView.findViewById(R.id.etRenameCategory)).setError("Name can't be empty");
+                                return;
+                            }
+
+                            if (CategoryList.categoryNameExists(newName)) {
+                                ((EditText) dialogView.findViewById(R.id.etNewCategoryName)).setError("Category name already exists");
+                                return;
+                            }
+
+//                            String categoryName = ((TextView) ((ConstraintLayout)view.getParent()).findViewById(R.id.tv_category_title)).getText().toString();
+                            CategoryList.renameCategory(mContext, categoryName, newName);
+
+                            createCategoryDialog.dismiss();
+                            notifyDataSetChanged();
+
+                            Toast.makeText(mContext, mContext.getString(R.string.category_renamed), Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
                     return true;
+
                 case R.id.action_delete:
-                    String categoryName = ((TextView) ((ConstraintLayout)view.getParent()).findViewById(R.id.tv_category_title)).getText().toString();
+//                    String categoryName = ((TextView) ((ConstraintLayout)view.getParent()).findViewById(R.id.tv_category_title)).getText().toString();
                     CategoryList.deleteCategory(mContext, categoryName);
                     //refresh adapter
                     notifyDataSetChanged();
@@ -112,6 +153,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
                     return true;
                 default:
             }
+
             return false;
         }
     }

@@ -60,10 +60,10 @@ public class MainActivity extends AppCompatActivity
             {
                 final View dialogView = getLayoutInflater().inflate(R.layout.dialog_new_category, null);
 
-                final CreateNewCategoryPopUp createNewCategoryPopUp = new CreateNewCategoryPopUp (
+                final CreateCategoryDialog createCategoryDialog = new CreateCategoryDialog(
                         new AlertDialog.Builder(thisActivity).setCancelable(true), dialogView);
 
-                (dialogView.findViewById(R.id.button_save)).setOnClickListener(new View.OnClickListener() {
+                (dialogView.findViewById(R.id.btnNewSave)).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v)
                     {
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity
 //                        Category newCategory = new Category(newName, new ArrayList<ItemInCategory>(), type, R.drawable.album4); //TODO image
                         CategoryList.addCategory(thisActivity, newCategory);
 
-                        createNewCategoryPopUp.dismiss();
+                        createCategoryDialog.dismiss();
                         adapter.notifyDataSetChanged();
                     }
                 });

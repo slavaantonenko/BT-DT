@@ -8,6 +8,8 @@
     android:layout_gravity="center"
     android:layout_margin="@dimen/cc_cv_margin"
     android:elevation="@dimen/cc_cv_elevation"
+    android:clickable="true"
+    android:focusable="true"
     card_view:cardCornerRadius="@dimen/cc_cv_category_radius">
 
     <android.support.constraint.ConstraintLayout
@@ -20,119 +22,56 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/cc_category_cover_height"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:focusable="true"
             android:scaleType="fitXY" />
 
         <TextView
             android:id="@+id/tv_category_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/cc_category_title_padding"
-            android:textColor="@color/cc_category_title"
-            android:textSize="@dimen/cc_category_title"
+            android:fontFamily="serif"
+            android:shadowColor="#000000"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="3"
+            android:textColor="#ffffff"
+            android:textSize="40sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/thumbnail" />
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <!--<TextView-->
+            <!--android:id="@+id/tv_category_title"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:padding="@dimen/cc_category_title_padding"-->
+            <!--android:textColor="@color/cc_category_title"-->
+            <!--android:textSize="@dimen/cc_category_title"-->
+            <!--android:textStyle="bold"-->
+            <!--app:layout_constraintTop_toBottomOf="@id/thumbnail" />-->
+
 
         <ImageView
             android:id="@+id/overflow"
             android:layout_width="@dimen/cc_ic_category_overflow_width"
             android:layout_height="@dimen/cc_ic_category_overflow_height"
-            android:layout_marginEnd="@dimen/cc_ic_category_overflow_margin_end"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_menu_dots"
-            app:layout_constraintTop_toTopOf="@id/tv_category_title"
-            app:layout_constraintBottom_toBottomOf="@id/tv_category_title"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <!--<ImageView-->
+            <!--android:id="@+id/overflow"-->
+            <!--android:layout_width="@dimen/cc_ic_category_overflow_width"-->
+            <!--android:layout_height="@dimen/cc_ic_category_overflow_height"-->
+            <!--android:layout_marginEnd="@dimen/cc_ic_category_overflow_margin_end"-->
+            <!--android:scaleType="centerCrop"-->
+            <!--android:src="@drawable/ic_menu_dots"-->
+            <!--app:layout_constraintTop_toTopOf="@id/tv_category_title"-->
+            <!--app:layout_constraintBottom_toBottomOf="@id/tv_category_title"-->
+            <!--app:layout_constraintEnd_toEndOf="parent" />-->
 
     </android.support.constraint.ConstraintLayout>
 
 </android.support.v7.widget.CardView>
-
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content">-->
-
-    <!--<android.support.v7.widget.CardView-->
-        <!--android:id="@+id/cvCategory"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_gravity="center"-->
-        <!--android:layout_margin="@dimen/cc_cv_margin"-->
-        <!--android:elevation="@dimen/cc_cv_elevation"-->
-        <!--card_view:cardCornerRadius="@dimen/cc_cv_category_radius">-->
-
-        <!--<RelativeLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent">-->
-
-            <!--<ImageView-->
-                <!--android:id="@+id/thumbnail"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/cc_category_cover_height"-->
-                <!--android:background="?attr/selectableItemBackgroundBorderless"-->
-                <!--android:clickable="true"-->
-                <!--android:focusable="true"-->
-                <!--android:scaleType="fitXY" />-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/title"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_below="@id/thumbnail"-->
-                <!--android:paddingLeft="@dimen/cc_category_title_padding"-->
-                <!--android:paddingRight="@dimen/cc_category_title_padding"-->
-                <!--android:paddingTop="@dimen/cc_category_title_padding"-->
-                <!--android:textColor="@color/cc_category_title"-->
-                <!--android:textSize="@dimen/cc_category_title" />-->
-
-            <!--<ImageView-->
-                <!--android:id="@+id/overflow"-->
-                <!--android:layout_width="@dimen/cc_ic_category_overflow_width"-->
-                <!--android:layout_height="@dimen/cc_ic_category_overflow_height"-->
-                <!--android:layout_alignParentEnd="true"-->
-                <!--android:layout_below="@id/thumbnail"-->
-                <!--android:layout_marginTop="@dimen/cc_ic_category_overflow_margin_top"-->
-                <!--android:scaleType="centerCrop"-->
-                <!--android:src="@drawable/ic_menu_dots" />-->
-
-        <!--</RelativeLayout>-->
-
-    <!--</android.support.v7.widget.CardView>-->
-
-<!--</LinearLayout>-->
-<!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<android.support.constraint.ConstraintLayout-->
-    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
-    <!--tools:context=".MainActivity"-->
-    <!--tools:showIn="@layout/activity_main">-->
-
-        <!--<android.support.v7.widget.CardView-->
-            <!--xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
-            <!--android:id="@+id/cvCategory"-->
-            <!--android:layout_width="170dp"-->
-            <!--android:layout_height="300dp"-->
-            <!--card_view:cardCornerRadius="4dp"-->
-            <!--android:background="@color/colorAccent"-->
-            <!--android:layout_marginStart="12dp"-->
-            <!--android:layout_marginTop="12dp"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--app:layout_constraintTop_toTopOf="parent"-->
-            <!--card_view:layout_constraintHorizontal_bias="0.25"-->
-            <!--android:layout_gravity="center">-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/category_name"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:text="mkskmflksmflk" />-->
-
-        <!--</android.support.v7.widget.CardView>-->
-
-<!--</android.support.constraint.ConstraintLayout>-->

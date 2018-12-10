@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_marginStart="80dp"
+    android:layout_marginEnd="80dp">
+
+    <Button
+        android:id="@+id/bold"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="B"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/italic"
+        app:layout_constraintHorizontal_weight="1" />
+
+    <Button
+        android:id="@+id/italic"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:text="I"
+        android:textStyle="italic"
+        android:textSize="18sp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@android:color/transparent"
+        app:layout_constraintStart_toEndOf="@id/bold"
+        app:layout_constraintEnd_toStartOf="@id/checkbox"
+        app:layout_constraintHorizontal_weight="1" />
+
+    <ImageButton
+        android:id="@+id/checkbox"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:fitsSystemWindows="true"
+        android:src="@drawable/ic_check_circle_24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/italic"
+        app:layout_constraintHorizontal_weight="1" />
+
+</android.support.constraint.ConstraintLayout>

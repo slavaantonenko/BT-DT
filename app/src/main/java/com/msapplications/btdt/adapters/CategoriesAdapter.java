@@ -1,10 +1,10 @@
-package com.msapplications.btdt;
+package com.msapplications.btdt.adapters;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,14 +12,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.msapplications.btdt.CategoryList;
+import com.msapplications.btdt.CommonValues;
+import com.msapplications.btdt.CreateCategoryDialog;
+import com.msapplications.btdt.R;
 import com.msapplications.btdt.objects.Category;
+import com.msapplications.btdt.activities.*;
 
 import java.util.List;
 
@@ -32,12 +36,15 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
     {
         public TextView title;
         public ImageView thumbnail, overflow;
+        public CardView cardView;
 
-        public MyViewHolder(View view) {
+        public MyViewHolder(View view)
+        {
             super(view);
             title = view.findViewById(R.id.tv_category_title);
             thumbnail = view.findViewById(R.id.thumbnail);
             overflow = view.findViewById(R.id.overflow);
+            cardView = view.findViewById(R.id.cvCategory);
         }
     }
 
@@ -58,7 +65,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, int position)
+    public void onBindViewHolder(final MyViewHolder holder, final int position)
     {
         Category category = categoryList.get(position);
         holder.title.setText(category.getName());
@@ -70,6 +77,17 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
             @Override
             public void onClick(View view) {
                 showPopupMenu(holder.overflow);
+            }
+        });
+
+        holder.cardView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(mContext, ListActivity.class);
+                intent.putExtra(CommonValues.CATEGORY_INDEX, position);
+                mContext.startActivity(intent);
             }
         });
     }

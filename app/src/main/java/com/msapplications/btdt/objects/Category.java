@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import com.msapplications.btdt.objects.itemTypes.ItemInCategory;
 
 import java.io.Serializable;
+import java.security.Timestamp;
 import java.util.ArrayList;
 
 import lombok.Getter;
@@ -15,7 +16,7 @@ import lombok.Setter;
 public class Category implements Serializable
 {
     String name;
-    ArrayList<ItemInCategory> itemsInCat;
+    ArrayList<? extends ItemInCategory> itemsInCat;
     CategoryType type;
     int previewPic;
 

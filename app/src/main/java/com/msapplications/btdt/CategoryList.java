@@ -1,6 +1,5 @@
 package com.msapplications.btdt;
 
-import android.app.Activity;
 import android.content.Context;
 
 import com.msapplications.btdt.objects.Category;
@@ -17,7 +16,6 @@ public class CategoryList
     {
 
         categories = (ArrayList<Category>) Utils.getListFromCache(mContext.getCacheDir(), CommonValues.CACHE_CATEGORIES_KEY);
-
         if (categories == null)
             categories = new ArrayList<>();
 
@@ -72,6 +70,14 @@ public class CategoryList
         }
 
         updateCategoriesCacheExtras(mContext, categories);
+    }
+
+    public static Category getCategoryByIndex(int index)
+    {
+        if (categories == null)
+            return null;
+
+        return categories.get(index);
     }
 
     public static boolean categoryNameExists(String newName)

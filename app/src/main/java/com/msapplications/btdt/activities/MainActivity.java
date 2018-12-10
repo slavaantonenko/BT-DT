@@ -1,4 +1,4 @@
-package com.msapplications.btdt;
+package com.msapplications.btdt.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -17,6 +17,11 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.msapplications.btdt.adapters.CategoriesAdapter;
+import com.msapplications.btdt.CategoryList;
+import com.msapplications.btdt.CreateCategoryDialog;
+import com.msapplications.btdt.R;
+import com.msapplications.btdt.Utils;
 import com.msapplications.btdt.objects.Category;
 import com.msapplications.btdt.objects.CategoryType;
 import com.msapplications.btdt.objects.itemTypes.ItemInCategory;
@@ -78,12 +83,13 @@ public class MainActivity extends AppCompatActivity
                             return;
                         }
 
-                        CategoryType type = getSelectedType(((Spinner)dialogView.findViewById(R.id.choose_category_type)).getPrompt().toString());
+                        CategoryType type = getSelectedType(((Spinner)dialogView.findViewById(R.id.choose_category_type)).getSelectedItem().toString());
 
                         //TODO remove this when images will be implemented.
                         Random rand = new Random();
                         int resID = getResources().getIdentifier("album" + Integer.toString(rand.nextInt((4) + 1) + 4), "drawable", getPackageName());
 
+//                        resID = R.drawable.food;
                         Category newCategory = new Category(newName, new ArrayList<ItemInCategory>(), type, resID); //TODO image
 //                        Category newCategory = new Category(newName, new ArrayList<ItemInCategory>(), type, R.drawable.album4); //TODO image
                         CategoryList.addCategory(thisActivity, newCategory);
@@ -112,6 +118,10 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    private void initRecyclerView()
+    {
+
+    }
 
     /**
      * RecyclerView item decoration - give equal margin around grid item
@@ -174,7 +184,7 @@ public class MainActivity extends AppCompatActivity
                 return CategoryType.CHECKLIST;
             case ("Note"):
                 return CategoryType.NOTES;
-            case("Collection"):
+            case ("Collection"):
                 return CategoryType.COLLECTION;
         }
 

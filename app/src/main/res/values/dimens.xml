@@ -13,8 +13,8 @@
     <dimen name="cc_category_title">15sp</dimen>
     <dimen name="cc_category_items_count_padding_bottom">5dp</dimen>
     <dimen name="cc_category_items_count">12sp</dimen>
-    <dimen name="cc_ic_category_overflow_width">20dp</dimen>
-    <dimen name="cc_ic_category_overflow_height">20dp</dimen>
+    <dimen name="cc_ic_category_overflow_width">30dp</dimen>
+    <dimen name="cc_ic_category_overflow_height">30dp</dimen>
     <dimen name="cc_ic_category_overflow_margin_top">10dp</dimen>
     <dimen name="cc_cv_elevation">3dp</dimen>
 
@@ -28,10 +28,11 @@
     <dimen name="dnc_et_ncn_text_size">20sp</dimen>
     <dimen name="dnc_btn_margin_top">15dp</dimen>
     <dimen name="dnc_space_margin_top">20dp</dimen>
-    <dimen name="cc_ic_category_overflow_margin_end">5dp</dimen>
+    <dimen name="cc_ic_category_overflow_margin_end">2dp</dimen>
 
     <!-- Dialog Rename Category-->
     <dimen name="drc_main_padding">20dp</dimen>
     <dimen name="drc_btn_margin_start">10dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 
 </resources>

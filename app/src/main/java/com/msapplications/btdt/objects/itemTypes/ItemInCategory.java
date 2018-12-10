@@ -14,5 +14,4 @@ public abstract class ItemInCategory implements Serializable
     String title;
     String description;
     Bitmap picture;
-
 }

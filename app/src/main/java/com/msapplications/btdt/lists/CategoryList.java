@@ -1,10 +1,10 @@
-package com.msapplications.btdt;
+package com.msapplications.btdt.lists;
 
 import android.content.Context;
 
+import com.msapplications.btdt.CommonValues;
+import com.msapplications.btdt.Utils;
 import com.msapplications.btdt.objects.Category;
-import com.msapplications.btdt.objects.CategoryType;
-import com.msapplications.btdt.objects.itemTypes.ItemInCategory;
 
 import java.util.ArrayList;
 
@@ -93,33 +93,6 @@ public class CategoryList
     {
         Utils.saveListToCache(mContext.getCacheDir(), categories, CommonValues.CACHE_CATEGORIES_KEY); // save categories to cache for next time
         //new CategoryList(mContext);
-    }
-
-    //TEMP
-    private static void createDemoInfo()
-    {
-        int[] covers = new int[]{
-                R.drawable.album8,
-                R.drawable.album4,
-                R.drawable.album5,
-                R.drawable.album7,
-                R.drawable.album6};
-
-        Category a = new Category("Travel", new ArrayList<ItemInCategory>(), CategoryType.COLLECTION, covers[0]);
-        categories.add(a);
-
-        a = new Category("Recepies", new ArrayList<ItemInCategory>(), CategoryType.COLLECTION, covers[1]);
-        categories.add(a);
-
-        a = new Category("Movies", new ArrayList<ItemInCategory>(), CategoryType.COLLECTION, covers[2]);
-        categories.add(a);
-
-        a = new Category("TV", new ArrayList<ItemInCategory>(), CategoryType.COLLECTION, covers[3]);
-        categories.add(a);
-
-        a = new Category("Food", new ArrayList<ItemInCategory>(), CategoryType.COLLECTION, covers[4]);
-        categories.add(a);
-
     }
 
 }

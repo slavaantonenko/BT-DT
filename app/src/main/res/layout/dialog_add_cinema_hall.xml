@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="@dimen/dialog_padding"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/tvAddHallTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dach_title"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/dialog_title_size" />
+
+    <EditText
+        android:id="@+id/etHallNumber"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:digits="0123456789"
+        android:inputType="number"
+        android:maxLines="1"
+        android:hint="Hall"
+        app:layout_constraintTop_toBottomOf="@id/tvAddHallTitle" />
+
+    <EditText
+        android:id="@+id/etRowNumber"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:digits="0123456789, "
+        android:inputType="number"
+        android:maxLines="1"
+        android:hint="Row"
+        app:layout_constraintTop_toBottomOf="@id/etHallNumber" />
+
+    <ImageButton
+        android:id="@+id/ibLike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_like"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/guideline"
+        app:layout_constraintTop_toBottomOf="@id/etRowNumber" />
+
+    <ImageButton
+        android:id="@+id/ibDislike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_dislike"
+        app:layout_constraintStart_toEndOf="@id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etRowNumber" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <!--<Spinner-->
+        <!--android:id="@+id/spCinema"-->
+        <!--android:layout_width="@dimen/dac_spinner_width"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="@dimen/dac_main_margin_top"-->
+        <!--tools:entries="@array/israel_cinemas_name"-->
+        <!--app:layout_constraintTop_toBottomOf="@id/tvAddCinemaTitle"-->
+        <!--app:layout_constraintStart_toStartOf="@id/tvAddCinemaTitle" />-->
+
+    <!--<Spinner-->
+        <!--android:id="@+id/spCinemaCities"-->
+        <!--android:layout_width="@dimen/dac_spinner_width"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="@dimen/dac_sp_margin_top"-->
+        <!--tools:entries="@array/cinema_city_cities"-->
+        <!--app:layout_constraintTop_toBottomOf="@id/spCinema"-->
+        <!--app:layout_constraintStart_toStartOf="@id/spCinema" />-->
+
+    <!--<Button-->
+        <!--android:id="@+id/btnSaveCinema"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--android:layout_marginTop="@dimen/dac_main_margin_top"-->
+        <!--android:text="@string/dac_save"-->
+        <!--android:textColor="@color/colorPrimary"-->
+        <!--android:textSize="@dimen/dac_btn_text_size"-->
+        <!--app:layout_constraintTop_toBottomOf="@id/spCinemaCities"-->
+        <!--app:layout_constraintEnd_toEndOf="@id/spCinemaCities" />-->
+
+</android.support.constraint.ConstraintLayout>

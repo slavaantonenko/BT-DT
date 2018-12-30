@@ -1,10 +1,14 @@
 package com.msapplications.btdt;
 
 import android.app.Activity;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -132,4 +136,23 @@ public class Utils
         return arrayList;
     }
 
+    /**
+     * Checks if app has access to necessary service on the device and if not request access from the user.
+     * @param activity
+     */
+    public static void requestNecessaryPermissions(Activity activity, String[] PERMISSIONS)
+    {
+        boolean grant = false;
+
+        for (String permission : PERMISSIONS) {
+            if (ActivityCompat.checkSelfPermission(activity, permission) != PackageManager.PERMISSION_GRANTED) {
+                grant = true;
+                break;
+            }
+        }
+
+        // We don't have permission so prompt the user
+        if (grant)
+            ActivityCompat.requestPermissions(activity, PERMISSIONS, 1);
+    }
 }

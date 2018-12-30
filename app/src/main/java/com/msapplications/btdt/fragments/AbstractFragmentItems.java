@@ -1,12 +1,11 @@
 package com.msapplications.btdt.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
-import com.msapplications.btdt.CategoryList;
+import com.msapplications.btdt.lists.CategoryList;
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.objects.Category;
 import com.msapplications.btdt.objects.itemTypes.ItemInCategory;

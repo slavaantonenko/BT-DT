@@ -30,9 +30,27 @@
     <dimen name="dnc_space_margin_top">20dp</dimen>
     <dimen name="cc_ic_category_overflow_margin_end">2dp</dimen>
 
+    <!-- Dialogs General-->
+    <dimen name="dialog_padding">20dp</dimen>
+    <dimen name="dialog_title_size">20sp</dimen>
+
     <!-- Dialog Rename Category-->
     <dimen name="drc_main_padding">20dp</dimen>
     <dimen name="drc_btn_margin_start">10dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+
+    <!-- Dialog Add Cinema-->
+    <dimen name="dac_tv_margin_start">15dp</dimen>
+    <dimen name="dac_tv_text_size">20sp</dimen>
+    <!--<dimen name="dac_padding">20dp</dimen>-->
+    <dimen name="dac_spinner_width">300dp</dimen>
+    <dimen name="dac_main_margin_top">20dp</dimen>
+    <dimen name="dac_sp_margin_top">10dp</dimen>
+    <dimen name="dac_btn_text_size">15sp</dimen>
+
+    <dimen name="activity_padding_horizontal">16dp</dimen>
+    <dimen name="padd_10">10dp</dimen>
+    <dimen name="ic_delete">30dp</dimen>
+    <dimen name="thumbnail">90dp</dimen>
 
 </resources>

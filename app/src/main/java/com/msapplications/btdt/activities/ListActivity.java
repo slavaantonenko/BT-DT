@@ -3,13 +3,13 @@ package com.msapplications.btdt.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.msapplications.btdt.CategoryList;
+import com.msapplications.btdt.lists.CategoryList;
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.fragments.CheckListFragment;
+import com.msapplications.btdt.fragments.CinemaSeatsFragment;
 import com.msapplications.btdt.fragments.CollectionFragment;
 import com.msapplications.btdt.fragments.NotesFragment;
 import com.msapplications.btdt.R;
@@ -43,7 +43,7 @@ public class ListActivity extends AppCompatActivity
     private void configureFragment()
     {
         Category category = CategoryList.getCategoryByIndex(categoryIndex);
-        if(category == null)
+        if (category == null)
             return;
 
         CategoryType type = category.getType();
@@ -59,6 +59,8 @@ public class ListActivity extends AppCompatActivity
             case COLLECTION:
                 openFragment(new CollectionFragment(), CommonValues.COLLECTION_FRAGMENT, categoryIndex);
                 break;
+            case CINEMA_SEATS:
+                openFragment(new CinemaSeatsFragment(), CommonValues.CINEMA_SEATS_FRAGMENT, categoryIndex);
         }
     }
 
@@ -68,7 +70,6 @@ public class ListActivity extends AppCompatActivity
         bundle.putInt(CommonValues.CATEGORY_INDEX, index);
         fragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction()
-            .addToBackStack(null)
             .replace(R.id.listActivityContent, fragment, tag)
             .commit();
     }

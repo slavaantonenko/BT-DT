@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.msapplications.btdt.CategoryList;
+import com.msapplications.btdt.lists.CategoryList;
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.CreateCategoryDialog;
 import com.msapplications.btdt.R;
@@ -31,6 +31,12 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
 {
     private Context mContext;
     private List<Category> categoryList;
+
+    public CategoriesAdapter(Context mContext)
+    {
+        this.mContext = mContext;
+        this.categoryList = CategoryList.getCategories(mContext);
+    }
 
     public class MyViewHolder extends RecyclerView.ViewHolder
     {
@@ -46,12 +52,6 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
             overflow = view.findViewById(R.id.overflow);
             cardView = view.findViewById(R.id.cvCategory);
         }
-    }
-
-    public CategoriesAdapter(Context mContext)
-    {
-        this.mContext = mContext;
-        this.categoryList = CategoryList.getCategories(mContext);
     }
 
     @Override

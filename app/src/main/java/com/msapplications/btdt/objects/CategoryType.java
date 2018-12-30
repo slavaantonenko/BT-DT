@@ -4,5 +4,5 @@ import java.io.Serializable;
 
 public enum CategoryType implements Serializable
 {
-    CHECKLIST, NOTES, COLLECTION;
+    CHECKLIST, NOTES, COLLECTION, CINEMA_SEATS;
 }

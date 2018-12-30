@@ -2,6 +2,7 @@ package com.msapplications.btdt.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.arch.lifecycle.ViewModelProvider;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -17,11 +18,13 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.adapters.CategoriesAdapter;
-import com.msapplications.btdt.CategoryList;
+import com.msapplications.btdt.lists.CategoryList;
 import com.msapplications.btdt.CreateCategoryDialog;
 import com.msapplications.btdt.R;
 import com.msapplications.btdt.Utils;
+import com.msapplications.btdt.interfaces.OnFloatingActionClick;
 import com.msapplications.btdt.objects.Category;
 import com.msapplications.btdt.objects.CategoryType;
 import com.msapplications.btdt.objects.itemTypes.ItemInCategory;
@@ -29,7 +32,7 @@ import com.msapplications.btdt.objects.itemTypes.ItemInCategory;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements OnFloatingActionClick
 {
     private RecyclerView recyclerView;
     private CategoriesAdapter adapter;
@@ -50,7 +53,6 @@ public class MainActivity extends AppCompatActivity
         Utils.centerTitle(this);
         adapter = new CategoriesAdapter(this);
 
-
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
@@ -58,10 +60,16 @@ public class MainActivity extends AppCompatActivity
         recyclerView.setAdapter(adapter);
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener()
+        fab.setOnClickListener(onFabClick());
+
+    }
+
+    public View.OnClickListener onFabClick()
+    {
+        return new View.OnClickListener()
         {
             @Override
-            public void onClick(View view)
+            public void onClick(View v)
             {
                 final View dialogView = getLayoutInflater().inflate(R.layout.dialog_new_category, null);
 
@@ -98,9 +106,9 @@ public class MainActivity extends AppCompatActivity
                         adapter.notifyDataSetChanged();
                     }
                 });
-
             }
-        });
+        };
+
     }
 
     @Override
@@ -180,12 +188,14 @@ public class MainActivity extends AppCompatActivity
     {
         switch (typeName)
         {
-            case ("Checklist"):
+            case (CommonValues.CHECKLIST):
                 return CategoryType.CHECKLIST;
-            case ("Note"):
+            case (CommonValues.NOTE):
                 return CategoryType.NOTES;
-            case ("Collection"):
+            case (CommonValues.COLLECTION):
                 return CategoryType.COLLECTION;
+            case (CommonValues.CINEMA_SEATS):
+                return CategoryType.CINEMA_SEATS;
         }
 
         return null;

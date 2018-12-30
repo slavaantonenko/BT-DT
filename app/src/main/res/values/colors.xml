@@ -9,4 +9,6 @@
     <color name="viewBackground">#f1f5f8</color>
     <color name="cc_category_title">#4c4c4c</color>
 
+    <color name="dislike_red">#d50000</color>
+    <color name="like_green">#00c853</color>
 </resources>

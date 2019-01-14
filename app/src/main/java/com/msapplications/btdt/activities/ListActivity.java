@@ -6,19 +6,19 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.msapplications.btdt.fragments.NotesFragment;
 import com.msapplications.btdt.lists.CategoryList;
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.fragments.CheckListFragment;
 import com.msapplications.btdt.fragments.CinemaSeatsFragment;
 import com.msapplications.btdt.fragments.CollectionFragment;
-import com.msapplications.btdt.fragments.NotesFragment;
 import com.msapplications.btdt.R;
 import com.msapplications.btdt.objects.Category;
 import com.msapplications.btdt.objects.CategoryType;
 
 public class ListActivity extends AppCompatActivity
-        implements CheckListFragment.OnFragmentInteractionListener, CollectionFragment.OnFragmentInteractionListener,
-                    NotesFragment.OnFragmentInteractionListener
+        implements CheckListFragment.OnFragmentInteractionListener, CollectionFragment.OnFragmentInteractionListener
+
 {
     private int categoryIndex = -1;
 

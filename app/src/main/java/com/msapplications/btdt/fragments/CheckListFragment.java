@@ -45,10 +45,6 @@ public class CheckListFragment extends AbstractFragmentItems implements OnEnterK
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private OnFragmentInteractionListener mListener;
 
     public CheckListFragment()
@@ -150,6 +146,7 @@ public class CheckListFragment extends AbstractFragmentItems implements OnEnterK
         checkListItems.get(index).setName(editText.getText().toString());
         //add new enpy
         checkListItems.add(index+1, new CheckListItem());
+       // adapter.notifyItemInserted(index+1);
         adapter.notifyDataSetChanged();
     }
 

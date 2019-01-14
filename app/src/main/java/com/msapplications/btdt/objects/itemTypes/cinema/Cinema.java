@@ -4,6 +4,10 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
+
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,52 +37,3 @@ public class Cinema
         this.logo = logo;
     }
 }
-//public class Cinema implements Parcelable
-//{
-//    String name;
-//    String city;
-//    int logo;
-//
-//    // Constructor
-//    public Cinema(String name, String city, int logo)
-//    {
-//        this.name = name;
-//        this.city = city;
-//        this.logo = logo;
-//    }
-//
-//    // Parcelling part
-//    // The order needs to be the same as in writeToParcel() method
-//    protected Cinema(Parcel in)
-//    {
-//        this.name = in.readString();
-//        this.city = in.readString();
-//        this.logo = in.readInt();
-//    }
-//
-//    public static final Creator<Cinema> CREATOR = new Creator<Cinema>()
-//    {
-//        @Override
-//        public Cinema createFromParcel(Parcel in) {
-//            return new Cinema(in);
-//        }
-//
-//        @Override
-//        public Cinema[] newArray(int size) {
-//            return new Cinema[size];
-//        }
-//    };
-//
-//    @Override
-//    public void writeToParcel(Parcel dest, int flags)
-//    {
-//        dest.writeString(name);
-//        dest.writeString(city);
-//        dest.writeInt(logo);
-//    }
-//
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
-//}

@@ -5,12 +5,16 @@ import android.arch.persistence.room.Room;
 import android.content.Context;
 
 import com.msapplications.btdt.objects.itemTypes.cinema.Cinema;
+import com.msapplications.btdt.objects.itemTypes.cinema.CinemaHall;
 import com.msapplications.btdt.room_storage.cinema.CinemaDao;
+import com.msapplications.btdt.room_storage.cinema.CinemaHallsDao;
 
-@Database(entities = {Cinema.class}, version = 1)
+// version = 1 is CinemaHall hall and row in int and not String.
+@Database(entities = {Cinema.class, CinemaHall.class}, version = 2)
 public abstract class RoomDatabase extends android.arch.persistence.room.RoomDatabase
 {
     public abstract CinemaDao cinemaDao();
+    public abstract CinemaHallsDao cinemaHallsDao();
 
     private static volatile RoomDatabase INSTANCE;
 

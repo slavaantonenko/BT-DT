@@ -15,16 +15,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.msapplications.btdt.adapters.CinemaHallsAdapter;
+import com.msapplications.btdt.dialogs.AddHallDialogFragment;
+import com.msapplications.btdt.interfaces.OnCinemaClickListener;
+import com.msapplications.btdt.interfaces.OnCinemaHallLongClickListener;
+import com.msapplications.btdt.objects.itemTypes.cinema.CinemaHall;
+import com.msapplications.btdt.room_storage.cinema.CinemaHallsViewModel;
 import com.msapplications.btdt.room_storage.cinema.CinemaViewModel;
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.R;
-import com.msapplications.btdt.SwipeListCallback;
+import com.msapplications.btdt.ListCallbackCinema;
 import com.msapplications.btdt.adapters.CinemasAdapter;
 import com.msapplications.btdt.dialogs.AddCinemaDialogFragment;
 import com.msapplications.btdt.interfaces.OnFloatingActionClick;
 import com.msapplications.btdt.objects.itemTypes.cinema.Cinema;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 ///**
@@ -35,15 +42,20 @@ import java.util.List;
 // * Use the {@link CinemaSeatsFragment#newInstance} factory method to
 // * create an instance of this fragment.
 // */
-public class CinemaSeatsFragment extends Fragment implements OnFloatingActionClick
+public class CinemaSeatsFragment extends Fragment implements OnFloatingActionClick,
+        OnCinemaClickListener, OnCinemaHallLongClickListener
 {
+    private int cinemaClickedPosition = 0;
     private ArrayList<Cinema> cinemasItems = null;
     private Fragment thisFragment = this;
-    private RecyclerView recyclerView;
-    private CinemasAdapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
+    private RecyclerView recyclerViewCinema;
+    private RecyclerView recyclerViewCHLastClicked;
+    private RecyclerView recyclerViewCinemaHalls;
+    private CinemasAdapter adapterCinema;
+    private CinemaHallsAdapter adapterCinemaHalls;
+    private RecyclerView.LayoutManager layoutManagerCinema;
     private CinemaViewModel cinemaViewModel;
-
+    CinemaHallsViewModel cinemaHallsViewModel;
 //    private OnFragmentInteractionListener mListener;
 
     public CinemaSeatsFragment()
@@ -55,17 +67,13 @@ public class CinemaSeatsFragment extends Fragment implements OnFloatingActionCli
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment CinemaSeatsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CinemaSeatsFragment newInstance(String param1, String param2)
+    public static CinemaSeatsFragment newInstance()
     {
         CinemaSeatsFragment fragment = new CinemaSeatsFragment();
         Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -74,10 +82,7 @@ public class CinemaSeatsFragment extends Fragment implements OnFloatingActionCli
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        if (getArguments() != null) {}
     }
 
     @Override
@@ -98,14 +103,13 @@ public class CinemaSeatsFragment extends Fragment implements OnFloatingActionCli
         initRecyclerView(view);
 
         cinemaViewModel = ViewModelProviders.of(this).get(CinemaViewModel.class);
-//        adapter.setCinemas(cinemaViewModel.getCinemas().getValue());
+        cinemaHallsViewModel = ViewModelProviders.of(this).get(CinemaHallsViewModel.class);
 
         cinemaViewModel.getCinemas().observe(this, new Observer<List<Cinema>>() {
             @Override
             public void onChanged(@Nullable final List<Cinema> cinemas) {
-                // Update the cached copy of the words in the adapter.
-//                adapter.setWords(words);
-                adapter.setCinemas(cinemas);
+                // Update the cached copy of the words in the adapterCinema.
+                adapterCinema.setCinemas(cinemas);
             }
         });
     }
@@ -130,35 +134,107 @@ public class CinemaSeatsFragment extends Fragment implements OnFloatingActionCli
         };
     }
 
-    private void initRecyclerView(final View view)
-    {
-        recyclerView = view.findViewById(R.id.rvCinemas);
-        layoutManager = new LinearLayoutManager(thisFragment.getContext());
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new CinemasAdapter(thisFragment.getContext());
-        recyclerView.setAdapter(adapter);
+    @Override
+    public void onCinemaClick(View view, int position) {
+        initRecyclerViewCinemaHalls(view, position);
+    }
 
-        SwipeListCallback swipeListCallback = new SwipeListCallback()
+    @Override
+    public void onCinemaLongClick(View view, int position) {
+        openCinemaHallDialogFragment(cinemaClickedPosition, adapterCinemaHalls.getItem(position), true);
+    }
+
+    private void initRecyclerView(View view)
+    {
+        recyclerViewCinema = view.findViewById(R.id.rvCinemas);
+        layoutManagerCinema = new LinearLayoutManager(thisFragment.getContext());
+        recyclerViewCinema.setLayoutManager(layoutManagerCinema);
+        adapterCinema = new CinemasAdapter(thisFragment.getContext(), this);
+        recyclerViewCinema.setAdapter(adapterCinema);
+        initSwipeCinema();
+    }
+
+    private void initRecyclerViewCinemaHalls(View view, int position)
+    {
+        recyclerViewCinemaHalls = view.findViewById(R.id.rvCinemaHalls);
+        int visibilityStatus = recyclerViewCinemaHalls.getVisibility();
+
+        if (visibilityStatus == View.GONE || (visibilityStatus == View.VISIBLE && position != cinemaClickedPosition))
+        {
+            recyclerViewCinemaHalls.setVisibility(View.VISIBLE);
+
+            if (position != cinemaClickedPosition && recyclerViewCHLastClicked != null)
+                recyclerViewCHLastClicked.setVisibility(View.GONE);
+
+            RecyclerView.LayoutManager layoutManagerCinemaHalls = new LinearLayoutManager(thisFragment.getContext());
+            recyclerViewCinemaHalls.setLayoutManager(layoutManagerCinemaHalls);
+            adapterCinemaHalls = new CinemaHallsAdapter(thisFragment.getContext(), this);
+            recyclerViewCinemaHalls.setAdapter(adapterCinemaHalls);
+
+            Cinema item = adapterCinema.getItem(position);
+
+            cinemaHallsViewModel.getCinemaHalls(item.getName(), item.getCity()).observe(this, new Observer<List<CinemaHall>>()
+            {
+                @Override
+                public void onChanged(@Nullable List<CinemaHall> cinemaHallList)
+                {
+                    if (cinemaHallList.size() > 0)
+                    {
+                        Cinema cinema = adapterCinema.getItem(cinemaClickedPosition); // Get clicked cinema.
+
+                        // This check prevents access also to other halls list which was not touched.
+                        if (cinemaHallList.get(0).getCinemaName().equals(cinema.getName()) &&
+                                cinemaHallList.get(0).getCinemaCity().equals(cinema.getCity())) {
+
+                            if (adapterCinemaHalls.getItemCount() != cinemaHallList.size())
+                                adapterCinemaHalls.setCinemaHalls(cinemaHallList);
+
+                            adapterCinemaHalls.notifyDataSetChanged();
+                        }
+                    }
+                }
+            });
+
+            cinemaClickedPosition = position;
+            recyclerViewCHLastClicked = recyclerViewCinemaHalls;
+        }
+        else {
+                recyclerViewCinemaHalls.setVisibility(View.GONE);
+        }
+    }
+
+    private void initSwipeCinema()
+    {
+        ListCallbackCinema listCallbackCinema = new ListCallbackCinema(adapterCinema)
         {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction)
             {
+                super.onSwiped(viewHolder, direction);
+
                 int position = viewHolder.getAdapterPosition();
 
-                if (direction == ItemTouchHelper.RIGHT) {
-                    adapter.notifyDataSetChanged();
-                }
-                else if (direction == ItemTouchHelper.LEFT)
+                if (direction == ItemTouchHelper.RIGHT)
                 {
-                    String name = adapter.getItem(position).getName();
-                    String city = adapter.getItem(position).getCity();
-                    cinemaViewModel.delete(adapter.getItem(position));
-                    adapter.notifyDataSetChanged();
+                    openCinemaHallDialogFragment(position, null, false);
+                    adapterCinema.notifyDataSetChanged();
+                }
+                else if (direction == ItemTouchHelper.LEFT) {
+                    cinemaViewModel.delete(adapterCinema.getItem(position));
                 }
             }
         };
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeListCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerView); // Set swipe to RecyclerView
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(listCallbackCinema);
+        itemTouchHelper.attachToRecyclerView(recyclerViewCinema); // Set swipe to RecyclerView
+    }
+
+    private void openCinemaHallDialogFragment(int position, CinemaHall cinemaHall, boolean edit)
+    {
+        Cinema cinema = adapterCinema.getItem(position);
+        FragmentTransaction ft = getFragmentManager().beginTransaction().addToBackStack(null);
+        AddHallDialogFragment dialogFragment = new AddHallDialogFragment().newInstance(
+                new String[]{cinema.getName(), cinema.getCity()}, cinemaHall, edit);
+        dialogFragment.show(ft, CommonValues.ADD_HALL_DIALOG_FRAGMENT_TAG);
     }
 }

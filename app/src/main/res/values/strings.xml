@@ -40,9 +40,6 @@
         <item>Yes Planet</item>
     </string-array>
 
-    <!-- Dialog Add Hall -->
-    <string name="dach_title">Add Hall</string>
-    
     <string-array name="cinema_city_cities">
         <item>Jerusalem</item>
         <item>Kfar Saba</item>
@@ -73,5 +70,11 @@
         <item>Rishon LeZion</item>
         <item>Zikhron Yaakov</item>
     </string-array>
+
+    <!-- Dialog Add/Edit Hall -->
+    <string name="dach_title_add">Add Hall</string>
+    <string name="dach_title_edit">Edit Hall</string>
+    <string name="ic_hall">Hall:&#160;</string>
+    <string name="ic_row">Row:&#160;</string>
 
 </resources>

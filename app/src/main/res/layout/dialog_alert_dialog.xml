@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/dialog_padding">
+
+    <TextView
+        android:id="@+id/tvAlertDialogTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/dialog_title_size"
+        android:textStyle="bold"
+        tools:text="@string/dialog_title_sample" />
+
+    <TextView
+        android:id="@+id/tvAlertDialogMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dad_margin_top"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/dialog_message_size"
+        tools:text="@string/dialog_message_sample"
+        app:layout_constraintTop_toBottomOf="@id/tvAlertDialogTitle" />
+
+    <Button
+        android:id="@+id/btnAlertDialogNeutral"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:layout_marginTop="@dimen/dad_margin_top"
+        android:text="@string/dialog_neutral_button"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintTop_toBottomOf="@id/tvAlertDialogMessage"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

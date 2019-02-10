@@ -86,7 +86,7 @@
             android:id="@+id/tvCinemaName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+
             android:textSize="20sp"
             android:textColor="@android:color/black"
             android:textStyle="bold"
@@ -98,7 +98,7 @@
             android:id="@+id/tvCinemaCity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+
             android:textSize="16sp"
             android:textColor="@android:color/black"
             tools:text="Rishon Lezion"

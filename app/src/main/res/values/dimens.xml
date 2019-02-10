@@ -33,6 +33,8 @@
     <!-- Dialogs General-->
     <dimen name="dialog_padding">20dp</dimen>
     <dimen name="dialog_title_size">20sp</dimen>
+    <dimen name="dialog_message_size">17sp</dimen>
+    <dimen name="dad_margin_top">10dp</dimen>
 
     <!-- Dialog Rename Category-->
     <dimen name="drc_main_padding">20dp</dimen>

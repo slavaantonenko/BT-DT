@@ -4,6 +4,12 @@
 
     <!-- Main activity -->
     <string name="am_title">Been There ; Done That</string>
+    <string name="cinema_seats_warning">
+        This feature is currently available only in Israel! More locations will be added in the next versions.
+    </string>
+    <string name="cinema_seats_exist">
+        A category Cinema Seats is already exist. You can not create more than 1 Cinema Seats category.
+    </string>
 
     <!-- Menus -->
     <string name="menu_category_rename">Rename</string>
@@ -26,6 +32,9 @@
     </string-array>
 
     <!-- Dialogs General -->
+    <string name="dialog_title_sample">Title</string>
+    <string name="dialog_message_sample">Here comes the text</string>
+    <string name="dialog_neutral_button">Okay</string>
 
     <!-- Dialog Rename Category -->
     <string name="drc_tv_rc_title">Rename Category</string>

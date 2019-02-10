@@ -4,6 +4,7 @@ import android.graphics.Typeface;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -57,8 +58,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
 
 
         FrameLayout constraintLayoutParent = ((FrameLayout)parent.getParent());
-        Button btnBold = constraintLayoutParent.findViewById(R.id.bold);
-        Button btnItalic = constraintLayoutParent.findViewById(R.id.italic);
+        ImageButton btnBold = constraintLayoutParent.findViewById(R.id.bold);
+        ImageButton btnItalic = constraintLayoutParent.findViewById(R.id.italic);
         ImageButton btnCheckbox = constraintLayoutParent.findViewById(R.id.checkbox_btn);
 
         btnBold.setOnClickListener(new View.OnClickListener()
@@ -151,6 +152,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
         final EditText currentEditText = holder.editText;
         final CheckBox currentCheckbox = holder.checkbox;
         currentEditText.setText(noteItem.getText());
+        currentEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        currentEditText.setRawInputType(InputType.TYPE_CLASS_TEXT);
         currentEditText.setOnFocusChangeListener(new View.OnFocusChangeListener()
         {
             @Override

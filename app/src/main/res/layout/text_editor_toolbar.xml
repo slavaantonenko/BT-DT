@@ -4,36 +4,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="50dp"
+    android:background="@color/viewBackground"
     android:layout_marginStart="80dp"
-    android:layout_marginEnd="80dp">
+    android:layout_marginEnd="80dp"
+    app:layout_constraintHorizontal_weight="3">
 
-    <Button
+    <ImageButton
         android:id="@+id/bold"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="B"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:fitsSystemWindows="true"
+        android:foregroundGravity="bottom"
+        android:src="@drawable/ic_bold_format"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/italic"
-        app:layout_constraintHorizontal_weight="1" />
+        />
 
-    <Button
+    <ImageButton
         android:id="@+id/italic"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:text="I"
-        android:textStyle="italic"
-        android:textSize="18sp"
-        android:clickable="true"
-        android:focusable="true"
         android:background="@android:color/transparent"
+        android:fitsSystemWindows="true"
+        android:foregroundGravity="bottom"
+        android:src="@drawable/ic_italic_format"
         app:layout_constraintStart_toEndOf="@id/bold"
-        app:layout_constraintEnd_toStartOf="@id/checkbox"
-        app:layout_constraintHorizontal_weight="1" />
+        app:layout_constraintEnd_toStartOf="@id/checkbox_btn"
+        />
 
     <ImageButton
         android:id="@+id/checkbox_btn"
@@ -45,6 +43,6 @@
         android:src="@drawable/ic_check_circle_24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/italic"
-        app:layout_constraintHorizontal_weight="1" />
+        />
 
 </android.support.constraint.ConstraintLayout>

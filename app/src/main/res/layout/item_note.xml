@@ -9,6 +9,7 @@
         android:id="@+id/checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:button="@drawable/custom_checkbox"
         />
 
     <EditText android:id="@+id/etNote"
@@ -16,8 +17,7 @@
         android:layout_height="wrap_content"
         android:gravity="top"
         android:background="@null"
-        android:imeOptions="actionDone"
-        android:inputType="text"
+        android:inputType="textMultiLine"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@id/checkbox" />
 

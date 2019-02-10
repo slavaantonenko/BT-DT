@@ -3,6 +3,7 @@ package com.msapplications.btdt.activities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.arch.lifecycle.ViewModelProvider;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -13,10 +14,14 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.adapters.CategoriesAdapter;
@@ -81,18 +86,30 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
                     @Override
                     public void onClick(View v)
                     {
-                        String newName = ((EditText) dialogView.findViewById(R.id.etNewCategoryName)).getText().toString();
+                        EditText etNewCategoryName = dialogView.findViewById(R.id.etNewCategoryName);
+                        String newName = etNewCategoryName.getText().toString();
                         if (newName.equals("")) {
-                            ((EditText) dialogView.findViewById(R.id.etNewCategoryName)).setError("Name can't be empty");
+                            etNewCategoryName.setError("Name can't be empty");
                             return;
                         }
 
                         if (CategoryList.categoryNameExists(newName)) {
-                            ((EditText) dialogView.findViewById(R.id.etNewCategoryName)).setError("Category name already exists");
+                            etNewCategoryName.setError("Category name already exists");
                             return;
                         }
 
                         CategoryType type = getSelectedType(((Spinner)dialogView.findViewById(R.id.choose_category_type)).getSelectedItem().toString());
+
+                        if (type.equals(CategoryType.CINEMA_SEATS))
+                        {
+                            if (CategoryList.categoryTypeExists(type)) {
+                                showAlertDialog(CommonValues.CINEMA_SEATS, getString(R.string.cinema_seats_exist));
+                                createCategoryDialog.dismiss();
+                                return;
+                            }
+
+                            showAlertDialog(CommonValues.CINEMA_SEATS, getString(R.string.cinema_seats_warning));
+                        }
 
                         //TODO remove this when images will be implemented.
                         Random rand = new Random();
@@ -200,5 +217,27 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
         }
 
         return null;
+    }
+
+    /**
+     * This method creates a custom AlertDialog and sets dynamically title and text.
+     * @param title the title which will be shown.
+     * @param msg the text which will be shown.
+     */
+    private void showAlertDialog(String title, String msg)
+    {
+        final View dialogView = getLayoutInflater().inflate(R.layout.dialog_alert_dialog, null);
+
+        final CreateCategoryDialog categoryCreateAlertDialog = new CreateCategoryDialog(
+                new AlertDialog.Builder(thisActivity).setCancelable(true), dialogView);
+
+        ((TextView) dialogView.findViewById(R.id.tvAlertDialogTitle)).setText(title);
+        ((TextView) dialogView.findViewById(R.id.tvAlertDialogMessage)).setText(msg);
+        dialogView.findViewById(R.id.btnAlertDialogNeutral).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                categoryCreateAlertDialog.dismiss();
+            }
+        });
     }
 }

@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -149,6 +150,9 @@ public class CinemaSeatsFragment extends Fragment implements OnFloatingActionCli
         recyclerViewCinema = view.findViewById(R.id.rvCinemas);
         layoutManagerCinema = new LinearLayoutManager(thisFragment.getContext());
         recyclerViewCinema.setLayoutManager(layoutManagerCinema);
+        
+        recyclerViewCinema.addItemDecoration(new DividerItemDecoration(recyclerViewCinema.getContext(), DividerItemDecoration.VERTICAL));
+
         adapterCinema = new CinemasAdapter(thisFragment.getContext(), this);
         recyclerViewCinema.setAdapter(adapterCinema);
         initSwipeCinema();

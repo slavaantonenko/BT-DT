@@ -5,6 +5,7 @@ import android.content.Context;
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.Utils;
 import com.msapplications.btdt.objects.Category;
+import com.msapplications.btdt.objects.CategoryType;
 
 import java.util.ArrayList;
 
@@ -84,6 +85,15 @@ public class CategoryList
     {
         for (Category category : categories)
             if (category.getName().equals(newName))
+                return true;
+
+        return false;
+    }
+
+    public static boolean categoryTypeExists(CategoryType type)
+    {
+        for (Category category : categories)
+            if (category.getType().equals(type))
                 return true;
 
         return false;

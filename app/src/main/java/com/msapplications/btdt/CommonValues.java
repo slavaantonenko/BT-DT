@@ -9,7 +9,7 @@ public class CommonValues
 
     // ListActivity
     public static final String LIST_TYPE = "ListType";
-    public static final String CATEGORY_INDEX = "CategoryIndex";
+    public static final String  CATEGORY_INDEX = "CategoryIndex";
     public static final String CHECK_LIST_FRAGMENT = "ChecklistFragment";
     public static final String NOTES_FRAGMENT = "NotesFragment";
     public static final String COLLECTION_FRAGMENT = "CollectionFragment";
@@ -30,4 +30,5 @@ public class CommonValues
     public static final String CINEMA_CITY = "Cinema City";
     public static final String GLOBUS_MAX = "Globus Max";
     public static final String YES_PLANET = "Yes Planet";
+    public static final String TRAVEL = "Travel";
 }

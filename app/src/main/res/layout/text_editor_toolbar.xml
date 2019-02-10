@@ -36,11 +36,12 @@
         app:layout_constraintHorizontal_weight="1" />
 
     <ImageButton
-        android:id="@+id/checkbox"
+        android:id="@+id/checkbox_btn"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
         android:fitsSystemWindows="true"
+        android:foregroundGravity="bottom"
         android:src="@drawable/ic_check_circle_24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/italic"

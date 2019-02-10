@@ -28,6 +28,7 @@ import com.msapplications.btdt.interfaces.OnFloatingActionClick;
 import com.msapplications.btdt.objects.Category;
 import com.msapplications.btdt.objects.CategoryType;
 import com.msapplications.btdt.objects.itemTypes.ItemInCategory;
+import com.msapplications.btdt.objects.itemTypes.NoteItem;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -98,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
                         int resID = getResources().getIdentifier("album" + Integer.toString(rand.nextInt((4) + 1) + 4), "drawable", getPackageName());
 
 //                        resID = R.drawable.food;
-                        Category newCategory = new Category(newName, new ArrayList<ItemInCategory>(), type, resID); //TODO image
+                        Category newCategory = new Category(newName, new ArrayList<NoteItem>(), type, resID); //TODO image
 //                        Category newCategory = new Category(newName, new ArrayList<ItemInCategory>(), type, R.drawable.album4); //TODO image
                         CategoryList.addCategory(thisActivity, newCategory);
 
@@ -188,14 +189,14 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
     {
         switch (typeName)
         {
-            case (CommonValues.CHECKLIST):
-                return CategoryType.CHECKLIST;
             case (CommonValues.NOTE):
                 return CategoryType.NOTES;
             case (CommonValues.COLLECTION):
                 return CategoryType.COLLECTION;
             case (CommonValues.CINEMA_SEATS):
                 return CategoryType.CINEMA_SEATS;
+            case (CommonValues.TRAVEL):
+                return CategoryType.TRAVEL;
         }
 
         return null;

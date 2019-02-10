@@ -80,14 +80,22 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
             }
         });
 
+        // TODO Create an interface for this and move to MainActivity. And think about better way to get category name.
         holder.cardView.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                Intent intent = new Intent(mContext, ListActivity.class);
-                intent.putExtra(CommonValues.CATEGORY_INDEX, position);
-                mContext.startActivity(intent);
+                TextView name = view.findViewById(R.id.tv_category_title);
+
+                if (name.getText().equals(CommonValues.TRAVEL))
+                    mContext.startActivity(new Intent(mContext, TravelActivity.class));
+                else
+                {
+                    Intent intent = new Intent(mContext, ListActivity.class);
+                    intent.putExtra(CommonValues.CATEGORY_INDEX, position);
+                    mContext.startActivity(intent);
+                }
             }
         });
     }

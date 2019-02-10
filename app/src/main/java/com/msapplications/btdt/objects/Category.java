@@ -6,6 +6,7 @@ import android.arch.persistence.room.PrimaryKey;
 import android.graphics.Bitmap;
 
 import com.msapplications.btdt.objects.itemTypes.ItemInCategory;
+import com.msapplications.btdt.objects.itemTypes.NoteItem;
 
 import java.io.Serializable;
 import java.security.Timestamp;
@@ -16,7 +17,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity(tableName = "cinemas_table")
+@Entity(tableName = "categories_table")
 public class Category implements Serializable
 {
     @PrimaryKey(autoGenerate = true)
@@ -26,7 +27,7 @@ public class Category implements Serializable
     String name;
 
     @ColumnInfo(name = "category_items")
-    ArrayList<? extends ItemInCategory> itemsInCat;
+    ArrayList<NoteItem> itemsInCat;
 
     @ColumnInfo(name = "category_type")
     CategoryType type;
@@ -35,7 +36,7 @@ public class Category implements Serializable
     int previewPic;
 
 
-    public Category(String name, ArrayList<ItemInCategory> itemInCategories, CategoryType type, int previewPic)
+    public Category(String name, ArrayList<NoteItem> itemInCategories, CategoryType type, int previewPic)
     {
         this.name = name;
         this.itemsInCat = itemInCategories;

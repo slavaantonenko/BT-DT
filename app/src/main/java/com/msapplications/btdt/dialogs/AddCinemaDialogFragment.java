@@ -17,7 +17,6 @@ import com.msapplications.btdt.room_storage.cinema.CinemaViewModel;
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.MyLocation;
 import com.msapplications.btdt.R;
-import com.msapplications.btdt.fragments.CheckListFragment;
 import com.msapplications.btdt.objects.itemTypes.cinema.Cinema;
 
 import java.util.ArrayList;

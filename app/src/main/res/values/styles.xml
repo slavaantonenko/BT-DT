@@ -18,11 +18,10 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <!--<style name="ThemeSpinner">-->
-        <!--&lt;!&ndash; Color when pressed &ndash;&gt;-->
-        <!--<item name="colorAccent">@android:color/white</item>-->
-        <!--&lt;!&ndash; Default color for the dropdown arrow and line &ndash;&gt;-->
-        <!--<item name="colorControlNormal">@android:color/white</item>-->
+    <!--&lt;!&ndash; Color when pressed &ndash;&gt;-->
+    <!--<item name="colorAccent">@android:color/white</item>-->
+    <!--&lt;!&ndash; Default color for the dropdown arrow and line &ndash;&gt;-->
+    <!--<item name="colorControlNormal">@android:color/white</item>-->
     <!--</style>-->
-
 
 </resources>

@@ -9,7 +9,6 @@ import android.os.Bundle;
 import com.msapplications.btdt.fragments.NotesFragment;
 import com.msapplications.btdt.lists.CategoryList;
 import com.msapplications.btdt.CommonValues;
-import com.msapplications.btdt.fragments.CheckListFragment;
 import com.msapplications.btdt.fragments.CinemaSeatsFragment;
 import com.msapplications.btdt.fragments.CollectionFragment;
 import com.msapplications.btdt.R;
@@ -17,7 +16,7 @@ import com.msapplications.btdt.objects.Category;
 import com.msapplications.btdt.objects.CategoryType;
 
 public class ListActivity extends AppCompatActivity
-        implements CheckListFragment.OnFragmentInteractionListener, CollectionFragment.OnFragmentInteractionListener
+        implements CollectionFragment.OnFragmentInteractionListener
 
 {
     private int categoryIndex = -1;
@@ -50,9 +49,6 @@ public class ListActivity extends AppCompatActivity
 
         switch (type)
         {
-            case CHECKLIST:
-                openFragment(new CheckListFragment(), CommonValues.CHECK_LIST_FRAGMENT, categoryIndex);
-                break;
             case NOTES:
                 openFragment(new NotesFragment(), CommonValues.NOTES_FRAGMENT, categoryIndex);
                 break;
@@ -61,6 +57,8 @@ public class ListActivity extends AppCompatActivity
                 break;
             case CINEMA_SEATS:
                 openFragment(new CinemaSeatsFragment(), CommonValues.CINEMA_SEATS_FRAGMENT, categoryIndex);
+            case TRAVEL:
+
         }
     }
 

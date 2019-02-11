@@ -26,6 +26,9 @@ public interface CinemaHallsDao
     @Delete
     void delete(CinemaHall cinemaHall);
 
+    @Query("DELETE FROM cinema_halls_table WHERE cinema_name=:cinemaName AND cinema_city=:cinemaCity")
+    void deleteCinemaHalls(String cinemaName, String cinemaCity);
+
     @Query("DELETE FROM cinema_halls_table")
     void deleteAll();
 }

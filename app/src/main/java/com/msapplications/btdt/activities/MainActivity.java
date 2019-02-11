@@ -2,29 +2,26 @@ package com.msapplications.btdt.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.arch.lifecycle.ViewModelProvider;
-import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.View;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.adapters.CategoriesAdapter;
+import com.msapplications.btdt.dialogs.NewCategoryDialogFragment;
 import com.msapplications.btdt.lists.CategoryList;
 import com.msapplications.btdt.CreateCategoryDialog;
 import com.msapplications.btdt.R;
@@ -32,7 +29,6 @@ import com.msapplications.btdt.Utils;
 import com.msapplications.btdt.interfaces.OnFloatingActionClick;
 import com.msapplications.btdt.objects.Category;
 import com.msapplications.btdt.objects.CategoryType;
-import com.msapplications.btdt.objects.itemTypes.ItemInCategory;
 import com.msapplications.btdt.objects.itemTypes.NoteItem;
 
 import java.util.ArrayList;
@@ -77,53 +73,58 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
             @Override
             public void onClick(View v)
             {
-                final View dialogView = getLayoutInflater().inflate(R.layout.dialog_new_category, null);
+//                final View dialogView = getLayoutInflater().inflate(R.layout.dialog_new_category, null);
 
-                final CreateCategoryDialog createCategoryDialog = new CreateCategoryDialog(
-                        new AlertDialog.Builder(thisActivity).setCancelable(true), dialogView);
+//                final CreateCategoryDialog createCategoryDialog = new CreateCategoryDialog(
+//                        new AlertDialog.Builder(thisActivity).setCancelable(true), dialogView);
 
-                (dialogView.findViewById(R.id.btnNewSave)).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        EditText etNewCategoryName = dialogView.findViewById(R.id.etNewCategoryName);
-                        String newName = etNewCategoryName.getText().toString();
-                        if (newName.equals("")) {
-                            etNewCategoryName.setError("Name can't be empty");
-                            return;
-                        }
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction().addToBackStack(null);
+                NewCategoryDialogFragment dialogFragment = new NewCategoryDialogFragment();
+                dialogFragment.show(ft, CommonValues.NEW_CATEGORY_DIALOG_FRAGMENT_TAG);
 
-                        if (CategoryList.categoryNameExists(newName)) {
-                            etNewCategoryName.setError("Category name already exists");
-                            return;
-                        }
-
-                        CategoryType type = getSelectedType(((Spinner)dialogView.findViewById(R.id.choose_category_type)).getSelectedItem().toString());
-
-                        if (type.equals(CategoryType.CINEMA_SEATS))
-                        {
-                            if (CategoryList.categoryTypeExists(type)) {
-                                showAlertDialog(CommonValues.CINEMA_SEATS, getString(R.string.cinema_seats_exist));
-                                createCategoryDialog.dismiss();
-                                return;
-                            }
-
-                            showAlertDialog(CommonValues.CINEMA_SEATS, getString(R.string.cinema_seats_warning));
-                        }
-
-                        //TODO remove this when images will be implemented.
-                        Random rand = new Random();
-                        int resID = getResources().getIdentifier("album" + Integer.toString(rand.nextInt((4) + 1) + 4), "drawable", getPackageName());
-
-//                        resID = R.drawable.food;
-                        Category newCategory = new Category(newName, new ArrayList<NoteItem>(), type, resID); //TODO image
-//                        Category newCategory = new Category(newName, new ArrayList<ItemInCategory>(), type, R.drawable.album4); //TODO image
-                        CategoryList.addCategory(thisActivity, newCategory);
-
-                        createCategoryDialog.dismiss();
-                        adapter.notifyDataSetChanged();
-                    }
-                });
+                adapter.notifyDataSetChanged();
+//                (dialogView.findViewById(R.id.btnSaveCategory)).setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v)
+//                    {
+//                        EditText etNewCategoryName = dialogView.findViewById(R.id.etNewCategoryName);
+//                        String newName = etNewCategoryName.getText().toString();
+//                        if (newName.equals("")) {
+//                            etNewCategoryName.setError("Name can't be empty");
+//                            return;
+//                        }
+//
+//                        if (CategoryList.categoryNameExists(newName)) {
+//                            etNewCategoryName.setError("Category name already exists");
+//                            return;
+//                        }
+//
+//                        CategoryType type = getSelectedType(((Spinner)dialogView.findViewById(R.id.choose_category_type)).getSelectedItem().toString());
+//
+//                        if (type.equals(CategoryType.CINEMA_SEATS))
+//                        {
+//                            if (CategoryList.categoryTypeExists(type)) {
+//                                showAlertDialog(CommonValues.CINEMA_SEATS, getString(R.string.cinema_seats_exist));
+////                                createCategoryDialog.dismiss();
+//                                return;
+//                            }
+//
+//                            showAlertDialog(CommonValues.CINEMA_SEATS, getString(R.string.cinema_seats_warning));
+//                        }
+//
+//                        //TODO remove this when images will be implemented.
+//                        Random rand = new Random();
+//                        int resID = getResources().getIdentifier("album" + Integer.toString(rand.nextInt((4) + 1) + 4), "drawable", getPackageName());
+//
+////                        resID = R.drawable.food;
+//                        Category newCategory = new Category(newName, new ArrayList<NoteItem>(), type, resID); //TODO image
+////                        Category newCategory = new Category(newName, new ArrayList<ItemInCategory>(), type, R.drawable.album4); //TODO image
+//                        CategoryList.addCategory(thisActivity, newCategory);
+//
+////                        createCategoryDialog.dismiss();
+//                        adapter.notifyDataSetChanged();
+//                    }
+//                });
             }
         };
 
@@ -202,42 +203,42 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
     }
 
 
-    private CategoryType getSelectedType(String typeName)
-    {
-        switch (typeName)
-        {
-            case (CommonValues.NOTE):
-                return CategoryType.NOTES;
-            case (CommonValues.COLLECTION):
-                return CategoryType.COLLECTION;
-            case (CommonValues.CINEMA_SEATS):
-                return CategoryType.CINEMA_SEATS;
-            case (CommonValues.TRAVEL):
-                return CategoryType.TRAVEL;
-        }
+//    private CategoryType getSelectedType(String typeName)
+//    {
+//        switch (typeName)
+//        {
+//            case (CommonValues.NOTE):
+//                return CategoryType.NOTES;
+//            case (CommonValues.COLLECTION):
+//                return CategoryType.COLLECTION;
+//            case (CommonValues.CINEMA_SEATS):
+//                return CategoryType.CINEMA_SEATS;
+//            case (CommonValues.TRAVEL):
+//                return CategoryType.TRAVEL;
+//        }
+//
+//        return null;
+//    }
 
-        return null;
-    }
-
-    /**
-     * This method creates a custom AlertDialog and sets dynamically title and text.
-     * @param title the title which will be shown.
-     * @param msg the text which will be shown.
-     */
-    private void showAlertDialog(String title, String msg)
-    {
-        final View dialogView = getLayoutInflater().inflate(R.layout.dialog_alert_dialog, null);
-
-        final CreateCategoryDialog categoryCreateAlertDialog = new CreateCategoryDialog(
-                new AlertDialog.Builder(thisActivity).setCancelable(true), dialogView);
-
-        ((TextView) dialogView.findViewById(R.id.tvAlertDialogTitle)).setText(title);
-        ((TextView) dialogView.findViewById(R.id.tvAlertDialogMessage)).setText(msg);
-        dialogView.findViewById(R.id.btnAlertDialogNeutral).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                categoryCreateAlertDialog.dismiss();
-            }
-        });
-    }
+//    /**
+//     * This method creates a custom AlertDialog and sets dynamically title and text.
+//     * @param title the title which will be shown.
+//     * @param msg the text which will be shown.
+//     */
+//    private void showAlertDialog(String title, String msg)
+//    {
+//        final View dialogView = getLayoutInflater().inflate(R.layout.dialog_alert_dialog, null);
+//
+//        final CreateCategoryDialog categoryCreateAlertDialog = new CreateCategoryDialog(
+//                new AlertDialog.Builder(thisActivity).setCancelable(true), dialogView);
+//
+//        ((TextView) dialogView.findViewById(R.id.tvAlertDialogTitle)).setText(title);
+//        ((TextView) dialogView.findViewById(R.id.tvAlertDialogMessage)).setText(msg);
+//        dialogView.findViewById(R.id.btnAlertDialogNeutral).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                categoryCreateAlertDialog.dismiss();
+//            }
+//        });
+//    }
 }

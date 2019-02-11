@@ -56,7 +56,7 @@ public class CinemaSeatsFragment extends Fragment implements OnFloatingActionCli
     private CinemaHallsAdapter adapterCinemaHalls;
     private RecyclerView.LayoutManager layoutManagerCinema;
     private CinemaViewModel cinemaViewModel;
-    CinemaHallsViewModel cinemaHallsViewModel;
+    private CinemaHallsViewModel cinemaHallsViewModel;
 //    private OnFragmentInteractionListener mListener;
 
     public CinemaSeatsFragment()
@@ -172,6 +172,10 @@ public class CinemaSeatsFragment extends Fragment implements OnFloatingActionCli
 
             RecyclerView.LayoutManager layoutManagerCinemaHalls = new LinearLayoutManager(thisFragment.getContext());
             recyclerViewCinemaHalls.setLayoutManager(layoutManagerCinemaHalls);
+
+            if (recyclerViewCinemaHalls.getItemDecorationCount() == 0)
+                recyclerViewCinemaHalls.addItemDecoration(new DividerItemDecoration(recyclerViewCinemaHalls.getContext(), DividerItemDecoration.VERTICAL));
+
             adapterCinemaHalls = new CinemaHallsAdapter(thisFragment.getContext(), this);
             recyclerViewCinemaHalls.setAdapter(adapterCinemaHalls);
 
@@ -218,13 +222,15 @@ public class CinemaSeatsFragment extends Fragment implements OnFloatingActionCli
 
                 int position = viewHolder.getAdapterPosition();
 
-                if (direction == ItemTouchHelper.RIGHT)
-                {
+                if (direction == ItemTouchHelper.RIGHT) {
                     openCinemaHallDialogFragment(position, null, false);
                     adapterCinema.notifyDataSetChanged();
                 }
-                else if (direction == ItemTouchHelper.LEFT) {
-                    cinemaViewModel.delete(adapterCinema.getItem(position));
+                else if (direction == ItemTouchHelper.LEFT)
+                {
+                    Cinema cinema = adapterCinema.getItem(position);
+                    cinemaHallsViewModel.deleteCinemaHalls(cinema);
+                    cinemaViewModel.delete(cinema);
                 }
             }
         };

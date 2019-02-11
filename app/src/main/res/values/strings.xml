@@ -19,9 +19,11 @@
     <!-- Dialog New Category -->
     <string name="category_type_prompt">Choose category type</string>
     <string name="dnc_tv_nc_title">Create New Category</string>
-    <string name="dnc_tv_ncn_text">Name:</string>
-    <string name="dnc_tv_nct_text">Type:</string>
+    <string name="dnc_et_hint">Name</string>
+    <!--<string name="dnc_tv_ncn_text">Name:</string>-->
+    <!--<string name="dnc_tv_nct_text">Type:</string>-->
     <string name="dnc_btn">Save</string>
+
     <string name="category_renamed">Category renamed</string>
 
     <string-array name="category_types">

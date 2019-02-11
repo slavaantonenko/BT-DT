@@ -9,14 +9,27 @@
     <color name="viewBackground">#f1f5f8</color>
     <color name="cc_category_title">#4c4c4c</color>
 
+    <array name="categories_background">
+        <item>#ffab40</item>
+        <item>#ffff00</item>
+        <item>#b2ff59</item>
+        <item>#00ff7f</item>
+        <item>#69f0ae</item>
+        <item>#18ffff</item>
+        <item>#2196f3</item>
+        <item>#ea80fc</item>
+        <item>#ff80ab</item>
+        <item>#ff1744</item>
+    </array>
+
+    <color name="dialogs_buttons">@color/colorPrimary</color>
+
+    <color name="cinema_hall">@android:color/black</color>
     <color name="dislike_red">#d50000</color>
     <color name="like_green">#00c853</color>
 
     <!-- Highlight country -->
     <color name="highlightCountry">#33F50057</color>
-
-
-
 
 
 

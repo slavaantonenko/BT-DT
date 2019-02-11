@@ -1,6 +1,5 @@
 package com.msapplications.btdt.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,7 +24,7 @@ import com.msapplications.btdt.room_storage.RoomDatabase;
 
 import java.util.List;
 
-import rest.RestClientManager;
+import com.msapplications.btdt.rest.RestClientManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

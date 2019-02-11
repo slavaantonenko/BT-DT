@@ -4,17 +4,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
-    android:paddingStart="50dp"
-    android:paddingEnd="50dp">
+    android:padding="@dimen/ich_padding"
+    android:paddingStart="@dimen/ich_padding_sides"
+    android:paddingEnd="@dimen/ich_padding_sides">
 
     <TextView
         android:id="@+id/tvHall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="@dimen/ich_text_size"
         android:textStyle="bold"
-        android:textColor="@android:color/black"
+        android:textColor="@color/cinema_hall"
         android:text="@string/ic_hall"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -22,9 +22,9 @@
         android:id="@+id/tvHallNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="@dimen/ich_text_size"
         android:textStyle="bold"
-        android:textColor="@android:color/black"
+        android:textColor="@color/cinema_hall"
         tools:text="1"
         app:layout_constraintStart_toEndOf="@id/tvHall" />
 
@@ -32,9 +32,9 @@
         android:id="@+id/tvRow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="@dimen/ich_text_size"
         android:textStyle="bold"
-        android:textColor="@android:color/black"
+        android:textColor="@color/cinema_hall"
         android:text="@string/ic_row"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -43,16 +43,16 @@
         android:id="@+id/tvRowNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="@dimen/ich_text_size"
         android:textStyle="bold"
-        android:textColor="@android:color/black"
+        android:textColor="@color/cinema_hall"
         tools:text="9"
         app:layout_constraintStart_toEndOf="@id/tvRow" />
 
     <ImageView
         android:id="@+id/ivStatus"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="@dimen/ich_iv_status_size"
+        android:layout_height="@dimen/ich_iv_status_size"
         android:adjustViewBounds="true"
         tools:src="@drawable/ic_like"
         app:layout_constraintEnd_toEndOf="parent"

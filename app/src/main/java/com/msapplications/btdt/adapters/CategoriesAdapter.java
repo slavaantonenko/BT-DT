@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.msapplications.btdt.Utils;
 import com.msapplications.btdt.lists.CategoryList;
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.CreateCategoryDialog;
@@ -26,6 +27,7 @@ import com.msapplications.btdt.objects.Category;
 import com.msapplications.btdt.activities.*;
 
 import java.util.List;
+import java.util.Random;
 
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.MyViewHolder>
 {
@@ -60,8 +62,19 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.category_card, parent, false);
 
-        return new MyViewHolder(itemView);
+//        int height = parent.getMeasuredHeight() / 4;
+//        Random random = new Random();
+//        int height = random.nextInt(101) + 100;
+//        itemView.setMinimumHeight(height);
 
+        // new Random().nextInt((max - min) + 1) + min;
+        Random random = new Random();
+        int height = random.nextInt(101) + 100;
+        ViewGroup.LayoutParams layoutParams = itemView.getLayoutParams();
+        layoutParams.height = Utils.dpToPx(parent.getResources(), height);
+        itemView.setLayoutParams(layoutParams);
+
+        return new MyViewHolder(itemView);
     }
 
     @Override
@@ -71,7 +84,9 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
         holder.title.setText(category.getName());
 
         // loading album cover using Glide library
-        Glide.with(mContext).load(category.getPreviewPic()).into(holder.thumbnail);
+//        Glide.with(mContext).load(category.getPreviewPic()).into(holder.thumbnail);
+
+        holder.cardView.setCardBackgroundColor(category.getPreviewPic());
 
         holder.overflow.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,4 +1,4 @@
-package rest;
+package com.msapplications.btdt.rest;
 
 import android.content.Context;
 

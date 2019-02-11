@@ -81,6 +81,25 @@ public class CinemaHallsRepository
         }
     }
 
+    public void deleteCinemaHalls(Cinema cinema) {
+        new CinemaHallsRepository.deleteCinemaHallsAsyncTask(cinemaHallsDao).execute(cinema);
+    }
+
+    private static class deleteCinemaHallsAsyncTask extends AsyncTask<Cinema, Void, Void>
+    {
+        private CinemaHallsDao asyncTaskDao;
+
+        deleteCinemaHallsAsyncTask(CinemaHallsDao dao) {
+            asyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Cinema... cinemas) {
+            asyncTaskDao.deleteCinemaHalls(cinemas[0].getName(), cinemas[0].getCity());
+            return null;
+        }
+    }
+
     public void deleteAll() {
         new CinemaHallsRepository.deleteAllAsyncTask(cinemaHallsDao).execute();
     }

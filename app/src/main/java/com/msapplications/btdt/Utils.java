@@ -3,6 +3,7 @@ package com.msapplications.btdt;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Rect;
 import android.support.annotation.DimenRes;
 import android.support.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -236,5 +238,14 @@ public class Utils
             super.getItemOffsets(outRect, view, parent, state);
             outRect.set(mItemOffset, mItemOffset, mItemOffset, mItemOffset);
         }
+    }
+
+    /**
+     * Converting dp to pixel
+     */
+    public static int dpToPx(Resources resources, int dp)
+    {
+        Resources r = resources;
+        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
 }

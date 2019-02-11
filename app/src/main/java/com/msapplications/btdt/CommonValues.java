@@ -18,6 +18,7 @@ public class CommonValues
     // Fragments
     public static final String ADD_CINEMA_DIALOG_FRAGMENT_TAG = "AddCinemaDialogFragment";
     public static final String ADD_HALL_DIALOG_FRAGMENT_TAG = "AddHallDialogFragment";
+    public static final String NEW_CATEGORY_DIALOG_FRAGMENT_TAG = "NewCategoryDialogFragment";
     public static final String CINEMA_HALL_BUNDLE = "CinemaHall";
     public static final String CINEMA_INFO_BUNDLE = "CinemaInfo";
     public static final String CINEMA_HALL_ACTION_BUNDLE = "CinemaHallAction";

@@ -29,5 +29,7 @@ public class CinemaHallsViewModel extends AndroidViewModel
 
     public void delete(CinemaHall cinemaHall) { repository.delete(cinemaHall); }
 
+    public void deleteCinemaHalls(Cinema cinema) { repository.deleteCinemaHalls(cinema); }
+
     public void deleteAll() { repository.deleteAll(); }
 }

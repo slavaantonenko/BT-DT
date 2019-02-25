@@ -1,25 +1,33 @@
 package com.msapplications.btdt.activities;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
+import com.msapplications.btdt.Utils;
+import com.msapplications.btdt.dialogs.RenameCategoryDialogFragment;
 import com.msapplications.btdt.fragments.NotesFragment;
-import com.msapplications.btdt.lists.CategoryList;
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.fragments.CinemaSeatsFragment;
 import com.msapplications.btdt.fragments.CollectionFragment;
 import com.msapplications.btdt.R;
-import com.msapplications.btdt.objects.Category;
 import com.msapplications.btdt.objects.CategoryType;
+import com.msapplications.btdt.room_storage.category.CategoryViewModel;
+import com.msapplications.btdt.room_storage.cinema.CinemaViewModel;
 
 public class ListActivity extends AppCompatActivity
-        implements CollectionFragment.OnFragmentInteractionListener
-
+        implements CollectionFragment.OnFragmentInteractionListener, CinemaSeatsFragment.OnFragmentInteractionListener,
+        NotesFragment.OnFragmentInteractionListener, RenameCategoryDialogFragment.OnRenameListener
 {
-    private int categoryIndex = -1;
+    CategoryViewModel categoryViewModel;
+    private int categoryTypeCode = -1;
+    private int categoryID = -1;
+    private String categoryName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -27,48 +35,82 @@ public class ListActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        Intent intent = getIntent();
-        categoryIndex = intent.getExtras().getInt(CommonValues.CATEGORY_INDEX);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        if (categoryIndex > -1)
+        categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel.class);
+
+        Intent intent = getIntent();
+        categoryID = intent.getExtras().getInt(CommonValues.CATEGORY_ID_EXTRA);
+        categoryName = intent.getExtras().getString(CommonValues.CATEGORY_NAME_EXTRA);
+        categoryTypeCode = categoryViewModel.getType(categoryID);
+
+        if (categoryTypeCode > -1)
             configureFragment();
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
-        // Do different stuff
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.category_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case android.R.id.home: // Click on back button
+                this.finish();
+                return true;
+            case R.id.action_rename:
+                Utils.renameCategory(getSupportFragmentManager(), categoryViewModel.getCategory(categoryID));
+                break;
+            case R.id.action_delete:
+                if (CategoryType.CINEMA_SEATS.equals(categoryTypeCode)) {
+                    CinemaViewModel cinemaViewModel = ViewModelProviders.of(this).get(CinemaViewModel.class);
+                    Utils.deleteCategory(cinemaViewModel, 0);
+                }
+
+                Utils.deleteCategory(categoryViewModel, categoryID);
+                this.finish();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFragmentInteraction(String title) {
+        getSupportActionBar().setTitle(title);
+    }
+
+    @Override
+    public void onRename(String title)
+    {
+        onFragmentInteraction(title);
+        Intent intent = new Intent();
+        setResult(CommonValues.RENAME_CATEGORY_RESULT_CODE, intent);
     }
 
     private void configureFragment()
     {
-        Category category = CategoryList.getCategoryByIndex(categoryIndex);
-        if (category == null)
-            return;
-
-        CategoryType type = category.getType();
-
-        switch (type)
+        switch (CategoryType.getType(categoryTypeCode))
         {
             case NOTES:
-                openFragment(new NotesFragment(), CommonValues.NOTES_FRAGMENT, categoryIndex);
+                openFragment(new NotesFragment().newInstance(categoryName, categoryID), CommonValues.NOTES_FRAGMENT);
                 break;
             case COLLECTION:
-                openFragment(new CollectionFragment(), CommonValues.COLLECTION_FRAGMENT, categoryIndex);
+                openFragment(new CollectionFragment(), CommonValues.COLLECTION_FRAGMENT);
                 break;
             case CINEMA_SEATS:
-                openFragment(new CinemaSeatsFragment(), CommonValues.CINEMA_SEATS_FRAGMENT, categoryIndex);
-            case TRAVEL:
-
+                openFragment(new CinemaSeatsFragment().newInstance(categoryName), CommonValues.CINEMA_SEATS_FRAGMENT);
         }
     }
 
-    private void openFragment(Fragment fragment, String tag, int index)
-    {
-        Bundle bundle = new Bundle();
-        bundle.putInt(CommonValues.CATEGORY_INDEX, index);
-        fragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction()
-            .replace(R.id.listActivityContent, fragment, tag)
-            .commit();
+    private void openFragment(Fragment fragment, String tag) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.listActivityContent, fragment, tag).commit();
     }
 }

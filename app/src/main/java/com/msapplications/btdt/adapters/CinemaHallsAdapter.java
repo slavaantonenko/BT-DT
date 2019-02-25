@@ -21,6 +21,7 @@ public class CinemaHallsAdapter extends RecyclerView.Adapter<CinemaHallsAdapter.
     private Context context;
     private List<CinemaHall> cinemaHallsList;
     private OnCinemaHallLongClickListener cinemaHallLongClickListener;
+    private int adapterPosition = -1;
 
     public CinemaHallsAdapter(Context context, OnCinemaHallLongClickListener listener) {
         this.context = context;
@@ -57,6 +58,7 @@ public class CinemaHallsAdapter extends RecyclerView.Adapter<CinemaHallsAdapter.
         @Override
         public boolean onLongClick(View view)
         {
+            adapterPosition = getAdapterPosition();
             cinemaHallLongClickListener.onCinemaLongClick(view, getAdapterPosition());
             return true;
         }
@@ -89,8 +91,18 @@ public class CinemaHallsAdapter extends RecyclerView.Adapter<CinemaHallsAdapter.
         return cinemaHallsList.get(position);
     }
 
+    public int getAdapterPosition() {
+        return adapterPosition;
+    }
+
     public void setCinemaHalls(List<CinemaHall> cinemaHalls) {
         cinemaHallsList = cinemaHalls;
         notifyDataSetChanged();
+    }
+
+    public void setCinemaHall(CinemaHall cinemaHall) {
+        cinemaHallsList.set(adapterPosition, cinemaHall);
+        notifyItemChanged(adapterPosition);
+        adapterPosition = -1;
     }
 }

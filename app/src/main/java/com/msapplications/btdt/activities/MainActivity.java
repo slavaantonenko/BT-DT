@@ -1,44 +1,49 @@
 package com.msapplications.btdt.activities;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.res.Resources;
-import android.graphics.Rect;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.util.TypedValue;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.MenuItem;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.adapters.CategoriesAdapter;
 import com.msapplications.btdt.dialogs.NewCategoryDialogFragment;
-import com.msapplications.btdt.lists.CategoryList;
-import com.msapplications.btdt.CreateCategoryDialog;
+import com.msapplications.btdt.dialogs.RenameCategoryDialogFragment;
+import com.msapplications.btdt.interfaces.OnCategoryClickListener;
+import com.msapplications.btdt.interfaces.OnCategoryMenuClickListener;
+import com.msapplications.btdt.interfaces.OnMenuItemClickListener;
 import com.msapplications.btdt.R;
 import com.msapplications.btdt.Utils;
 import com.msapplications.btdt.interfaces.OnFloatingActionClick;
 import com.msapplications.btdt.objects.Category;
 import com.msapplications.btdt.objects.CategoryType;
-import com.msapplications.btdt.objects.itemTypes.NoteItem;
+import com.msapplications.btdt.room_storage.category.CategoryViewModel;
+import com.msapplications.btdt.room_storage.cinema.CinemaViewModel;
 
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements OnFloatingActionClick
+public class MainActivity extends AppCompatActivity implements OnFloatingActionClick, OnCategoryClickListener,
+        OnCategoryMenuClickListener, OnMenuItemClickListener, RenameCategoryDialogFragment.OnRenameListener
 {
     private RecyclerView recyclerView;
     private CategoriesAdapter adapter;
-    private Activity thisActivity;
+    private CategoryViewModel categoryViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -49,85 +54,34 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
         recyclerView = findViewById(R.id.recycler_view);
 
         setSupportActionBar(toolbar);
-        thisActivity = this;
 
         this.setTitle(R.string.am_title);
         Utils.centerTitle(this);
-        adapter = new CategoriesAdapter(this);
 
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(adapter);
+        initRecyclerView();
+
+        categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel.class);
+        categoryViewModel.getCategories().observe(this, new Observer<List<Category>>() {
+            @Override
+            public void onChanged(@Nullable final List<Category> categories)
+            {
+                int position = adapter.getAdapterPosition();
+
+                if (position > -1)
+                    adapter.setCategory(categoryViewModel.getCategory(adapter.getItem(position).getId()));
+                else
+                    // Update the cached copy of the words in the adapter.
+                    adapter.setCategories(categories);
+            }
+        });
+
+        if (firstUse()) {
+            Utils.newCategory(this,this, CommonValues.CINEMA_SEATS, CategoryType.CINEMA_SEATS);
+            Utils.newCategory(this,this, CommonValues.TRAVEL, CategoryType.TRAVEL);
+        }
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(onFabClick());
-
-    }
-
-    public View.OnClickListener onFabClick()
-    {
-        return new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-//                final View dialogView = getLayoutInflater().inflate(R.layout.dialog_new_category, null);
-
-//                final CreateCategoryDialog createCategoryDialog = new CreateCategoryDialog(
-//                        new AlertDialog.Builder(thisActivity).setCancelable(true), dialogView);
-
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction().addToBackStack(null);
-                NewCategoryDialogFragment dialogFragment = new NewCategoryDialogFragment();
-                dialogFragment.show(ft, CommonValues.NEW_CATEGORY_DIALOG_FRAGMENT_TAG);
-
-                adapter.notifyDataSetChanged();
-//                (dialogView.findViewById(R.id.btnSaveCategory)).setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v)
-//                    {
-//                        EditText etNewCategoryName = dialogView.findViewById(R.id.etNewCategoryName);
-//                        String newName = etNewCategoryName.getText().toString();
-//                        if (newName.equals("")) {
-//                            etNewCategoryName.setError("Name can't be empty");
-//                            return;
-//                        }
-//
-//                        if (CategoryList.categoryNameExists(newName)) {
-//                            etNewCategoryName.setError("Category name already exists");
-//                            return;
-//                        }
-//
-//                        CategoryType type = getSelectedType(((Spinner)dialogView.findViewById(R.id.choose_category_type)).getSelectedItem().toString());
-//
-//                        if (type.equals(CategoryType.CINEMA_SEATS))
-//                        {
-//                            if (CategoryList.categoryTypeExists(type)) {
-//                                showAlertDialog(CommonValues.CINEMA_SEATS, getString(R.string.cinema_seats_exist));
-////                                createCategoryDialog.dismiss();
-//                                return;
-//                            }
-//
-//                            showAlertDialog(CommonValues.CINEMA_SEATS, getString(R.string.cinema_seats_warning));
-//                        }
-//
-//                        //TODO remove this when images will be implemented.
-//                        Random rand = new Random();
-//                        int resID = getResources().getIdentifier("album" + Integer.toString(rand.nextInt((4) + 1) + 4), "drawable", getPackageName());
-//
-////                        resID = R.drawable.food;
-//                        Category newCategory = new Category(newName, new ArrayList<NoteItem>(), type, resID); //TODO image
-////                        Category newCategory = new Category(newName, new ArrayList<ItemInCategory>(), type, R.drawable.album4); //TODO image
-//                        CategoryList.addCategory(thisActivity, newCategory);
-//
-////                        createCategoryDialog.dismiss();
-//                        adapter.notifyDataSetChanged();
-//                    }
-//                });
-            }
-        };
-
     }
 
     @Override
@@ -145,100 +99,115 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
         return super.onOptionsItemSelected(item);
     }
 
+    public View.OnClickListener onFabClick()
+    {
+        return new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction().addToBackStack(null);
+                NewCategoryDialogFragment dialogFragment = new NewCategoryDialogFragment();
+                dialogFragment.show(ft, CommonValues.NEW_CATEGORY_DIALOG_FRAGMENT_TAG);
+            }
+        };
+
+    }
+
+    @Override
+    public void onCategoryClick(View view)
+    {
+        TextView name = view.findViewById(R.id.tvCategoryTitle);
+
+//        if (name.getText().equals(CommonValues.TRAVEL))
+//            startActivity(new Intent(this, TravelActivity.class));
+//            return;
+        if (!name.getText().equals(CommonValues.TRAVEL))
+        {
+            Intent intent = new Intent(this, ListActivity.class);
+            intent.putExtra(CommonValues.CATEGORY_ID_EXTRA, categoryViewModel.getIdByName(name.getText().toString()));
+            intent.putExtra(CommonValues.CATEGORY_NAME_EXTRA, name.getText().toString());
+            startActivityForResult(intent, 0);
+        }
+    }
+
+    @Override
+    public void onCategoryMenuClick(View view, int position) {
+        showPopupMenu(view, position);
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem menuItem, int position)
+    {
+        Category category = adapter.getItem(position);
+
+        switch (menuItem.getItemId())
+        {
+            case R.id.action_rename:
+                Utils.renameCategory(getSupportFragmentManager(), category);
+                return true;
+
+            case R.id.action_delete:
+                if (category.getType().equals(CategoryType.CINEMA_SEATS))
+                {
+                    CinemaViewModel cinemaViewModel = ViewModelProviders.of(this).get(CinemaViewModel.class);
+                    Utils.deleteCategory(cinemaViewModel, 0);
+                }
+
+                Utils.deleteCategory(categoryViewModel, category.getId());
+
+                return true;
+            default:
+        }
+
+        return false;
+    }
+
+    @Override
+    public void onRename(String title) {}
+
     private void initRecyclerView()
     {
+        adapter = new CategoriesAdapter(this);
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, 1));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(adapter);
+    }
 
+    private boolean firstUse()
+    {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean firstUse = preferences.getBoolean(CommonValues.FIRST_USE, true);
+
+        if (firstUse)
+        {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean(CommonValues.FIRST_USE, false);
+            editor.apply();
+        }
+
+        return firstUse;
     }
 
     /**
-     * RecyclerView item decoration - give equal margin around grid item
+     * Showing popup menu when tapping on 3 dots
      */
-    public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration
+    private void showPopupMenu(View view, int position)
     {
-        private int spanCount;
-        private int spacing;
-        private boolean includeEdge;
-
-        public GridSpacingItemDecoration(int spanCount, int spacing, boolean includeEdge)
-        {
-            this.spanCount = spanCount;
-            this.spacing = spacing;
-            this.includeEdge = includeEdge;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state)
-        {
-            int position = parent.getChildAdapterPosition(view); // item position
-            int column = position % spanCount; // item column
-
-            if (includeEdge)
-            {
-                outRect.left = spacing - column * spacing / spanCount; // spacing - column * ((1f / spanCount) * spacing)
-                outRect.right = (column + 1) * spacing / spanCount; // (column + 1) * ((1f / spanCount) * spacing)
-
-                if (position < spanCount) // top edge
-                    outRect.top = spacing;
-
-                outRect.bottom = spacing; // item bottom
-            }
-            else
-            {
-                outRect.left = column * spacing / spanCount; // column * ((1f / spanCount) * spacing)
-                outRect.right = spacing - (column + 1) * spacing / spanCount; // spacing - (column + 1) * ((1f /    spanCount) * spacing)
-
-                if (position >= spanCount)
-                    outRect.top = spacing; // item top
-            }
-        }
+        // inflate menu
+        PopupMenu popup = new PopupMenu(this, view);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.category_menu, popup.getMenu());
+        popup.setOnMenuItemClickListener((CategoriesAdapter.ViewHolder)recyclerView.findViewHolderForAdapterPosition(position));
+        popup.show();
     }
 
-    /**
-     * Converting dp to pixel
-     */
-    private int dpToPx(int dp)
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
     {
-        Resources r = getResources();
-        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (!(resultCode == CommonValues.RENAME_CATEGORY_RESULT_CODE))
+            adapter.resetPosition();
     }
-
-
-//    private CategoryType getSelectedType(String typeName)
-//    {
-//        switch (typeName)
-//        {
-//            case (CommonValues.NOTE):
-//                return CategoryType.NOTES;
-//            case (CommonValues.COLLECTION):
-//                return CategoryType.COLLECTION;
-//            case (CommonValues.CINEMA_SEATS):
-//                return CategoryType.CINEMA_SEATS;
-//            case (CommonValues.TRAVEL):
-//                return CategoryType.TRAVEL;
-//        }
-//
-//        return null;
-//    }
-
-//    /**
-//     * This method creates a custom AlertDialog and sets dynamically title and text.
-//     * @param title the title which will be shown.
-//     * @param msg the text which will be shown.
-//     */
-//    private void showAlertDialog(String title, String msg)
-//    {
-//        final View dialogView = getLayoutInflater().inflate(R.layout.dialog_alert_dialog, null);
-//
-//        final CreateCategoryDialog categoryCreateAlertDialog = new CreateCategoryDialog(
-//                new AlertDialog.Builder(thisActivity).setCancelable(true), dialogView);
-//
-//        ((TextView) dialogView.findViewById(R.id.tvAlertDialogTitle)).setText(title);
-//        ((TextView) dialogView.findViewById(R.id.tvAlertDialogMessage)).setText(msg);
-//        dialogView.findViewById(R.id.btnAlertDialogNeutral).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                categoryCreateAlertDialog.dismiss();
-//            }
-//        });
-//    }
 }

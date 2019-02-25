@@ -103,7 +103,8 @@ public class CinemasAdapter extends RecyclerView.Adapter<CinemasAdapter.ViewHold
         notifyDataSetChanged();
     }
 
-    public void deleteCinema(int position) {
-        cinemasList.remove(position);
+    public void addCinema(Cinema cinema) {
+        cinemasList.add(getItemCount(), cinema);
+        notifyItemInserted(getItemCount() - 1);
     }
 }

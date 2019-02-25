@@ -2,6 +2,7 @@ package com.msapplications.btdt.dialogs;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -13,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import com.google.android.gms.common.data.ObjectExclusionFilterable;
 import com.msapplications.btdt.room_storage.cinema.CinemaViewModel;
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.MyLocation;
@@ -22,6 +24,8 @@ import com.msapplications.btdt.objects.itemTypes.cinema.Cinema;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
 
 public class AddCinemaDialogFragment extends DialogFragment
 {
@@ -106,15 +110,21 @@ public class AddCinemaDialogFragment extends DialogFragment
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
                 String selectedItem = spCinemas.getSelectedItem().toString();
+                boolean areEntriesSet;
+
                 switch (selectedItem)
                 {
                     case (CommonValues.CINEMA_CITY):
-                        setSpinnerEntries(view, spCinemaCities, CommonValues.CINEMA_CITY, R.array.cinema_city_cities);
-                        break;
+                        areEntriesSet = setSpinnerEntries(view, spCinemaCities, CommonValues.CINEMA_CITY, R.array.cinema_city_cities);
+                        if (areEntriesSet)
+                            break;
                     case (CommonValues.GLOBUS_MAX):
-                        setSpinnerEntries(view, spCinemaCities, CommonValues.GLOBUS_MAX, R.array.globus_max_cities);
-                        break;
+                        spCinemas.setSelection(1);
+                        areEntriesSet = setSpinnerEntries(view, spCinemaCities, CommonValues.GLOBUS_MAX, R.array.globus_max_cities);
+                        if (areEntriesSet)
+                            break;
                     case (CommonValues.YES_PLANET):
+                        spCinemas.setSelection(2);
                         setSpinnerEntries(view, spCinemaCities, CommonValues.YES_PLANET, R.array.yes_planet_cities);
                         break;
                 }
@@ -131,7 +141,10 @@ public class AddCinemaDialogFragment extends DialogFragment
             {
                 int logoID = 0;
                 String cinemaName = spCinemas.getSelectedItem().toString();
-                String cinemaCity = spCinemaCities.getSelectedItem().toString();
+                Object cinemaCity = spCinemaCities.getSelectedItem();
+
+                if (cinemaCity == null)
+                    return;
 
                 switch (cinemaName)
                 {
@@ -146,7 +159,8 @@ public class AddCinemaDialogFragment extends DialogFragment
                         break;
                 }
 
-                cinemaViewModel.insert(new Cinema(0, cinemaName, cinemaCity, logoID));
+                getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, new Intent());
+                cinemaViewModel.insert(new Cinema(0, cinemaName, cinemaCity.toString(), logoID));
                 dismiss();
             }
         });
@@ -156,7 +170,7 @@ public class AddCinemaDialogFragment extends DialogFragment
         this.countryName = countryName;
     }
 
-    private void setSpinnerEntries(View view, Spinner sp, String cinemaName, int id)
+    private boolean setSpinnerEntries(View view, Spinner sp, String cinemaName, int id)
     {
         String[] cities = getResources().getStringArray(id);
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter(view.getContext(), android.R.layout.simple_spinner_item, new ArrayList(Arrays.asList(cities)));
@@ -167,24 +181,20 @@ public class AddCinemaDialogFragment extends DialogFragment
             {
                 CharSequence cinemaCity = adapter.getItem(i);
                 if (cinemaCity != null) {
-                    if (cinemaExist(cinemaName, cinemaCity.toString())) {
+                    if (cinemaViewModel.cinemaExists(cinemaName, cinemaCity.toString()) > 0) {
                         adapter.remove(cinemaCity);
                         i--;
                     }
                 }
             }
+
+            if (adapter.getCount() == 0)
+                return false;
         }
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp.setAdapter(adapter);
-    }
 
-    private boolean cinemaExist(String cinemaName, String cinemaCity)
-    {
-        for (Cinema cinema : cinemaList)
-            if (cinema.getName().equals(cinemaName) && cinema.getCity().equals(cinemaCity))
-                return true;
-
-        return false;
+        return true;
     }
 }

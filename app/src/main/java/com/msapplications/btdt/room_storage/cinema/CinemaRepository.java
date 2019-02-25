@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
 import com.msapplications.btdt.objects.itemTypes.cinema.Cinema;
+import com.msapplications.btdt.objects.itemTypes.cinema.CinemaHall;
 import com.msapplications.btdt.room_storage.RoomDatabase;
 
 import java.util.List;
@@ -24,6 +25,12 @@ public class CinemaRepository
     LiveData<List<Cinema>> getCinemas() {
         return cinemas;
     }
+
+    public Cinema getCinema(int id) {
+        return cinemaDao.getCinema(id);
+    }
+
+    public int cinemaExists(String name, String city) { return cinemaDao.cinemaExists(name, city); }
 
     public void insert(Cinema cinema) {
         new insertAsyncTask(cinemaDao).execute(cinema);
@@ -59,6 +66,26 @@ public class CinemaRepository
         @Override
         protected Void doInBackground(Cinema... cinemas) {
             asyncTaskDao.delete(cinemas[0]);
+            return null;
+        }
+    }
+
+    public void deleteAll() {
+        new CinemaRepository.deleteAllAsyncTask(cinemaDao).execute();
+    }
+
+    private static class deleteAllAsyncTask extends AsyncTask<Cinema, Void, Void>
+    {
+        private CinemaDao asyncTaskDao;
+
+        deleteAllAsyncTask(CinemaDao dao) {
+            asyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Cinema... cinemas) {
+            asyncTaskDao.deleteAll();
+            asyncTaskDao.deleteAllHalls();
             return null;
         }
     }

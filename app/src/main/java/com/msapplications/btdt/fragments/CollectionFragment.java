@@ -74,13 +74,13 @@ public class CollectionFragment extends AbstractFragmentItems
         return inflater.inflate(R.layout.fragment_collection, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri)
-    {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+//    // TODO: Rename method, update argument and hook method into UI event
+//    public void onButtonPressed()
+//    {
+//        if (mListener != null) {
+//            mListener.onFragmentInteraction(uri);
+//        }
+//    }
 
     @Override
     public void onAttach(Context context)
@@ -114,6 +114,6 @@ public class CollectionFragment extends AbstractFragmentItems
     public interface OnFragmentInteractionListener
     {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(String title);
     }
 }

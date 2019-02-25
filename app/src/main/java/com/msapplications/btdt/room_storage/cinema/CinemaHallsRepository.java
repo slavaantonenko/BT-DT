@@ -24,6 +24,10 @@ public class CinemaHallsRepository
         return cinemaHallsDao.getCinemaHalls(cinemaName, cinemaCity);
     }
 
+    public CinemaHall getCinemaHall(int id) {
+        return cinemaHallsDao.getCinemaHall(id);
+    }
+
     public void edit(CinemaHall cinemaHall) {
         new CinemaHallsRepository.editAsyncTask(cinemaHallsDao).execute(cinemaHall);
     }

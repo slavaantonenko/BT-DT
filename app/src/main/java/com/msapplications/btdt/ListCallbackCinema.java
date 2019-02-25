@@ -19,26 +19,10 @@ public class ListCallbackCinema extends ItemTouchHelper.SimpleCallback
 
     public ListCallbackCinema(CinemasAdapter adapter) {
         super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
-//        super(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
-//        this.adapter = adapter;
     }
 
     // Drag & Drop
-//    @Override
-    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target)
-    {
-//        int fromPosition = viewHolder.getAdapterPosition();
-//        int toPosition = target.getAdapterPosition();
-//
-//        if (fromPosition < toPosition)
-//            for (int i = fromPosition; i < toPosition; i++)
-//                Collections.swap(adapter.getCinemasList(), i, i + 1);
-//        else
-//            for (int i = fromPosition; i > toPosition; i--)
-//                Collections.swap(adapter.getCinemasList(), i, i - 1);
-//
-//        adapter.notifyItemMoved(fromPosition, toPosition);
-//
+    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
         return false;
     }
 

@@ -4,25 +4,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="@dimen/drc_main_padding">
+    android:padding="@dimen/dialog_padding">
 
     <EditText
         android:id="@+id/etRenameCategory"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dnc_et_ncn_margin_start"
         android:textSize="@dimen/dnc_et_ncn_text_size"
         android:maxLength="25"
-        android:maxLines="1" />
+        android:maxLines="1"
+        android:singleLine="true"
+        android:lines="1"
+        android:inputType="text"
+        tools:hint="@string/dialog_category_name" />
 
     <Button
         android:id="@+id/btnSaveRename"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginStart="@dimen/drc_btn_margin_start"
-        android:text="@string/drc_btn"
-        android:textColor="@color/colorPrimary"
-        android:background="@color/viewBackground"
-        app:layout_constraintStart_toEndOf="@id/etRenameCategory" />
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_save_button"
+        android:textColor="@color/dialogs_buttons"
+        android:background="@android:color/transparent"
+        app:layout_constraintStart_toEndOf="@id/etRenameCategory"
+        app:layout_constraintTop_toTopOf="@id/etRenameCategory"
+        app:layout_constraintBottom_toBottomOf="@id/etRenameCategory" />
 
 </android.support.constraint.ConstraintLayout>

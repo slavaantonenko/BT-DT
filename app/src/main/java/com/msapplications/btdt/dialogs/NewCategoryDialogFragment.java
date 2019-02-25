@@ -1,13 +1,14 @@
 package com.msapplications.btdt.dialogs;
 
 import android.app.AlertDialog;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -16,16 +17,19 @@ import android.widget.TextView;
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.CreateCategoryDialog;
 import com.msapplications.btdt.R;
-import com.msapplications.btdt.lists.CategoryList;
+import com.msapplications.btdt.Utils;
 import com.msapplications.btdt.objects.Category;
 import com.msapplications.btdt.objects.CategoryType;
 import com.msapplications.btdt.objects.itemTypes.NoteItem;
+import com.msapplications.btdt.room_storage.category.CategoryViewModel;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class NewCategoryDialogFragment extends DialogFragment
 {
+    private CategoryViewModel categoryViewModel;
+
     public NewCategoryDialogFragment()
     {
         // Required empty public constructor
@@ -35,11 +39,10 @@ public class NewCategoryDialogFragment extends DialogFragment
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+//     * @param categoryCode category code.
      * @return A new instance of fragment CheckListFragment.
      */
-    public static NewCategoryDialogFragment newInstance(String param1, String param2)
+    public static NewCategoryDialogFragment newInstance()
     {
         NewCategoryDialogFragment fragment = new NewCategoryDialogFragment();
         Bundle args = new Bundle();
@@ -48,8 +51,7 @@ public class NewCategoryDialogFragment extends DialogFragment
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
@@ -64,37 +66,63 @@ public class NewCategoryDialogFragment extends DialogFragment
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
+        categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel.class);
         initializeDialog(view);
     }
 
     private void initializeDialog(final View view)
     {
-        Button btnSaveCategory = view.findViewById(R.id.btnSaveCategory);
+        final EditText etNewCategoryName = view.findViewById(R.id.etNewCategoryName);
+        final Spinner spCategoryType = view.findViewById(R.id.spCategoryType);
+        final Button btnSaveCategory = view.findViewById(R.id.btnSaveCategory);
+
+        spCategoryType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                String selectedItem = spCategoryType.getSelectedItem().toString();
+                switch (selectedItem)
+                {
+                    case (CommonValues.CINEMA_SEATS):
+                        etNewCategoryName.setText(CommonValues.CINEMA_SEATS);
+                        break;
+                    case (CommonValues.TRAVEL):
+                        etNewCategoryName.setText(CommonValues.TRAVEL);
+                        break;
+                    default:
+                        etNewCategoryName.setText("");
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
 
         btnSaveCategory.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                EditText etNewCategoryName = view.findViewById(R.id.etNewCategoryName);
                 String newName = etNewCategoryName.getText().toString();
 
-                if (newName.equals("")) {
-                    etNewCategoryName.setError("Name can't be empty");
+                if (newName.isEmpty()) {
+                    etNewCategoryName.setError(getString(R.string.name_empty_error));
                     return;
                 }
 
-                if (CategoryList.categoryNameExists(newName)) {
-                    etNewCategoryName.setError("Category name already exists");
+                if (categoryViewModel.categoryNameExists(newName) > 0) {
+                    etNewCategoryName.setError(getString(R.string.category_exist_error));
                     return;
                 }
 
-                CategoryType type = getSelectedType(((Spinner)view.findViewById(R.id.choose_category_type)).getSelectedItem().toString());
+                String typeName = ((Spinner)view.findViewById(R.id.spCategoryType)).getSelectedItem().toString();
+                CategoryType type = getSelectedType(typeName);
 
                 if (type.equals(CategoryType.CINEMA_SEATS))
                 {
-                    if (CategoryList.categoryTypeExists(type)) {
-                        showAlertDialog(CommonValues.CINEMA_SEATS, getString(R.string.cinema_seats_exist));
+                    if (categoryViewModel.categoryTypeExists(type.getCode()) > 0) {
+                        showAlertDialog(CommonValues.CINEMA_SEATS, getString(R.string.cinema_seats_exist_error));
                         dismiss();
                         return;
                     }
@@ -102,16 +130,7 @@ public class NewCategoryDialogFragment extends DialogFragment
                     showAlertDialog(CommonValues.CINEMA_SEATS, getString(R.string.cinema_seats_warning));
                 }
 
-                //TODO remove this when images will be implemented.
-                // new Random().nextInt((max - min) + 1) + min;
-                int[] categoryBackground = getResources().getIntArray(R.array.categories_background);
-                Random random = new Random();
-                int randomNum = random.nextInt(10);
-
-                Category newCategory = new Category(newName, new ArrayList<NoteItem>(), type, categoryBackground[randomNum]); //TODO image
-                CategoryList.addCategory(getActivity(), newCategory);
-
-//                adapter.notifyDataSetChanged();
+                Utils.newCategory(getActivity(),getContext(), newName, type);
                 dismiss();
             }
         });

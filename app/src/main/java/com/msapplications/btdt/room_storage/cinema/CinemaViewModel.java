@@ -5,10 +5,11 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 
 import com.msapplications.btdt.objects.itemTypes.cinema.Cinema;
+import com.msapplications.btdt.room_storage.ViewModelDeletable;
 
 import java.util.List;
 
-public class CinemaViewModel extends AndroidViewModel
+public class CinemaViewModel extends AndroidViewModel implements ViewModelDeletable
 {
     private CinemaRepository repository;
 
@@ -23,7 +24,15 @@ public class CinemaViewModel extends AndroidViewModel
 
     public LiveData<List<Cinema>> getCinemas() { return cinemas; }
 
+    public Cinema getCinema(int id) { return repository.getCinema(id); }
+
+    public int cinemaExists(String name, String city) { return repository.cinemaExists(name, city); }
+
     public void insert(Cinema cinema) { repository.insert(cinema); }
 
     public void delete(Cinema cinema) { repository.delete(cinema); }
+
+    public void deleteAll() { repository.deleteAll(); }
+
+    public void deleteCategory(int id) { repository.deleteAll(); }
 }

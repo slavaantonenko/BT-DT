@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/am_fab_margin_end"
         android:layout_marginBottom="@dimen/am_fab_margin_bottom"
+        android:scaleType="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_add" />

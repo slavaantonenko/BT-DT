@@ -1,206 +1,156 @@
 package com.msapplications.btdt.adapters;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.support.constraint.ConstraintLayout;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.msapplications.btdt.Utils;
-import com.msapplications.btdt.lists.CategoryList;
-import com.msapplications.btdt.CommonValues;
-import com.msapplications.btdt.CreateCategoryDialog;
+import com.msapplications.btdt.interfaces.OnCategoryClickListener;
+import com.msapplications.btdt.interfaces.OnCategoryMenuClickListener;
+import com.msapplications.btdt.interfaces.OnMenuItemClickListener;
 import com.msapplications.btdt.R;
 import com.msapplications.btdt.objects.Category;
-import com.msapplications.btdt.activities.*;
+import com.msapplications.btdt.objects.CategoryType;
 
 import java.util.List;
 import java.util.Random;
 
-public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.MyViewHolder>
+public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.ViewHolder>
 {
-    private Context mContext;
-    private List<Category> categoryList;
+    private Context context;
+    private List<Category> categoriesList;
+    private OnCategoryClickListener categoryClickListener;
+    private OnCategoryMenuClickListener categoryMenuClickListener;
+    private OnMenuItemClickListener menuItemClickListener;
+    private int adapterPosition = -1;
 
-    public CategoriesAdapter(Context mContext)
+    public CategoriesAdapter(Context context)
     {
-        this.mContext = mContext;
-        this.categoryList = CategoryList.getCategories(mContext);
+        this.context = context;
+        categoryClickListener = (OnCategoryClickListener) context;
+        categoryMenuClickListener = (OnCategoryMenuClickListener) context;
+        menuItemClickListener = (OnMenuItemClickListener) context;
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder
+    public class ViewHolder extends RecyclerView.ViewHolder implements PopupMenu.OnMenuItemClickListener,
+            View.OnClickListener
     {
         public TextView title;
-        public ImageView thumbnail, overflow;
+        public ImageView overflow;
         public CardView cardView;
 
-        public MyViewHolder(View view)
+        public ViewHolder(View view)
         {
             super(view);
-            title = view.findViewById(R.id.tv_category_title);
-            thumbnail = view.findViewById(R.id.thumbnail);
+            title = view.findViewById(R.id.tvCategoryTitle);
             overflow = view.findViewById(R.id.overflow);
             cardView = view.findViewById(R.id.cvCategory);
+            cardView.setOnClickListener(this);
+            overflow.setOnClickListener(this);
+
+            Random random = new Random();
+            int height = random.nextInt(101) + 150; // new Random().nextInt((max - min) + 1) + min;
+            StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) cardView.getLayoutParams();
+            layoutParams.height = Utils.dpToPx(context.getResources(), height);
+            cardView.setLayoutParams(layoutParams);
         }
-    }
 
-    @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-    {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.category_card, parent, false);
-
-//        int height = parent.getMeasuredHeight() / 4;
-//        Random random = new Random();
-//        int height = random.nextInt(101) + 100;
-//        itemView.setMinimumHeight(height);
-
-        // new Random().nextInt((max - min) + 1) + min;
-        Random random = new Random();
-        int height = random.nextInt(101) + 100;
-        ViewGroup.LayoutParams layoutParams = itemView.getLayoutParams();
-        layoutParams.height = Utils.dpToPx(parent.getResources(), height);
-        itemView.setLayoutParams(layoutParams);
-
-        return new MyViewHolder(itemView);
-    }
-
-    @Override
-    public void onBindViewHolder(final MyViewHolder holder, final int position)
-    {
-        Category category = categoryList.get(position);
-        holder.title.setText(category.getName());
-
-        // loading album cover using Glide library
-//        Glide.with(mContext).load(category.getPreviewPic()).into(holder.thumbnail);
-
-        holder.cardView.setCardBackgroundColor(category.getPreviewPic());
-
-        holder.overflow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showPopupMenu(holder.overflow);
-            }
-        });
-
-        // TODO Create an interface for this and move to MainActivity. And think about better way to get category name.
-        holder.cardView.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                TextView name = view.findViewById(R.id.tv_category_title);
-
-                if (name.getText().equals(CommonValues.TRAVEL))
-                    mContext.startActivity(new Intent(mContext, TravelActivity.class));
-                else
-                {
-                    Intent intent = new Intent(mContext, ListActivity.class);
-                    intent.putExtra(CommonValues.CATEGORY_INDEX, position);
-                    mContext.startActivity(intent);
-                }
-            }
-        });
-    }
-
-    /**
-     * Showing popup menu when tapping on 3 dots
-     */
-    private void showPopupMenu(View view)
-    {
-        // inflate menu
-        PopupMenu popup = new PopupMenu(mContext, view);
-        MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.category_menu, popup.getMenu());
-        popup.setOnMenuItemClickListener(new MyMenuItemClickListener(view));
-        popup.show();
-    }
-
-    /**
-     * Click listener for popup menu items
-     */
-    class MyMenuItemClickListener implements PopupMenu.OnMenuItemClickListener
-    {
-        View view;
-        public MyMenuItemClickListener(View view)
-        {
-            this.view = view;
+        public void onBindViewHolder(Category category) {
+            title.setText(category.getName());
+            cardView.setCardBackgroundColor(category.getBackgroundColor());
         }
 
         @Override
-        public boolean onMenuItemClick(MenuItem menuItem)
+        public void onClick(View view)
         {
-            final String categoryName = ((TextView) ((ConstraintLayout)view.getParent()).findViewById(R.id.tv_category_title)).getText().toString();
+            if (getItem(getAdapterPosition()).getType().equals(CategoryType.TRAVEL)) //TODO remove when Travel will be finished
+                return;
 
-            switch (menuItem.getItemId())
+            switch (view.getId())
             {
-                case R.id.action_rename:
-                    LayoutInflater inflater = LayoutInflater.from(mContext);
-                    final View dialogView = inflater.inflate(R.layout.dialog_rename_category, null);
-                    EditText oldName = dialogView.findViewById(R.id.etRenameCategory);
-                    oldName.setHint(categoryName);
-                    oldName.requestFocus();
+                case (R.id.cvCategory):
+                    if (categoryClickListener == null)
+                        return;
 
-                    final CreateCategoryDialog createCategoryDialog = new CreateCategoryDialog (
-                            new AlertDialog.Builder(mContext).setCancelable(true), dialogView);
+                    adapterPosition = getAdapterPosition();
+                    categoryClickListener.onCategoryClick(view);
+                    break;
+                case (R.id.overflow):
+                    if (categoryMenuClickListener == null)
+                        return;
 
-                    (dialogView.findViewById(R.id.btnSaveRename)).setOnClickListener(new View.OnClickListener()
-                    {
-                        @Override
-                        public void onClick(View v)
-                        {
-                            String newName = ((EditText) dialogView.findViewById(R.id.etRenameCategory)).getText().toString();
-                            if (newName.equals("")) {
-                                ((EditText) dialogView.findViewById(R.id.etRenameCategory)).setError("Name can't be empty");
-                                return;
-                            }
-
-                            if (CategoryList.categoryNameExists(newName)) {
-                                ((EditText) dialogView.findViewById(R.id.etNewCategoryName)).setError("Category name already exists");
-                                return;
-                            }
-
-//                            String categoryName = ((TextView) ((ConstraintLayout)view.getParent()).findViewById(R.id.tv_category_title)).getText().toString();
-                            CategoryList.renameCategory(mContext, categoryName, newName);
-
-                            createCategoryDialog.dismiss();
-                            notifyDataSetChanged();
-
-                            Toast.makeText(mContext, mContext.getString(R.string.category_renamed), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-                    return true;
-
-                case R.id.action_delete:
-//                    String categoryName = ((TextView) ((ConstraintLayout)view.getParent()).findViewById(R.id.tv_category_title)).getText().toString();
-                    CategoryList.deleteCategory(mContext, categoryName);
-                    //refresh adapter
-                    notifyDataSetChanged();
-
-                    Toast.makeText(mContext, mContext.getString(R.string.category_deleted), Toast.LENGTH_SHORT).show();
-                    return true;
-                default:
+                    categoryMenuClickListener.onCategoryMenuClick(view, getAdapterPosition());
+                    break;
             }
+        }
 
+        @Override
+        public boolean onMenuItemClick(MenuItem menuItem) {
+            if (getItem(getAdapterPosition()).getType().equals(CategoryType.TRAVEL)) //TODO remove when Travel will be finished
+                return false;
+
+            if (menuItem.getItemId() == R.id.action_rename)
+                adapterPosition = getAdapterPosition();
+
+            menuItemClickListener.onMenuItemClick(menuItem, getAdapterPosition());
             return false;
         }
     }
 
+    @NonNull
     @Override
-    public int getItemCount() {
-        return categoryList.size();
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.category_card, parent, false);
+        return new ViewHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        holder.onBindViewHolder(categoriesList.get(position));
+    }
+
+    @Override
+    public int getItemCount()
+    {
+        if (categoriesList == null)
+            return 0;
+
+        return categoriesList.size();
+    }
+
+    public Category getItem(int position) {
+        return categoriesList.get(position);
+    }
+
+    public void setCategories(List<Category> categories) {
+        categoriesList = categories;
+        notifyDataSetChanged();
+    }
+
+
+    public void setCategory(Category category)
+    {
+        categoriesList.set(adapterPosition, category);
+        notifyItemChanged(adapterPosition);
+        adapterPosition = -1;
+    }
+
+    public int getAdapterPosition() {
+        return adapterPosition;
+    }
+
+    public void resetPosition() {
+        adapterPosition = -1;
     }
 }

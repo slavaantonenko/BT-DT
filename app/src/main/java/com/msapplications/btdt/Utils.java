@@ -1,6 +1,7 @@
 package com.msapplications.btdt;
 
 import android.app.Activity;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -8,7 +9,12 @@ import android.graphics.Rect;
 import android.support.annotation.DimenRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +25,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.msapplications.btdt.dialogs.RenameCategoryDialogFragment;
+import com.msapplications.btdt.objects.Category;
+import com.msapplications.btdt.objects.CategoryType;
+import com.msapplications.btdt.objects.itemTypes.NoteItem;
+import com.msapplications.btdt.room_storage.ViewModelDeletable;
+import com.msapplications.btdt.room_storage.category.CategoryViewModel;
+import com.msapplications.btdt.room_storage.cinema.CinemaHallsViewModel;
+import com.msapplications.btdt.room_storage.cinema.CinemaViewModel;
+import com.msapplications.btdt.room_storage.note.NoteItemViewModel;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -28,6 +44,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Utils
 {
@@ -188,12 +205,82 @@ public class Utils
         return json;
     }
 
+    public static void newCategory(FragmentActivity activity, Context context, String newName, CategoryType type)
+    {
+        int[] categoryBackground = context.getResources().getIntArray(R.array.categories_background);
+        Random random = new Random();
+        int randomNum = random.nextInt(categoryBackground.length);
+
+        Category newCategory = new Category(0, newName, type, categoryBackground[randomNum]);
+        CategoryViewModel categoryViewModel = ViewModelProviders.of(activity).get(CategoryViewModel.class);
+        categoryViewModel.insert(newCategory);
+        int categoryID = categoryViewModel.getIdByName(newCategory.getName());
+
+        NoteItemViewModel noteItemViewModel = ViewModelProviders.of(activity).get(NoteItemViewModel.class);
+        NoteItem newEmptyItem = new NoteItem(0, categoryID, 0);
+        noteItemViewModel.insert(newEmptyItem);
+    }
+
+    public static void renameCategory(FragmentManager fragmentManager, Category category)
+    {
+        FragmentTransaction ft = fragmentManager.beginTransaction().addToBackStack(null);
+        RenameCategoryDialogFragment dialogFragment = new RenameCategoryDialogFragment().newInstance(category);
+        dialogFragment.show(ft, CommonValues.RENAME_CATEGORY_DIALOG_FRAGMENT_TAG);
+    }
+
+    public static void deleteCategory(ViewModelDeletable viewModelDeletable, int id) {
+        viewModelDeletable.deleteCategory(id);
+    }
+
     public static int calculateNoOfColumns(Context context)
     {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
         int noOfColumns = (int) (dpWidth / 100);
         return noOfColumns;
+    }
+
+    /**
+     * RecyclerView item decoration - give equal margin around grid item
+     */
+    public static class GridSpacingItemDecoration extends RecyclerView.ItemDecoration
+    {
+        private int spanCount;
+        private int spacing;
+        private boolean includeEdge;
+
+        public GridSpacingItemDecoration(int spanCount, int spacing, boolean includeEdge)
+        {
+            this.spanCount = spanCount;
+            this.spacing = spacing;
+            this.includeEdge = includeEdge;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state)
+        {
+            int position = parent.getChildAdapterPosition(view); // item position
+            int column = position % spanCount; // item column
+
+            if (includeEdge)
+            {
+                outRect.left = spacing - column * spacing / spanCount; // spacing - column * ((1f / spanCount) * spacing)
+                outRect.right = (column + 1) * spacing / spanCount; // (column + 1) * ((1f / spanCount) * spacing)
+
+                if (position < spanCount) // top edge
+                    outRect.top = spacing;
+
+                outRect.bottom = spacing; // item bottom
+            }
+            else
+            {
+                outRect.left = column * spacing / spanCount; // column * ((1f / spanCount) * spacing)
+                outRect.right = spacing - (column + 1) * spacing / spanCount; // spacing - (column + 1) * ((1f /    spanCount) * spacing)
+
+                if (position >= spanCount)
+                    outRect.top = spacing; // item top
+            }
+        }
     }
 
     public static class SpacesItemDecoration extends RecyclerView.ItemDecoration

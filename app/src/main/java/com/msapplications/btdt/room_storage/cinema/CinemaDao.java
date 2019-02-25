@@ -16,6 +16,12 @@ public interface CinemaDao
     @Query("SELECT * from cinemas_table")
     LiveData<List<Cinema>> getCinemas();
 
+    @Query("SELECT * FROM cinemas_table WHERE id=:id")
+    Cinema getCinema(int id);
+
+    @Query("SELECT COUNT(id) FROM cinemas_table WHERE cinema_name=:name AND cinema_city=:city")
+    int cinemaExists(String name, String city);
+
     @Insert
     void insert(Cinema cinema);
 
@@ -24,4 +30,7 @@ public interface CinemaDao
 
     @Query("DELETE FROM cinemas_table")
     void deleteAll();
+
+    @Query("DELETE FROM cinema_halls_table")
+    void deleteAllHalls();
 }

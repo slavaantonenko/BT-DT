@@ -1,0 +1,97 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <!-- Main Activity -->
+    <dimen name="am_fab_margin_end">16dp</dimen>
+    <dimen name="am_fab_margin_bottom">16dp</dimen>
+
+    <!-- Fragment Notes -->
+    <dimen name="fn_rv_margin_sides">7dp</dimen>
+    <dimen name="fn_rv_margin_top">5dp</dimen>
+    <dimen name="fn_include_height">60dp</dimen>
+
+    <!-- Category Card View -->
+    <dimen name="cc_cv_margin">5dp</dimen>
+    <dimen name="cc_cv_category_radius">5dp</dimen>
+    <dimen name="cc_category_cover_height">160dp</dimen>
+    <dimen name="cc_category_title_padding">12dp</dimen>
+    <dimen name="cc_category_title">20sp</dimen>
+    <dimen name="cc_category_items_count_padding_bottom">5dp</dimen>
+    <dimen name="cc_category_items_count">12sp</dimen>
+    <dimen name="cc_ic_category_overflow_width">30dp</dimen>
+    <dimen name="cc_ic_category_overflow_height">30dp</dimen>
+    <dimen name="cc_ic_category_overflow_margin_top">10dp</dimen>
+    <dimen name="cc_cv_elevation">3dp</dimen>
+    <dimen name="cc_overflow_margin_top">5dp</dimen>
+
+    <!-- Dialogs General-->
+    <dimen name="dialog_padding">20dp</dimen>
+    <dimen name="dialog_title_size">20sp</dimen>
+    <dimen name="dialog_message_size">17sp</dimen>
+    <dimen name="dad_margin_top">10dp</dimen>
+
+    <!-- Dialog New Category-->
+    <dimen name="dnc_width">250dp</dimen>
+    <dimen name="dnc_spinner_height">50dp</dimen>
+    <dimen name="dnc_tv_nc_title_margin_start">15dp</dimen>
+    <dimen name="dnc_tv_nct_text_size">30sp</dimen>
+    <dimen name="dnc_tv_margin_top">20dp</dimen>
+    <dimen name="dnc_tv_margin_start">15dp</dimen>
+    <dimen name="dnc_tv_nc_text_size">20sp</dimen>
+    <dimen name="dnc_et_ncn_margin_start">20dp</dimen>
+    <dimen name="dnc_et_ncn_text_size">20sp</dimen>
+    <dimen name="dnc_btn_margin_top">15dp</dimen>
+    <dimen name="dnc_space_margin_top">20dp</dimen>
+    <dimen name="cc_ic_category_overflow_margin_end">2dp</dimen>
+
+    <!-- Dialog Rename Category-->
+    <dimen name="drc_et_width">250dp</dimen>
+    <dimen name="drc_btn_margin_start">10dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+
+    <!-- Dialog Add Cinema-->
+    <dimen name="dac_tv_margin_start">15dp</dimen>
+    <dimen name="dac_tv_text_size">20sp</dimen>
+    <dimen name="dac_spinner_width">250dp</dimen>
+    <dimen name="dac_main_margin_top">20dp</dimen>
+    <dimen name="dac_sp_margin_top">10dp</dimen>
+    <dimen name="dac_btn_text_size">15sp</dimen>
+
+    <!-- Dialog Add Cinema Hall -->
+    <dimen name="dch_et_width">200dp</dimen>
+    <dimen name="dch_ethn_margin_top">20dp</dimen>
+    <dimen name="dch_ib_margin_top">20dp</dimen>
+
+    <!-- Cinema -->
+    <dimen name="ic_margin_top">5dp</dimen>
+    <dimen name="ic_icons_size">30dp</dimen>
+    <dimen name="ic_padding">10dp</dimen>
+    <dimen name="ic_hidden_views_text_size">13sp</dimen>
+    <dimen name="ic_logo_width">120dp</dimen>
+    <dimen name="ic_logo_height">80dp</dimen>
+    <dimen name="ic_logo_padding">10dp</dimen>
+    <dimen name="ic_tvcn_text_size">20sp</dimen>
+    <dimen name="ic_tvcc_text_size">16sp</dimen>
+    <dimen name="ic_guideline_begin">40dp</dimen>
+
+    <!-- Cinema Hall -->
+    <dimen name="ich_text_size">15sp</dimen>
+    <dimen name="ich_iv_status_size">20dp</dimen>
+    <dimen name="ich_padding_sides">50dp</dimen>
+
+    <dimen name="activity_padding_horizontal">16dp</dimen>
+    <dimen name="thumbnail">90dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
+
+
+    <dimen name="spacing">20dp</dimen>
+    <dimen name="ich_padding">10dp</dimen>
+
+
+    <dimen name="card_staggered_height">240dp</dimen>
+    <dimen name="tet_height">30dp</dimen>
+    <dimen name="tet_margin_sides">80dp</dimen>
+</resources>

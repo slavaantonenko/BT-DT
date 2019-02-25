@@ -1,6 +1,7 @@
 package com.msapplications.btdt.dialogs;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,11 +16,12 @@ import android.widget.TextView;
 
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.R;
-import com.msapplications.btdt.objects.itemTypes.cinema.Cinema;
 import com.msapplications.btdt.objects.itemTypes.cinema.CinemaHall;
 import com.msapplications.btdt.room_storage.cinema.CinemaHallsViewModel;
 
-public class AddHallDialogFragment extends DialogFragment
+import static android.app.Activity.RESULT_OK;
+
+public class AddEditHallDialogFragment extends DialogFragment
 {
     private CinemaHallsViewModel cinemaHallsViewModel = null;
     private TextView tvAddHallTitle;
@@ -31,7 +33,7 @@ public class AddHallDialogFragment extends DialogFragment
     private String[] cinemaInfo = null;
     private boolean edit = false;
 
-    public AddHallDialogFragment() {
+    public AddEditHallDialogFragment() {
         // Required empty public constructor
     }
 
@@ -42,10 +44,10 @@ public class AddHallDialogFragment extends DialogFragment
      * @param cinemaInfo index 0 contains the name and index 1 contains the city.
      * @return A new instance of fragment CheckListFragment.
      */
-//    public static AddHallDialogFragment newInstance(String[] cinemaInfo, boolean edit, int id)
-    public static AddHallDialogFragment newInstance(String[] cinemaInfo, CinemaHall cinemaHall, boolean edit)
+//    public static AddEditHallDialogFragment newInstance(String[] cinemaInfo, boolean edit, int id)
+    public static AddEditHallDialogFragment newInstance(String[] cinemaInfo, CinemaHall cinemaHall, boolean edit)
     {
-        AddHallDialogFragment fragment = new AddHallDialogFragment();
+        AddEditHallDialogFragment fragment = new AddEditHallDialogFragment();
         Bundle args = new Bundle();
         args.putStringArray(CommonValues.CINEMA_INFO_BUNDLE, cinemaInfo);
         args.putBoolean(CommonValues.CINEMA_HALL_ACTION_BUNDLE, edit);
@@ -137,13 +139,13 @@ public class AddHallDialogFragment extends DialogFragment
     {
         boolean valid = true;
 
-        if (etHallNumber.getText().toString().equals("")) {
-            etHallNumber.setError("Hall can't be empty");
+        if (etHallNumber.getText().toString().isEmpty()) {
+            etHallNumber.setError(getString(R.string.cinema_hall_empty_error));
             valid = false;
         }
 
         if (etRowNumber.getText().toString().equals("")) {
-            etRowNumber.setError("Row can't be empty");
+            etRowNumber.setError(getString(R.string.cinema_hall_row_empty_error));
             valid = false;
         }
 
@@ -163,6 +165,7 @@ public class AddHallDialogFragment extends DialogFragment
     private void editHall() {
         cinemaHall.setHall(etHallNumber.getText().toString());
         cinemaHall.setRow(etRowNumber.getText().toString());
+        getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, new Intent());
         cinemaHallsViewModel.edit(cinemaHall);
     }
 

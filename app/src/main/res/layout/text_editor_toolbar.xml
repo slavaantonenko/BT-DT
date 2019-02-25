@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/text_editor"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="20dp"
     android:background="@color/viewBackground"
-    android:layout_marginStart="80dp"
-    android:layout_marginEnd="80dp"
+    android:layout_marginStart="@dimen/tet_margin_sides"
+    android:layout_marginEnd="@dimen/tet_margin_sides"
     app:layout_constraintHorizontal_weight="3">
 
     <ImageButton
@@ -16,10 +16,9 @@
         android:background="@android:color/transparent"
         android:fitsSystemWindows="true"
         android:foregroundGravity="bottom"
-        android:src="@drawable/ic_bold_format"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/italic"
-        />
+        app:srcCompat="@drawable/ic_bold_format" />
 
     <ImageButton
         android:id="@+id/italic"
@@ -28,10 +27,9 @@
         android:background="@android:color/transparent"
         android:fitsSystemWindows="true"
         android:foregroundGravity="bottom"
-        android:src="@drawable/ic_italic_format"
         app:layout_constraintStart_toEndOf="@id/bold"
         app:layout_constraintEnd_toStartOf="@id/checkbox_btn"
-        />
+        app:srcCompat="@drawable/ic_italic_format" />
 
     <ImageButton
         android:id="@+id/checkbox_btn"
@@ -40,9 +38,8 @@
         android:background="@android:color/transparent"
         android:fitsSystemWindows="true"
         android:foregroundGravity="bottom"
-        android:src="@drawable/ic_check_circle_24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/italic"
-        />
+        app:srcCompat="@drawable/ic_check_circle_24dp" />
 
 </android.support.constraint.ConstraintLayout>

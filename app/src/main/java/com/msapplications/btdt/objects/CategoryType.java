@@ -1,8 +1,29 @@
 package com.msapplications.btdt.objects;
 
-import java.io.Serializable;
-
-public enum CategoryType implements Serializable
+public enum CategoryType
 {
-      NOTES, COLLECTION, CINEMA_SEATS, TRAVEL
+    NOTES(0),
+    COLLECTION(1),
+    CINEMA_SEATS(2),
+    TRAVEL(3);
+
+    private int code;
+
+    CategoryType(int code) {
+        this.code = code;
+    }
+
+    public static CategoryType getType(int code)
+    {
+        for (CategoryType type : values())
+            if (type.code == code)
+                return type;
+
+        return null;
+    }
+
+    public int getCode() {
+        return code;
+    }
 }
+

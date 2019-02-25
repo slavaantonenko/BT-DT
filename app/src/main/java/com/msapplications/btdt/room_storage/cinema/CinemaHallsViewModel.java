@@ -6,6 +6,7 @@ import android.arch.lifecycle.LiveData;
 
 import com.msapplications.btdt.objects.itemTypes.cinema.Cinema;
 import com.msapplications.btdt.objects.itemTypes.cinema.CinemaHall;
+import com.msapplications.btdt.room_storage.ViewModelDeletable;
 
 import java.util.List;
 
@@ -23,6 +24,10 @@ public class CinemaHallsViewModel extends AndroidViewModel
         return repository.getCinemaHalls(cinemaName, cinemaCity);
     }
 
+    public CinemaHall getCinemaHall(int id) {
+        return repository.getCinemaHall(id);
+    }
+
     public void edit(CinemaHall cinemaHall) { repository.edit(cinemaHall); }
 
     public void insert(CinemaHall cinemaHall) { repository.insert(cinemaHall); }
@@ -32,4 +37,5 @@ public class CinemaHallsViewModel extends AndroidViewModel
     public void deleteCinemaHalls(Cinema cinema) { repository.deleteCinemaHalls(cinema); }
 
     public void deleteAll() { repository.deleteAll(); }
+
 }

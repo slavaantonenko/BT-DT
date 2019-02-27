@@ -1,6 +1,7 @@
 package com.msapplications.btdt.dialogs;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -68,6 +69,18 @@ public class NewCategoryDialogFragment extends DialogFragment
         super.onViewCreated(view, savedInstanceState);
         categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel.class);
         initializeDialog(view);
+    }
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        Dialog dialog = getDialog();
+        if (dialog != null) {
+            int width = ViewGroup.LayoutParams.MATCH_PARENT;
+            int height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            dialog.getWindow().setLayout(width, height);
+        }
     }
 
     private void initializeDialog(final View view)

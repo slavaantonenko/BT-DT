@@ -96,8 +96,8 @@
     </string-array>
 
     <!-- Dialog Add/Edit Hall -->
-    <string name="dach_title_add">Add Hall</string>
-    <string name="dach_title_edit">Edit Hall</string>
+    <string name="dch_title_add">Add Hall</string>
+    <string name="dch_title_edit">Edit Hall</string>
     <string name="ic_hall">Hall:&#160;</string>
     <string name="ic_row">Row:&#160;</string>
     <string name="cinema_hall_empty_error">Hall can not be empty</string>

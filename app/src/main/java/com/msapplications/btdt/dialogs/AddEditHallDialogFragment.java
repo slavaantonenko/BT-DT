@@ -93,7 +93,7 @@ public class AddEditHallDialogFragment extends DialogFragment
 
         if (edit)
         {
-            tvAddHallTitle.setText(getString(R.string.dach_title_edit));
+            tvAddHallTitle.setText(getString(R.string.dch_title_edit));
             etHallNumber.setText(cinemaHall.getHall());
             etRowNumber.setText(cinemaHall.getRow());
             ibIcon1.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_edit));

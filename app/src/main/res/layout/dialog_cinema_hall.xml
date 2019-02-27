@@ -10,7 +10,7 @@
         android:id="@+id/tvAddHallTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/dach_title_add"
+        android:text="@string/dch_title_add"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/dialog_title_size" />
 
@@ -19,8 +19,9 @@
         android:layout_width="@dimen/dch_et_width"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dch_ethn_margin_top"
-        android:digits="0123456789, "
-        android:inputType="number"
+        android:digits="0123456789- "
+        android:inputType="textNoSuggestions"
+        android:maxLength="3"
         android:maxLines="1"
         android:hint="@string/dch_ethn_hint"
         app:layout_constraintTop_toBottomOf="@id/tvAddHallTitle" />
@@ -29,9 +30,10 @@
         android:id="@+id/etRowNumber"
         android:layout_width="@dimen/dch_et_width"
         android:layout_height="wrap_content"
-        android:digits="0123456789, "
-        android:inputType="number"
+        android:digits="0123456789- "
+        android:inputType="textNoSuggestions"
         android:maxLines="1"
+        android:maxLength="10"
         android:hint="@string/dch_etrn_hint"
         app:layout_constraintTop_toBottomOf="@id/etHallNumber" />
 

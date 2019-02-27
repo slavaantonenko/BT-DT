@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/dialog_padding">
 
@@ -17,7 +17,7 @@
 
     <EditText
         android:id="@+id/etNewCategoryName"
-        android:layout_width="@dimen/dnc_width"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dnc_tv_margin_top"
         android:textSize="@dimen/dnc_et_ncn_text_size"
@@ -27,15 +27,18 @@
         android:lines="1"
         android:inputType="text"
         android:hint="@string/dialog_category_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvNewCategoryTitle" />
 
     <Spinner
         android:id="@+id/spCategoryType"
-        android:layout_width="@dimen/dnc_width"
+        android:layout_width="0dp"
         android:layout_height="@dimen/dnc_spinner_height"
         android:entries="@array/category_types"
         android:prompt="@string/category_type_prompt"
-        app:layout_constraintStart_toStartOf="@id/etNewCategoryName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etNewCategoryName" />
 
     <Button
@@ -46,7 +49,7 @@
         android:textColor="@color/dialogs_buttons"
         android:background="@android:color/transparent"
         android:layout_marginTop="@dimen/dnc_btn_margin_top"
-        app:layout_constraintRight_toRightOf="@id/etNewCategoryName"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/spCategoryType" />
 
 </android.support.constraint.ConstraintLayout>

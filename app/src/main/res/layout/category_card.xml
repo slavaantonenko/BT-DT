@@ -4,33 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cvCategory"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="@dimen/cc_height"
     android:layout_margin="@dimen/cc_cv_margin"
     android:elevation="@dimen/cc_cv_elevation"
     android:clickable="true"
     android:focusable="true"
-    card_view:cardBackgroundColor="@color/colorPrimary">
+    card_view:cardBackgroundColor="@color/colorPrimary"
+    card_view:cardCornerRadius="@dimen/card_corner_radius">
 
     <android.support.constraint.ConstraintLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/tvTravelComingSoon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="serif"
-            android:textColor="#33ffffff"
-            android:text="Travel"
-            android:textSize="80sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
 
         <TextView
             android:id="@+id/tvCategoryTitle"

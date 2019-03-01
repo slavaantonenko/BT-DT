@@ -5,12 +5,12 @@
     android:id="@+id/cvCategory"
     android:layout_width="match_parent"
     android:layout_height="@dimen/cc_height"
-    android:layout_margin="@dimen/cc_cv_margin"
-    android:elevation="@dimen/cc_cv_elevation"
+    android:layout_margin="@dimen/category_card_margin"
+    android:elevation="@dimen/category_card_elevation"
     android:clickable="true"
     android:focusable="true"
     card_view:cardBackgroundColor="@color/colorPrimary"
-    card_view:cardCornerRadius="@dimen/card_corner_radius">
+    card_view:cardCornerRadius="@dimen/category_card_corner_radius">
 
     <android.support.constraint.ConstraintLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="serif"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/cc_category_title"
+            android:textSize="@dimen/category_card_title_size"
             android:textStyle="bold"
             android:gravity="center"
             tools:text="@string/cc_category_title_sample"

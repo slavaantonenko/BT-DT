@@ -12,12 +12,7 @@ import com.msapplications.btdt.R;
 
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link CollectionFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link CollectionFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * not used for now
  */
 public class CollectionFragment extends AbstractFragmentItems
 {

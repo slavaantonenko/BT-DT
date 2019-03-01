@@ -10,10 +10,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.Utils;
 import com.msapplications.btdt.interfaces.OnCategoryClickListener;
 import com.msapplications.btdt.interfaces.OnCategoryMenuClickListener;
@@ -22,8 +22,13 @@ import com.msapplications.btdt.R;
 import com.msapplications.btdt.objects.Category;
 import com.msapplications.btdt.objects.CategoryType;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
+
+import cn.iwgang.countdownview.CountdownView;
 
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.ViewHolder>
 {
@@ -33,6 +38,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
     private OnCategoryMenuClickListener categoryMenuClickListener;
     private OnMenuItemClickListener menuItemClickListener;
     private int adapterPosition = -1;
+    private int viewPositionAtCreation = -1;
 
     public CategoriesAdapter(Context context)
     {
@@ -45,29 +51,62 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder implements PopupMenu.OnMenuItemClickListener,
             View.OnClickListener
     {
-        public TextView title;
+        public TextView title, tvNewFeatureTitle;
         public ImageView overflow;
         public CardView cardView;
+        public CountdownView mCvCountdownView; //for future features
 
         public ViewHolder(View view)
         {
             super(view);
-            title = view.findViewById(R.id.tvCategoryTitle);
-            overflow = view.findViewById(R.id.overflow);
-            cardView = view.findViewById(R.id.cvCategory);
-            cardView.setOnClickListener(this);
-            overflow.setOnClickListener(this);
+            if (!CategoryType.TRAVEL.equals(getItem(viewPositionAtCreation).getType()))
+            {
+                title = view.findViewById(R.id.tvCategoryTitle);
+                overflow = view.findViewById(R.id.overflow);
+                cardView = view.findViewById(R.id.cvCategory);
+                cardView.setOnClickListener(this);
+                overflow.setOnClickListener(this);
 
-            Random random = new Random();
-            int height = random.nextInt(101) + 150; // new Random().nextInt((max - min) + 1) + min;
-            StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) cardView.getLayoutParams();
-            layoutParams.height = Utils.dpToPx(context.getResources(), height);
-            cardView.setLayoutParams(layoutParams);
+                Random random = new Random();
+
+                //randomize height for a category card
+                int height = random.nextInt((CommonValues.CATEGORY_CARD_SIZE_MAX - CommonValues.CATEGORY_CARD_SIZE_MIN) + 1)
+                        + CommonValues.CATEGORY_CARD_SIZE_MIN; // new Random().nextInt((max - min) + 1) + min;
+
+                StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) cardView.getLayoutParams();
+                layoutParams.height = Utils.dpToPx(context.getResources(), height);
+                cardView.setLayoutParams(layoutParams);
+            }
+            else {
+                tvNewFeatureTitle = view.findViewById(R.id.tvNewFeatureTitle);
+                mCvCountdownView = view.findViewById(R.id.countDownNewFeature);
+            }
         }
 
         public void onBindViewHolder(Category category) {
-            title.setText(category.getName());
-            cardView.setCardBackgroundColor(category.getBackgroundColor());
+            if (!getItem(getAdapterPosition()).getType().equals(CategoryType.TRAVEL)) {
+                title.setText(category.getName());
+                cardView.setCardBackgroundColor(category.getBackgroundColor());
+            }
+            else
+            {   //future feature
+                tvNewFeatureTitle.setText(CommonValues.TRAVEL);
+
+                try
+                {
+                    Date currentDate = Calendar.getInstance().getTime();
+                    String date = "01/04/2019";
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                    Date finalDate = formatter.parse(date);
+                    long diff = finalDate.getTime() - currentDate.getTime();
+                    mCvCountdownView.start(diff);
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            viewPositionAtCreation = -1;
         }
 
         @Override
@@ -110,8 +149,18 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        int layout;
+
+        if (CategoryType.TRAVEL.equals(getItem(viewType).getType()))
+            layout = R.layout.new_feature_countdown_card;
+        else
+            layout = R.layout.category_card;
+
+        viewPositionAtCreation = viewType;
+
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.category_card, parent, false);
+                .inflate(layout, parent, false);
         return new ViewHolder(itemView);
     }
 
@@ -129,6 +178,11 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
         return categoriesList.size();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
     public Category getItem(int position) {
         return categoriesList.get(position);
     }
@@ -138,7 +192,6 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
         notifyDataSetChanged();
     }
 
-
     public void setCategory(Category category)
     {
         categoriesList.set(adapterPosition, category);
@@ -146,7 +199,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
         adapterPosition = -1;
     }
 
-    public int getAdapterPosition() {
+    public int adapterPosition() {
         return adapterPosition;
     }
 

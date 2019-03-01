@@ -10,6 +10,9 @@ import com.msapplications.btdt.objects.itemTypes.ItemInCategory;
 
 import java.util.ArrayList;
 
+/*
+Currently used only for notes.
+ */
 public abstract class AbstractFragmentItems extends Fragment
 {
     int categoryID=-1;

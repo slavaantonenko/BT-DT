@@ -11,6 +11,8 @@
         A category Cinema Seats is already exist. You can not create more than 1 Cinema Seats category.
     </string>
     <string name="cc_category_title_sample">Category Name</string>
+    <string name="nfcc_title_sample">NEW FEATURE NAME</string>
+    <string name="nfcc_coming_soon">\nCOMING SOON</string>
 
     <!-- Cinema -->
     <string name="ic_add_seat">Add Seat</string>
@@ -116,6 +118,10 @@
     <string name="title_activity_maps">Map</string>
     <string name="menu_travel_map_search">Search</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="nfcc_tv_days_unit">DAYS</string>
+    <string name="nfcc_tv_hours_unit">HRS</string>
+    <string name="nfcc_tv_minutes_unit">MINS</string>
+    <string name="nfcc_tv_seconds_unit">SECS</string>
     <!-- Travel -->
 
 </resources>

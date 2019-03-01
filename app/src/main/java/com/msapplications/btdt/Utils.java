@@ -48,6 +48,7 @@ import java.util.Random;
 
 public class Utils
 {
+    // set activity title in the center
     public static void centerTitle(Activity activity)
     {
         ArrayList<View> textViews = new ArrayList<>();
@@ -205,6 +206,7 @@ public class Utils
         return json;
     }
 
+    //add new category to db
     public static void newCategory(FragmentActivity activity, Context context, String newName, CategoryType type)
     {
         int[] categoryBackground = context.getResources().getIntArray(R.array.categories_background);
@@ -327,7 +329,7 @@ public class Utils
         }
     }
 
-    /**
+    /*
      * Converting dp to pixel
      */
     public static int dpToPx(Resources resources, int dp)

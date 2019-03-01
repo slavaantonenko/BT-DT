@@ -1,6 +1,5 @@
 package com.msapplications.btdt.activities;
 
-import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -38,6 +37,9 @@ import com.msapplications.btdt.room_storage.cinema.CinemaViewModel;
 
 import java.util.List;
 
+/*
+Main activity, shows all categories of the user
+ */
 public class MainActivity extends AppCompatActivity implements OnFloatingActionClick, OnCategoryClickListener,
         OnCategoryMenuClickListener, OnMenuItemClickListener, RenameCategoryDialogFragment.OnRenameListener
 {
@@ -60,17 +62,18 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
 
         initRecyclerView();
 
-        categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel.class);
+        categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel.class); //room
+        //observer for categories list
         categoryViewModel.getCategories().observe(this, new Observer<List<Category>>() {
             @Override
             public void onChanged(@Nullable final List<Category> categories)
             {
-                int position = adapter.getAdapterPosition();
+                int position = adapter.adapterPosition();
 
                 if (position > -1)
                     adapter.setCategory(categoryViewModel.getCategory(adapter.getItem(position).getId()));
                 else
-                    // Update the cached copy of the words in the adapter.
+                    // Update the cached copy of the categories in the adapter.
                     adapter.setCategories(categories);
             }
         });
@@ -81,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
         }
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(onFabClick());
+        fab.setOnClickListener(onFabClick()); //add new category button
     }
 
     @Override
@@ -99,6 +102,9 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
         return super.onOptionsItemSelected(item);
     }
 
+    /*
+    create new category
+     */
     public View.OnClickListener onFabClick()
     {
         return new View.OnClickListener()
@@ -124,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
 //            return;
         if (!name.getText().equals(CommonValues.TRAVEL))
         {
+            //open category list
             Intent intent = new Intent(this, ListActivity.class);
             intent.putExtra(CommonValues.CATEGORY_ID_EXTRA, categoryViewModel.getIdByName(name.getText().toString()));
             intent.putExtra(CommonValues.CATEGORY_NAME_EXTRA, name.getText().toString());
@@ -174,6 +181,9 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
         recyclerView.setAdapter(adapter);
     }
 
+    /*
+    use when app is opened for the first time
+     */
     private boolean firstUse()
     {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);

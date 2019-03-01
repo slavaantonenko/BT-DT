@@ -16,6 +16,9 @@ import com.msapplications.btdt.objects.itemTypes.cinema.CinemaHall;
 
 import java.util.List;
 
+/*
+adapter for halls for a specific cinema
+ */
 public class CinemaHallsAdapter extends RecyclerView.Adapter<CinemaHallsAdapter.ViewHolder>
 {
     private Context context;

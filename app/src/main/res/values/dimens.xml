@@ -1,6 +1,5 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="card_corner_radius">2dp</dimen>
 
     <!-- Main Activity -->
     <dimen name="am_fab_margin_end">16dp</dimen>
@@ -9,22 +8,37 @@
     <!-- Fragment Notes -->
     <dimen name="fn_rv_margin_sides">7dp</dimen>
     <dimen name="fn_rv_margin_top">5dp</dimen>
-    <dimen name="fn_include_height">60dp</dimen>
+    <dimen name="fn_rv_padding_bottom">40dp</dimen>
+    <dimen name="fn_include_height">30dp</dimen>
+
+    <!-- Category Card Views -->
+    <dimen name="category_card_corner_radius">2dp</dimen>
+    <dimen name="category_card_elevation">3dp</dimen>
+    <dimen name="category_card_margin">5dp</dimen>
+    <dimen name="category_card_title_size">22sp</dimen>
 
     <!-- Category Card View -->
     <dimen name="cc_height">150dp</dimen>
-    <dimen name="cc_cv_margin">5dp</dimen>
-    <dimen name="cc_cv_category_radius">5dp</dimen>
-    <dimen name="cc_category_cover_height">160dp</dimen>
     <dimen name="cc_category_title_padding">12dp</dimen>
-    <dimen name="cc_category_title">22sp</dimen>
     <dimen name="cc_category_items_count_padding_bottom">5dp</dimen>
     <dimen name="cc_category_items_count">12sp</dimen>
     <dimen name="cc_ic_category_overflow_width">30dp</dimen>
     <dimen name="cc_ic_category_overflow_height">30dp</dimen>
     <dimen name="cc_ic_category_overflow_margin_top">10dp</dimen>
-    <dimen name="cc_cv_elevation">3dp</dimen>
     <dimen name="cc_overflow_margin_top">5dp</dimen>
+
+    <!-- New Feature Card View -->
+    <dimen name="nfcc_height">250dp</dimen>
+    <dimen name="nfcc_tv_days_margin_end">15dp</dimen>
+    <dimen name="nfcc_tv_timer_size">12sp</dimen>
+    <dimen name="nfcc_tv_hours_margin_end">8dp</dimen>
+    <dimen name="nfcc_tv_minutes_margin_start">6dp</dimen>
+    <dimen name="nfcc_tv_seconds_margin_start">11dp</dimen>
+    <dimen name="nfcc_countdown_padding">5dp</dimen>
+    <dimen name="nfcc_countdown_text_size">30sp</dimen>
+    <dimen name="nfcc_countdown_suffix_size">10sp</dimen>
+    <dimen name="nfcc_lock_size">50dp</dimen>
+    <dimen name="nfcc_lock_margin_top">10dp</dimen>
 
     <!-- Dialogs General-->
     <dimen name="dialog_padding">20dp</dimen>
@@ -92,8 +106,7 @@
     <dimen name="spacing">20dp</dimen>
     <dimen name="ich_padding">10dp</dimen>
 
-
-    <dimen name="card_staggered_height">240dp</dimen>
+    <!-- Text Editor Toolbar -->
     <dimen name="tet_height">30dp</dimen>
     <dimen name="tet_margin_sides">80dp</dimen>
 </resources>

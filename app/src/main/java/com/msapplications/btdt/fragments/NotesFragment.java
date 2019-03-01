@@ -42,7 +42,6 @@ public class NotesFragment extends AbstractFragmentItems implements NotesEditor
     private boolean isRemovedItems = false;
 
     public NotesFragment() {
-        // Required empty public constructor
     }
 
     public static NotesFragment newInstance(String title, int categoryID)
@@ -102,6 +101,7 @@ public class NotesFragment extends AbstractFragmentItems implements NotesEditor
         }
     }
 
+    //add new line
     @Override
     public void OnEnterKeyClicked(int id, int newLineNumber, EditText editText, boolean isCheckBox)
     {
@@ -116,6 +116,7 @@ public class NotesFragment extends AbstractFragmentItems implements NotesEditor
        // adapter.notifyItemChanged(newLineNumber);
     }
 
+    //remove line
     @Override
     public void onBackspaceClicked(int noteItemID, int position) {
         notifyFromIndex = position;
@@ -125,6 +126,7 @@ public class NotesFragment extends AbstractFragmentItems implements NotesEditor
         updateAdapter = true;
     }
 
+    //current line is edited, save to db
     @Override
     public void saveCurrentEdit(int id, String newText, int adapterPosition){
         notifyFromIndex = adapterPosition;

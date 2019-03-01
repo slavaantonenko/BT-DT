@@ -25,6 +25,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+not used until travel category is implemented
+ */
 public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.ViewHolder>
 {
     private LayoutInflater inflater;

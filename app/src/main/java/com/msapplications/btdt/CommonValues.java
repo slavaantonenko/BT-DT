@@ -1,14 +1,15 @@
 package com.msapplications.btdt;
 
+/*
+static values for app
+ */
 public class CommonValues
 {
-    // Cache
-    public static final String CACHE_CATEGORIES_KEY = "Categories";
-    public static final String CACHE_CINEMAS_KEY = "Cinemas";
-    public static final String CACHE_CINEMAS_HALLS_KEY = "Halls";
+    // Categories
+    public static final int CATEGORY_CARD_SIZE_MIN = 150;
+    public static final int CATEGORY_CARD_SIZE_MAX = 250;
 
     // ListActivity
-    public static final String LIST_TYPE = "ListType";
     public static final String CATEGORY_ID_EXTRA = "CategoryID";
     public static final String CATEGORY_NAME_EXTRA = "CategoryName";
     public static final String NOTES_FRAGMENT = "NotesFragment";
@@ -36,7 +37,7 @@ public class CommonValues
     public static final String CINEMA_CITY = "Cinema City";
     public static final String GLOBUS_MAX = "Globus Max";
     public static final String YES_PLANET = "Yes Planet";
-    public static final String TRAVEL = "Travel\n\nComing Soon";
+    public static final String TRAVEL = "Travel";
 
     // Preferences
     public static final String FIRST_USE = "firstUse";

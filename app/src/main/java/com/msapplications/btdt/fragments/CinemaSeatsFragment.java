@@ -35,14 +35,7 @@ import com.msapplications.btdt.objects.itemTypes.cinema.Cinema;
 
 import java.util.List;
 
-///**
-// * A simple {@link Fragment} subclass.
-// * Activities that contain this fragment must implement the
-// * {@link CinemaSeatsFragment.OnFragmentInteractionListener} interface
-// * to handle interaction events.
-// * Use the {@link CinemaSeatsFragment#newInstance} factory method to
-// * create an instance of this fragment.
-// */
+
 public class CinemaSeatsFragment extends Fragment implements OnFloatingActionClick,
         OnCinemaClickListener, OnCinemaHallLongClickListener
 {
@@ -63,15 +56,8 @@ public class CinemaSeatsFragment extends Fragment implements OnFloatingActionCli
     private OnFragmentInteractionListener onFragmentInteractionListener;
 
     public CinemaSeatsFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment CinemaSeatsFragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static CinemaSeatsFragment newInstance(String title)
     {
@@ -213,6 +199,7 @@ public class CinemaSeatsFragment extends Fragment implements OnFloatingActionCli
 
             Cinema item = adapterCinema.getItem(position);
 
+            //observer for changes in cinema halls from db
             cinemaHallsViewModel.getCinemaHalls(item.getName(), item.getCity()).observe(this, new Observer<List<CinemaHall>>()
             {
                 @Override
@@ -272,7 +259,7 @@ public class CinemaSeatsFragment extends Fragment implements OnFloatingActionCli
                     adapterCinema.notifyDataSetChanged();
                 }
 
-                else if (direction == ItemTouchHelper.LEFT) // Delete
+                else if (direction == ItemTouchHelper.LEFT) // Delete cinema
                 {
                     Cinema cinema = adapterCinema.getItem(position);
                     isCinemaDeleted = true;

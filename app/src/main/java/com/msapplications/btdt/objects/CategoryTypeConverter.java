@@ -2,6 +2,9 @@ package com.msapplications.btdt.objects;
 
 import android.arch.persistence.room.TypeConverter;
 
+/*
+Convert int from db to category type
+ */
 public class CategoryTypeConverter
 {
     @TypeConverter

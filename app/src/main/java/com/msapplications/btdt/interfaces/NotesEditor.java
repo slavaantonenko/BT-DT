@@ -2,6 +2,9 @@ package com.msapplications.btdt.interfaces;
 
 import android.widget.EditText;
 
+/**
+ * for editing a note
+ */
 public interface NotesEditor
 {
     void OnEnterKeyClicked(int idClicked, int newLineNumber, EditText editText, boolean isChecked);

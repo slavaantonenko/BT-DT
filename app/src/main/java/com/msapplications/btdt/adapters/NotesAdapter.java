@@ -34,6 +34,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
     NotesEditor listener;
     NoteItemViewModel noteItemViewModel;
     int currentIndex=-1;
+    boolean setSelectionFocus = true;
 
     ImageButton btnBold;
     ImageButton btnItalic;
@@ -50,10 +51,10 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
             return;
 
         this.notes = new ArrayList<>(noteItems);
-        Collections.sort(notes);
+        Collections.sort(notes); //sort by line number
         if(notifyFromIndex == -1)
-            notifyDataSetChanged();
-        else if(isRemoved) {
+            notifyDataSetChanged(); //note just opened
+        else if(isRemoved) { //a line is removed
             notifyItemRangeRemoved(notifyFromIndex, 1);
             if(notifyFromIndex != 0) {
                 currentIndex = notifyFromIndex - 1;
@@ -88,9 +89,9 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
         {
             int position = getAdapterPosition();
 
+            //line removed
             if(keyCode == KeyEvent.KEYCODE_DEL && event.getAction() == KeyEvent.ACTION_DOWN  && position != 0 && editText.getText().toString().isEmpty()) {
                 listener.onBackspaceClicked(notes.get(position).getId(), position);
-                //currentIndex = position -1;
             }
             return false;
         }
@@ -107,7 +108,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
         btnItalic = constraintLayoutParent.findViewById(R.id.italic);
         btnCheckbox = constraintLayoutParent.findViewById(R.id.checkbox_btn);
 
-
+        //line un/bold
         btnBold.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -116,14 +117,15 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
                 String e = ((EditText)parent.findFocus()).getText().toString();
                 NoteItem noteItem = notes.get(currentIndex);
                 boolean newValue = !noteItem.isBold();
-//                noteItemViewModel.updateText(noteItem.getId(), editText.getText().toString());
                 noteItemViewModel.updateBold(noteItem.getId(), newValue);
                 noteItem.setBold(newValue);
                 noteItem.setText(e);
+                setSelectionFocus = false;
                 notifyItemChanged(currentIndex);
             }
         });
 
+        //line un/italic
         btnItalic.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -135,10 +137,12 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
                 noteItemViewModel.updateItalic(noteItem.getId(), newValue);
                 noteItem.setItalic(newValue);
                 noteItem.setText(e);
+                setSelectionFocus = false;
                 notifyItemChanged(currentIndex);
             }
         });
 
+        //line checkbox un/shown
         btnCheckbox.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -150,6 +154,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
                 noteItemViewModel.updateCheckBox(noteItem.getId(), newValue);
                 noteItem.setCheckBox(newValue);
                 noteItem.setText(e);
+                setSelectionFocus = false;
                 notifyItemChanged(currentIndex);
             }
         });
@@ -170,7 +175,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
         currentEditText.setRawInputType(InputType.TYPE_CLASS_TEXT);
 
        // if(noteItem.getText() != null && !noteItem.getText().equals(currentEditText.getText().toString()))
-            currentEditText.setText(noteItem.getText());
+        currentEditText.setText(noteItem.getText());
 
         currentEditText.setOnFocusChangeListener(new View.OnFocusChangeListener()
         {
@@ -206,6 +211,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
             }
         });
 
+        //checkbox un/checked
         currentCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
             @Override
@@ -216,13 +222,13 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
             }
         });
 
-
+        //set focus for current line
         if(currentIndex == position) {
             currentEditText.setFocusableInTouchMode(true);
             currentEditText.requestFocus();
-            currentEditText.setSelection(currentEditText.length());
         }
 
+        //adjust line appearance (text and checkbox)
         if (!noteItem.isCheckBox()) {
             currentCheckbox.setVisibility(View.INVISIBLE);
         } else {

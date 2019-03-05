@@ -14,7 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
-import com.google.android.gms.common.data.ObjectExclusionFilterable;
 import com.msapplications.btdt.room_storage.cinema.CinemaViewModel;
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.MyLocation;
@@ -34,8 +33,8 @@ public class AddCinemaDialogFragment extends DialogFragment
     private CinemaViewModel cinemaViewModel = null;
     private List<Cinema> cinemaList = new ArrayList<>();
 
-    public AddCinemaDialogFragment()
-    {
+    public AddCinemaDialogFragment() {
+        // Required empty public constructor
     }
 
     @Override
@@ -100,9 +99,9 @@ public class AddCinemaDialogFragment extends DialogFragment
                         areEntriesSet = setSpinnerEntries(view, spCinemaCities, CommonValues.CINEMA_CITY, R.array.cinema_city_cities);
                         if (areEntriesSet)
                             break;
-                    case (CommonValues.GLOBUS_MAX):
+                    case (CommonValues.HOT_CINEMA):
                         spCinemas.setSelection(1);
-                        areEntriesSet = setSpinnerEntries(view, spCinemaCities, CommonValues.GLOBUS_MAX, R.array.globus_max_cities);
+                        areEntriesSet = setSpinnerEntries(view, spCinemaCities, CommonValues.HOT_CINEMA, R.array.hot_cinema_cities);
                         if (areEntriesSet)
                             break;
                     case (CommonValues.YES_PLANET):
@@ -133,8 +132,8 @@ public class AddCinemaDialogFragment extends DialogFragment
                     case (CommonValues.CINEMA_CITY):
                         logoID = R.drawable.cinema_city;
                         break;
-                    case (CommonValues.GLOBUS_MAX):
-                        logoID = R.drawable.globus_max;
+                    case (CommonValues.HOT_CINEMA):
+                        logoID = R.drawable.hot_cinema;
                         break;
                     case (CommonValues.YES_PLANET):
                         logoID = R.drawable.yes_planet;

@@ -138,7 +138,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
             if (getItem(getAdapterPosition()).getType().equals(CategoryType.TRAVEL)) //TODO remove when Travel will be finished
                 return false;
 
-            if (menuItem.getItemId() == R.id.action_rename)
+            if (menuItem.getItemId() != R.id.action_delete)
                 adapterPosition = getAdapterPosition();
 
             menuItemClickListener.onMenuItemClick(menuItem, getAdapterPosition());

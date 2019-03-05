@@ -1,9 +1,12 @@
 package com.msapplications.btdt.activities;
 
+import android.app.AlertDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -15,13 +18,20 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.colorpicker.ColorPickerDialog;
+import com.android.colorpicker.ColorPickerPalette;
+import com.android.colorpicker.ColorPickerSwatch;
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.adapters.CategoriesAdapter;
+import com.msapplications.btdt.dialogs.ChooseColorDialogFragment;
 import com.msapplications.btdt.dialogs.NewCategoryDialogFragment;
 import com.msapplications.btdt.dialogs.RenameCategoryDialogFragment;
 import com.msapplications.btdt.interfaces.OnCategoryClickListener;
@@ -53,12 +63,16 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
+//        AppCompatTextView title = findViewById(R.id.app_title);
         recyclerView = findViewById(R.id.recycler_view);
 
         setSupportActionBar(toolbar);
 
-        this.setTitle(R.string.am_title);
-        Utils.centerTitle(this);
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/ARLRDBD.ttf");
+//        title.setTypeface(font);
+
+//        this.setTitle(R.string.am_title);
+//        Utils.centerTitle(this);
 
         initRecyclerView();
 
@@ -154,9 +168,14 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
                 Utils.renameCategory(getSupportFragmentManager(), category);
                 return true;
 
+            case R.id.action_choose_color:
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction().addToBackStack(null);
+                ChooseColorDialogFragment dialogFragment = new ChooseColorDialogFragment().newInstance(category);
+                dialogFragment.show(ft, CommonValues.CHOOSE_COLOR_DIALOG_FRAGMENT_TAG);
+                return true;
+
             case R.id.action_delete:
-                if (category.getType().equals(CategoryType.CINEMA_SEATS))
-                {
+                if (category.getType().equals(CategoryType.CINEMA_SEATS)) {
                     CinemaViewModel cinemaViewModel = ViewModelProviders.of(this).get(CinemaViewModel.class);
                     Utils.deleteCategory(cinemaViewModel, 0);
                 }

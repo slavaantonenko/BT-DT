@@ -62,7 +62,10 @@ dependencies {
 
     // Floating SearchView
 
-
+    // CountDown for new features
     implementation 'com.github.iwgang:countdownview:2.1.6'
+
+    // Google Materials
+    implementation project(':colorpicker')
 
 }

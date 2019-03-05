@@ -37,6 +37,8 @@
         android:layout_height="@dimen/dnc_spinner_height"
         android:entries="@array/category_types"
         android:prompt="@string/category_type_prompt"
+        android:gravity="center_horizontal"
+        android:textAlignment="gravity"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etNewCategoryName" />

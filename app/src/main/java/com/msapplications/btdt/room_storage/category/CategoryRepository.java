@@ -37,6 +37,8 @@ public class CategoryRepository
         new renameAsyncTask(categoryDao).execute(category);
     }
 
+    public void updateColor(int color, int id) { categoryDao.updateColor(color, id); }
+
     public void insert(Category category) {
         categoryDao.insert(category);
         //new insertAsyncTask(categoryDao).execute(category);

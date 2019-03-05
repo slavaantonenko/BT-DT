@@ -41,4 +41,6 @@
 
 
     <color name="new_feature_text">@android:color/white</color>
+    <color name="title">@android:color/white</color>
+
 </resources>

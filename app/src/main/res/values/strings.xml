@@ -1,4 +1,6 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation">
+
     <string name="app_name">BT;DT</string>
     <string name="action_settings">Settings</string>
 
@@ -13,6 +15,7 @@
     <string name="cc_category_title_sample">Category Name</string>
     <string name="nfcc_title_sample">NEW FEATURE NAME</string>
     <string name="nfcc_coming_soon">\nCOMING SOON</string>
+    <string name="select_category_color">Select your color:</string>
 
     <!-- Cinema -->
     <string name="ic_add_seat">Add Seat</string>
@@ -22,6 +25,7 @@
 
     <!-- Menus -->
     <string name="menu_category_rename">Rename</string>
+    <string name="menu_category_choose_color">Choose Color</string>
     <string name="menu_category_delete">Delete</string>
     <string name="category_deleted">Category deleted</string>
 
@@ -62,7 +66,7 @@
     <string name="dac_save">SAVE</string>
     <string-array name="israel_cinemas_name">
         <item>Cinema City</item>
-        <item>Globus Max</item>
+        <item>Hot Cinema</item>
         <item>Yes Planet</item>
     </string-array>
 
@@ -74,7 +78,7 @@
         <item>Rishon LeZion</item>
     </string-array>
 
-    <string-array name="globus_max_cities">
+    <string-array name="hot_cinema_cities">
         <item>Ashdod</item>
         <item>Ashkelon</item>
         <item>Beer Sheva</item>
@@ -106,6 +110,9 @@
     <string name="cinema_hall_row_empty_error">"Row can't be empty"</string>
     <string name="dch_ethn_hint">Hall</string>
     <string name="dch_etrn_hint">Row</string>
+
+    <!-- Dialog Select Color -->
+    <string name="dsc_title_select_color">Select your color:</string>
 
     <!-- Travel -->
     <string name="title_activity_travel">Travel</string>

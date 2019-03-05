@@ -19,6 +19,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.util.LayoutDirection;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,8 +78,10 @@ public class Utils
             {
                 ViewGroup.LayoutParams params = appCompatTextView.getLayoutParams();
                 params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                params.resolveLayoutDirection(LayoutDirection.LTR);
                 appCompatTextView.setLayoutParams(params);
                 appCompatTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                appCompatTextView.setLayoutDirection(LayoutDirection.LTR);
             }
         }
     }

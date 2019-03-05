@@ -34,6 +34,8 @@ public class CategoryViewModel extends AndroidViewModel implements ViewModelDele
 
     public void rename(Category category) { repository.rename(category); }
 
+    public void updateColor(int color, int id) { repository.updateColor(color, id); }
+
     public void insert(Category category) { repository.insert(category); }
 
     public void deleteCategory(int categoryID) {

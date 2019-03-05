@@ -31,7 +31,7 @@ public class Category implements Parcelable
     @ColumnInfo(name = "category_type")
     CategoryType type;
 
-    @ColumnInfo(name = "category_picture")
+    @ColumnInfo(name = "category_color")
     int backgroundColor;
 
     public Category(int id, String name, CategoryType type, int backgroundColor)

@@ -17,7 +17,6 @@
         android:icon="@mipmap/btdt_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/btdt_launcher_round"
-        android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 

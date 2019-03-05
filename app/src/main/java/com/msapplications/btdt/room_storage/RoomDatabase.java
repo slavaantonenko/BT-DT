@@ -16,7 +16,7 @@ import com.msapplications.btdt.room_storage.note.NoteItemDao;
 import com.msapplications.btdt.room_storage.travel.CountryDao;
 
 // version = 1 is CinemaHall hall and row in int and not String.
-@Database(entities = {Cinema.class, CinemaHall.class, CountryModel.class, NoteItem.class, Category.class}, version = 7)
+@Database(entities = {Cinema.class, CinemaHall.class, CountryModel.class, NoteItem.class, Category.class}, version = 8)
 public abstract class RoomDatabase extends android.arch.persistence.room.RoomDatabase
 {
     public abstract CinemaDao cinemaDao();

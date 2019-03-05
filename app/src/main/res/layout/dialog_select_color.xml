@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dialog_padding">
+
+    <TextView
+        android:id="@+id/tvChooseColorTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dsc_title_select_color"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/dialog_title_size"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.android.colorpicker.ColorPickerPalette
+        android:id="@+id/colorPickerPalette"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/dsc_cpp_margin_top"
+        android:layout_marginStart="@dimen/dsc_cpp_margin_start"
+        app:layout_constraintTop_toBottomOf="@id/tvChooseColorTitle"
+        app:layout_constraintStart_toStartOf="@id/tvChooseColorTitle" />
+
+</android.support.constraint.ConstraintLayout>

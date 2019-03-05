@@ -28,6 +28,9 @@ public interface CategoryDao
     @Query("UPDATE categories_table SET category_name=:name WHERE id=:id")
     void rename(String name, int id);
 
+    @Query("UPDATE categories_table SET category_color=:color WHERE id=:id")
+    void updateColor(int color, int id);
+
     @Insert
     void insert(Category category);
 

@@ -18,22 +18,19 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/app_title"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <!--<android.support.v7.widget.AppCompatTextView-->
-                <!--android:id="@+id/app_title"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:textAlignment="center"-->
-                <!--android:gravity="center"-->
-                <!--android:textSize="25sp"-->
-                <!--android:textStyle="bold"-->
-                <!--android:textColor="@color/title"-->
-                <!--android:text="@string/am_title" />-->
+                android:layout_height="match_parent"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textColor="@color/title"
+                android:text="@string/am_title" />
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>

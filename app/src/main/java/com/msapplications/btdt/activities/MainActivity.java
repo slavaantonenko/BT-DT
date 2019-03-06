@@ -13,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -63,16 +64,13 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
-//        AppCompatTextView title = findViewById(R.id.app_title);
+        AppCompatTextView title = findViewById(R.id.app_title);
         recyclerView = findViewById(R.id.recycler_view);
 
         setSupportActionBar(toolbar);
 
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/ARLRDBD.ttf");
-//        title.setTypeface(font);
-
-//        this.setTitle(R.string.am_title);
-//        Utils.centerTitle(this);
+        title.setTypeface(font);
 
         initRecyclerView();
 

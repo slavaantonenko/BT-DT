@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.msapplications.btdt.Utils;
 import com.msapplications.btdt.dialogs.RenameCategoryDialogFragment;
@@ -54,6 +55,11 @@ public class ListActivity extends AppCompatActivity
     {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.category_menu, menu);
+
+        MenuItem menuItem = menu.findItem(R.id.action_choose_color);
+        if (menuItem != null)
+            menuItem.setVisible(false);
+
         return super.onCreateOptionsMenu(menu);
     }
 

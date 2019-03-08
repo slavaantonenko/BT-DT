@@ -114,7 +114,11 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
             @Override
             public void onClick(View v)
             {
-                String e = ((EditText)parent.findFocus()).getText().toString();
+                if(parent.findFocus() == null) {
+                    parent.getChildAt(0).findViewById(R.id.etNote).requestFocus();
+                }
+
+                String e = ((EditText) parent.findFocus()).getText().toString();
                 NoteItem noteItem = notes.get(currentIndex);
                 boolean newValue = !noteItem.isBold();
                 noteItemViewModel.updateBold(noteItem.getId(), newValue);
@@ -131,7 +135,11 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
             @Override
             public void onClick(View v)
             {
-                String e = ((EditText)parent.findFocus()).getText().toString();
+                if(parent.findFocus() == null) {
+                    parent.getChildAt(0).findViewById(R.id.etNote).requestFocus();
+                }
+
+                String e = ((EditText) parent.findFocus()).getText().toString();
                 NoteItem noteItem = notes.get(currentIndex);
                 boolean newValue = !noteItem.isItalic();
                 noteItemViewModel.updateItalic(noteItem.getId(), newValue);
@@ -139,6 +147,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
                 noteItem.setText(e);
                 setSelectionFocus = false;
                 notifyItemChanged(currentIndex);
+
             }
         });
 
@@ -148,7 +157,11 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
             @Override
             public void onClick(View v)
             {
-                String e = ((EditText)parent.findFocus()).getText().toString();
+                if(parent.findFocus() == null) {
+                    parent.getChildAt(0).findViewById(R.id.etNote).requestFocus();
+                }
+
+                String e = ((EditText) parent.findFocus()).getText().toString();
                 NoteItem noteItem = notes.get(currentIndex);
                 boolean newValue = !noteItem.isCheckBox();
                 noteItemViewModel.updateCheckBox(noteItem.getId(), newValue);

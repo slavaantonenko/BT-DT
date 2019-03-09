@@ -2,17 +2,18 @@ package com.msapplications.btdt.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.msapplications.btdt.R;
 import com.msapplications.btdt.interfaces.OnCinemaClickListener;
+import com.msapplications.btdt.interfaces.OnCinemaOptionClickListener;
 import com.msapplications.btdt.objects.itemTypes.cinema.Cinema;
 
 import java.util.List;
@@ -23,19 +24,21 @@ public class CinemasAdapter extends RecyclerView.Adapter<CinemasAdapter.ViewHold
 //    private ArrayList<Cinema> cinemasList;
     private List<Cinema> cinemasList;
     private OnCinemaClickListener cinemaClickListener;
+    private OnCinemaOptionClickListener cinemaOptionClickListener;
 
-    public CinemasAdapter(Context context, OnCinemaClickListener listener)
+    public CinemasAdapter(Context context, OnCinemaClickListener cinemaClickListener,
+                          OnCinemaOptionClickListener cinemaOptionClickListener)
     {
         this.context = context;
-        cinemaClickListener = listener;
-//        this.cinemasList = CinemasList.getCinemas(context);
+        this.cinemaClickListener = cinemaClickListener ;
+        this.cinemaOptionClickListener = cinemaOptionClickListener;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         public TextView name, city;
         public ImageView logo;
-        public ConstraintLayout viewForeground, deleteCinemaViewBackground, addSeatViewBackground;
+        public ImageButton addSeat, deleteCinema;
 
         public ViewHolder(View view)
         {
@@ -43,9 +46,10 @@ public class CinemasAdapter extends RecyclerView.Adapter<CinemasAdapter.ViewHold
             name = view.findViewById(R.id.tvCinemaName);
             city = view.findViewById(R.id.tvCinemaCity);
             logo = view.findViewById(R.id.ivCinemaLogo);
-            viewForeground = view.findViewById(R.id.clCinemaViewForeground);
-            deleteCinemaViewBackground = view.findViewById(R.id.clCinemaDeleteViewBackground);
-            addSeatViewBackground = view.findViewById(R.id.clCinemaAddSeatViewBackground);
+            addSeat = view.findViewById(R.id.ibAddSeat);
+            deleteCinema = view.findViewById(R.id.ibDeleteCinema);
+            addSeat.setOnClickListener(this);
+            deleteCinema.setOnClickListener(this);
             view.setOnClickListener(this);
         }
 
@@ -61,10 +65,20 @@ public class CinemasAdapter extends RecyclerView.Adapter<CinemasAdapter.ViewHold
         @Override
         public void onClick(View view)
         {
-            if (cinemaClickListener == null)
-                return;
+            if ((view.getId() == R.id.ibAddSeat) || (view.getId() == R.id.ibDeleteCinema))
+            {
+                if (cinemaOptionClickListener == null)
+                    return;
 
-            cinemaClickListener.onCinemaClick(view, getAdapterPosition());
+                cinemaOptionClickListener.onCinemaOptionClick(view, getAdapterPosition());
+            }
+            else
+            {
+                if (cinemaClickListener == null)
+                    return;
+
+                cinemaClickListener.onCinemaClick(view, getAdapterPosition());
+            }
         }
     }
 

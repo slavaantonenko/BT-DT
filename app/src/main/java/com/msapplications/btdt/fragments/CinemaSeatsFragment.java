@@ -22,12 +22,12 @@ import com.msapplications.btdt.adapters.CinemaHallsAdapter;
 import com.msapplications.btdt.dialogs.AddEditHallDialogFragment;
 import com.msapplications.btdt.interfaces.OnCinemaClickListener;
 import com.msapplications.btdt.interfaces.OnCinemaHallLongClickListener;
+import com.msapplications.btdt.interfaces.OnCinemaOptionClickListener;
 import com.msapplications.btdt.objects.itemTypes.cinema.CinemaHall;
 import com.msapplications.btdt.room_storage.cinema.CinemaHallsViewModel;
 import com.msapplications.btdt.room_storage.cinema.CinemaViewModel;
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.R;
-import com.msapplications.btdt.ListCallbackCinema;
 import com.msapplications.btdt.adapters.CinemasAdapter;
 import com.msapplications.btdt.dialogs.AddCinemaDialogFragment;
 import com.msapplications.btdt.interfaces.OnFloatingActionClick;
@@ -37,7 +37,7 @@ import java.util.List;
 
 
 public class CinemaSeatsFragment extends Fragment implements OnFloatingActionClick,
-        OnCinemaClickListener, OnCinemaHallLongClickListener
+        OnCinemaClickListener, OnCinemaOptionClickListener, OnCinemaHallLongClickListener
 {
     private String title = "";
     private int cinemaClickedPosition = 0;
@@ -159,6 +159,24 @@ public class CinemaSeatsFragment extends Fragment implements OnFloatingActionCli
     }
 
     @Override
+    public void onCinemaOptionClick(View view, int position)
+    {
+        switch (view.getId())
+        {
+            case (R.id.ibAddSeat): // Add hall
+                openCinemaHallDialogFragment(position, null, false);
+                adapterCinema.notifyDataSetChanged();
+                break;
+            case (R.id.ibDeleteCinema): // Delete Cinema
+                Cinema cinema = adapterCinema.getItem(position);
+                isCinemaDeleted = true;
+                cinemaHallsViewModel.deleteCinemaHalls(cinema);
+                cinemaViewModel.delete(cinema);
+                break;
+        }
+    }
+
+    @Override
     public void onCinemaLongClick(View view, int position) {
         openCinemaHallDialogFragment(cinemaClickedPosition, adapterCinemaHalls.getItem(position), true);
     }
@@ -171,9 +189,8 @@ public class CinemaSeatsFragment extends Fragment implements OnFloatingActionCli
         
         recyclerViewCinema.addItemDecoration(new DividerItemDecoration(recyclerViewCinema.getContext(), DividerItemDecoration.VERTICAL));
 
-        adapterCinema = new CinemasAdapter(thisFragment.getContext(), this);
+        adapterCinema = new CinemasAdapter(thisFragment.getContext(), this, this);
         recyclerViewCinema.setAdapter(adapterCinema);
-        initSwipeCinema();
     }
 
     private void initRecyclerViewCinemaHalls(View view, int position)
@@ -241,36 +258,6 @@ public class CinemaSeatsFragment extends Fragment implements OnFloatingActionCli
         else {
                 recyclerViewCinemaHalls.setVisibility(View.GONE);
         }
-    }
-
-    private void initSwipeCinema()
-    {
-        ListCallbackCinema listCallbackCinema = new ListCallbackCinema(adapterCinema)
-        {
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction)
-            {
-                super.onSwiped(viewHolder, direction);
-
-                int position = viewHolder.getAdapterPosition();
-
-                if (direction == ItemTouchHelper.RIGHT) { // Add hall
-                    openCinemaHallDialogFragment(position, null, false);
-                    adapterCinema.notifyDataSetChanged();
-                }
-
-                else if (direction == ItemTouchHelper.LEFT) // Delete cinema
-                {
-                    Cinema cinema = adapterCinema.getItem(position);
-                    isCinemaDeleted = true;
-                    cinemaHallsViewModel.deleteCinemaHalls(cinema);
-                    cinemaViewModel.delete(cinema);
-                }
-            }
-        };
-
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(listCallbackCinema);
-        itemTouchHelper.attachToRecyclerView(recyclerViewCinema); // Set swipe to RecyclerView
     }
 
     private void openCinemaHallDialogFragment(int position, CinemaHall cinemaHall, boolean edit)

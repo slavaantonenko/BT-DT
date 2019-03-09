@@ -24,12 +24,15 @@ public class CommonValues
     public static final String NEW_CATEGORY_DIALOG_FRAGMENT_TAG = "NewCategoryDialogFragment";
     public static final String RENAME_CATEGORY_DIALOG_FRAGMENT_TAG = "RenameCategoryDialogFragment";
     public static final String CHOOSE_COLOR_DIALOG_FRAGMENT_TAG = "ChooseColorDialogFragment";
+    public static final String ADD_RECIPE_DIALOG_FRAGMENT_TAG = "AddRecipeDialogFragment";
     public static final String CINEMA_HALL_BUNDLE = "CinemaHall";
     public static final String CINEMA_INFO_BUNDLE = "CinemaInfo";
     public static final String CINEMA_HALL_ACTION_BUNDLE = "CinemaHallAction";
     public static final String CATEGORY_BUNDLE = "Category";
     public static final int ADD_CINEMA_REQUEST_CODE = 1;
     public static final int EDIT_HALL_REQUEST_CODE = 2;
+    public static final int ADD_RECIPE_REQUEST_CODE = 3;
+
 
     // Global Strings
     public static final String NOTE = "Note";

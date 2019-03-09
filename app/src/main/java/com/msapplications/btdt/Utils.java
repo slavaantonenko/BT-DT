@@ -212,11 +212,8 @@ public class Utils
     //add new category to db
     public static void newCategory(FragmentActivity activity, Context context, String newName, CategoryType type)
     {
-        int[] categoryBackground = context.getResources().getIntArray(R.array.categories_background);
-        Random random = new Random();
-        int randomNum = random.nextInt(categoryBackground.length);
-
-        Category newCategory = new Category(0, newName, type, categoryBackground[randomNum]);
+        int randomColor = randomColor(context);
+        Category newCategory = new Category(0, newName, type, randomColor);
         CategoryViewModel categoryViewModel = ViewModelProviders.of(activity).get(CategoryViewModel.class);
         categoryViewModel.insert(newCategory);
         int categoryID = categoryViewModel.getIdByName(newCategory.getName());
@@ -224,6 +221,14 @@ public class Utils
         NoteItemViewModel noteItemViewModel = ViewModelProviders.of(activity).get(NoteItemViewModel.class);
         NoteItem newEmptyItem = new NoteItem(0, categoryID, 0);
         noteItemViewModel.insert(newEmptyItem);
+    }
+
+    public static int randomColor(Context context) {
+        int[] categoryBackground = context.getResources().getIntArray(R.array.categories_background);
+        Random random = new Random();
+        int randomNum = random.nextInt(categoryBackground.length);
+
+        return categoryBackground[randomNum];
     }
 
     public static void renameCategory(FragmentManager fragmentManager, Category category)

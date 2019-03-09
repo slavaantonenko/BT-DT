@@ -99,6 +99,11 @@
     <dimen name="ich_iv_status_size">20dp</dimen>
     <dimen name="ich_padding_sides">50dp</dimen>
 
+    <!-- Recipes -->
+    <dimen name="btn_size_recipe">25dp</dimen>
+    <dimen name="tv_recipe_name">20sp</dimen>
+
+
     <dimen name="activity_padding_horizontal">16dp</dimen>
     <dimen name="thumbnail">90dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->

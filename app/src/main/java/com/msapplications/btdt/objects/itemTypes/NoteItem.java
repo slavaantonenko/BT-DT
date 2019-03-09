@@ -46,14 +46,6 @@ public class NoteItem implements Comparable<NoteItem>{
         this.isItalic = false;
     }
 
-//    public NoteItem(int id, int categoryID, boolean isChecked) {
-//        this.id = id;
-//        this.categoryID = categoryID;
-//        this.isBold = false;
-//        this.isChecked = isChecked;
-//        this.isItalic = false;
-//    }
-
     @Override
     public int compareTo(NoteItem o) {
         return this.getLineNumber() - o.getLineNumber();

@@ -1,5 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="MissingTranslation">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
     <string name="app_name">BT;DT</string>
     <string name="action_settings">Settings</string>
@@ -23,6 +22,10 @@
     <string name="ic_tvcn_sample">Cinema City</string>
     <string name="ic_tvcc_sample">Rishon Lezion</string>
 
+    <!-- Recipes -->
+    <string name="dnc_tv_nr_title">Create New Recipe</string>
+
+
     <!-- Menus -->
     <string name="menu_category_rename">Rename</string>
     <string name="menu_category_choose_color">Choose Color</string>
@@ -39,10 +42,10 @@
     <string name="category_renamed">Category renamed</string>
 
     <!--<string-array name="category_types">-->
-        <!--<item>Note</item>-->
-        <!--<item>Collection</item>-->
-        <!--<item>Cinema Seats</item>-->
-        <!--<item>Travel</item>-->
+    <!--<item>Note</item>-->
+    <!--<item>Collection</item>-->
+    <!--<item>Cinema Seats</item>-->
+    <!--<item>Travel</item>-->
     <!--</string-array>-->
 
     <string-array name="category_types">

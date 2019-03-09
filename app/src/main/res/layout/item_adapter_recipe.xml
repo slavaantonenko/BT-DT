@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cl_recipe_item"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+     <Button
+         android:id="@+id/btn_color_recipe"
+         android:layout_width="@dimen/btn_size_recipe"
+         android:layout_height="@dimen/btn_size_recipe"
+         android:clickable="false"
+         android:layout_margin="5dp"
+         tools:background="@color/colorPrimary"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/tv_recipe_name"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/btn_color_recipe"
+        tools:text="yam ayma"/>
+
+</android.support.constraint.ConstraintLayout>

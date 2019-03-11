@@ -46,8 +46,8 @@ public abstract class RoomDatabase extends android.arch.persistence.room.RoomDat
 
         return INSTANCE;
     }
-
-    static final Migration MIGRATION_8_9 = new Migration(9, 10) {
+    
+    static final Migration MIGRATION_8_9 = new Migration(8, 9) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             // Since we didn't alter the table, there's nothing else to do here.

@@ -19,6 +19,15 @@
         <item>#ff1744</item>
     </array>
 
+    <array name="feature_available">
+        <item>#FFFFFF</item>
+        <item>#FFEB3B</item>
+        <item>#00E676</item>
+        <item>#1DE9B6</item>
+        <item>#00E5FF</item>
+        <item>#3D5AFE</item>
+    </array>
+
     <color name="dialogs_buttons">@color/colorPrimary</color>
 
     <color name="cinema_hall_text">@android:color/black</color>

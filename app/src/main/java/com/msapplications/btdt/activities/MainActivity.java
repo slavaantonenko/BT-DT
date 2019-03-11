@@ -48,6 +48,8 @@ import com.msapplications.btdt.room_storage.cinema.CinemaViewModel;
 
 import java.util.List;
 
+import okhttp3.internal.Util;
+
 /*
 Main activity, shows all categories of the user
  */
@@ -93,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
         if (firstUse()) {
             Utils.newCategory(this,this, CommonValues.CINEMA_SEATS, CategoryType.CINEMA_SEATS);
             Utils.newCategory(this,this, CommonValues.TRAVEL, CategoryType.TRAVEL);
+            Utils.newCategory(this,this, CommonValues.RECIPES, CategoryType.RECIPES);
         }
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -137,10 +140,9 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
     {
         TextView name = view.findViewById(R.id.tvCategoryTitle);
 
-//        if (name.getText().equals(CommonValues.TRAVEL))
-//            startActivity(new Intent(this, TravelActivity.class));
-//            return;
-        if (!name.getText().equals(CommonValues.TRAVEL))
+        if (name.getText().equals(CommonValues.TRAVEL))
+            startActivity(new Intent(this, TravelActivity.class));
+        else
         {
             //open category list
             Intent intent = new Intent(this, ListActivity.class);
@@ -203,15 +205,10 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
      */
     private boolean firstUse()
     {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean firstUse = preferences.getBoolean(CommonValues.FIRST_USE, true);
+        boolean firstUse = Utils.getBooleanFromCache(this, CommonValues.FIRST_USE, true);
 
         if (firstUse)
-        {
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean(CommonValues.FIRST_USE, false);
-            editor.apply();
-        }
+            Utils.saveBooleanToCache(this, CommonValues.FIRST_USE, false);
 
         return firstUse;
     }

@@ -3,7 +3,7 @@ package com.msapplications.btdt.objects;
 public enum CategoryType
 {
     NOTES(0),
-    COLLECTION(1),
+    RECIPES(1),
     CINEMA_SEATS(2),
     TRAVEL(3);
 

@@ -3,9 +3,11 @@ package com.msapplications.btdt;
 import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Rect;
+import android.preference.PreferenceManager;
 import android.support.annotation.DimenRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -339,5 +341,20 @@ public class Utils
     {
         Resources r = resources;
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
+    }
+
+    /////////////////////////////////////// SharedPreferences /////////////////////////////////////////////////
+
+    public static void saveBooleanToCache(Context context, String prefName, boolean value)
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean(prefName, value);
+        editor.apply();
+    }
+
+    public static boolean getBooleanFromCache(Context context, String prefName, boolean defaultValue) {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(prefName, defaultValue);
     }
 }

@@ -8,21 +8,20 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.msapplications.btdt.Utils;
 import com.msapplications.btdt.dialogs.RenameCategoryDialogFragment;
 import com.msapplications.btdt.fragments.NotesFragment;
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.fragments.CinemaSeatsFragment;
-import com.msapplications.btdt.fragments.CollectionFragment;
+import com.msapplications.btdt.fragments.RecipesFragment;
 import com.msapplications.btdt.R;
 import com.msapplications.btdt.objects.CategoryType;
 import com.msapplications.btdt.room_storage.category.CategoryViewModel;
 import com.msapplications.btdt.room_storage.cinema.CinemaViewModel;
 
 public class ListActivity extends AppCompatActivity
-        implements CollectionFragment.OnFragmentInteractionListener, CinemaSeatsFragment.OnFragmentInteractionListener,
+        implements RecipesFragment.OnFragmentInteractionListener, CinemaSeatsFragment.OnFragmentInteractionListener,
         NotesFragment.OnFragmentInteractionListener, RenameCategoryDialogFragment.OnRenameListener
 {
     CategoryViewModel categoryViewModel;
@@ -108,8 +107,8 @@ public class ListActivity extends AppCompatActivity
             case NOTES:
                 openFragment(new NotesFragment().newInstance(categoryName, categoryID), CommonValues.NOTES_FRAGMENT);
                 break;
-            case COLLECTION:
-                openFragment(new CollectionFragment(), CommonValues.COLLECTION_FRAGMENT);
+            case RECIPES:
+                openFragment(new RecipesFragment(), CommonValues.RECIPES_FRAGMENT);
                 break;
             case CINEMA_SEATS:
                 openFragment(new CinemaSeatsFragment().newInstance(categoryName), CommonValues.CINEMA_SEATS_FRAGMENT);

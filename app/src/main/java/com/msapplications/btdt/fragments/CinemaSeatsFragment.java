@@ -3,6 +3,7 @@ package com.msapplications.btdt.fragments;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -168,10 +170,7 @@ public class CinemaSeatsFragment extends Fragment implements OnFloatingActionCli
                 adapterCinema.notifyDataSetChanged();
                 break;
             case (R.id.ibDeleteCinema): // Delete Cinema
-                Cinema cinema = adapterCinema.getItem(position);
-                isCinemaDeleted = true;
-                cinemaHallsViewModel.deleteCinemaHalls(cinema);
-                cinemaViewModel.delete(cinema);
+                deleteCinema(position);
                 break;
         }
     }
@@ -271,6 +270,25 @@ public class CinemaSeatsFragment extends Fragment implements OnFloatingActionCli
             dialogFragment.setTargetFragment(thisFragment, CommonValues.EDIT_HALL_REQUEST_CODE);
 
         dialogFragment.show(ft, CommonValues.ADD_HALL_DIALOG_FRAGMENT_TAG);
+    }
+
+    private void deleteCinema(final int position)
+    {
+        new AlertDialog.Builder(getContext())
+                .setMessage("Are you sure you want to delete this cinema?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        Cinema cinema = adapterCinema.getItem(position);
+                        isCinemaDeleted = true;
+                        cinemaHallsViewModel.deleteCinemaHalls(cinema);
+                        cinemaViewModel.delete(cinema);
+                    }
+                })
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                .setNegativeButton(android.R.string.no, null)
+                .show();
     }
 
     @Override

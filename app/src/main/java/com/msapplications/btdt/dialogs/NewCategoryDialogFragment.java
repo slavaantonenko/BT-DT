@@ -19,13 +19,8 @@ import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.CreateCategoryDialog;
 import com.msapplications.btdt.R;
 import com.msapplications.btdt.Utils;
-import com.msapplications.btdt.objects.Category;
 import com.msapplications.btdt.objects.CategoryType;
-import com.msapplications.btdt.objects.itemTypes.NoteItem;
 import com.msapplications.btdt.room_storage.category.CategoryViewModel;
-
-import java.util.ArrayList;
-import java.util.Random;
 
 public class NewCategoryDialogFragment extends DialogFragment
 {
@@ -155,8 +150,8 @@ public class NewCategoryDialogFragment extends DialogFragment
         {
             case (CommonValues.NOTE):
                 return CategoryType.NOTES;
-            case (CommonValues.COLLECTION):
-                return CategoryType.COLLECTION;
+            case (CommonValues.RECIPES):
+                return CategoryType.RECIPES;
             case (CommonValues.CINEMA_SEATS):
                 return CategoryType.CINEMA_SEATS;
             case (CommonValues.TRAVEL):

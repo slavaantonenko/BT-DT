@@ -18,7 +18,7 @@
     <dimen name="category_card_title_size">22sp</dimen>
 
     <!-- Category Card View -->
-    <dimen name="cc_height">150dp</dimen>
+    <dimen name="cc_height">250dp</dimen>
     <dimen name="cc_category_title_padding">12dp</dimen>
     <dimen name="cc_category_items_count_padding_bottom">5dp</dimen>
     <dimen name="cc_category_items_count">12sp</dimen>
@@ -28,17 +28,19 @@
     <dimen name="cc_overflow_margin_top">5dp</dimen>
 
     <!-- New Feature Card View -->
+    <dimen name="nfcc_card_elevation">4dp</dimen>
     <dimen name="nfcc_height">250dp</dimen>
-    <dimen name="nfcc_tv_days_margin_end">15dp</dimen>
+    <dimen name="nfcc_tv_days_margin_end">12dp</dimen>
     <dimen name="nfcc_tv_timer_size">12sp</dimen>
-    <dimen name="nfcc_tv_hours_margin_end">8dp</dimen>
+    <dimen name="nfcc_tv_hours_margin_end">7dp</dimen>
     <dimen name="nfcc_tv_minutes_margin_start">6dp</dimen>
-    <dimen name="nfcc_tv_seconds_margin_start">11dp</dimen>
+    <dimen name="nfcc_tv_seconds_margin_start">8dp</dimen>
     <dimen name="nfcc_countdown_padding">5dp</dimen>
     <dimen name="nfcc_countdown_text_size">30sp</dimen>
     <dimen name="nfcc_countdown_suffix_size">10sp</dimen>
     <dimen name="nfcc_lock_size">50dp</dimen>
     <dimen name="nfcc_lock_margin_top">10dp</dimen>
+    <dimen name="ic_lock_size">60dp</dimen>
 
     <!-- Dialogs General-->
     <dimen name="dialog_padding">20dp</dimen>

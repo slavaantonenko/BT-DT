@@ -1,5 +1,10 @@
 package com.msapplications.btdt;
 
+import com.msapplications.btdt.objects.CategoryType;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /*
 static values for app
  */
@@ -13,7 +18,7 @@ public class CommonValues
     public static final String CATEGORY_ID_EXTRA = "CategoryID";
     public static final String CATEGORY_NAME_EXTRA = "CategoryName";
     public static final String NOTES_FRAGMENT = "NotesFragment";
-    public static final String COLLECTION_FRAGMENT = "CollectionFragment";
+    public static final String RECIPES_FRAGMENT = "RecipesFragment";
     public static final String CINEMA_SEATS_FRAGMENT = "CinemaSeatsFragment";
     public static final String FRAGMENT_TITLE = "FragmentTitle";
     public static final int RENAME_CATEGORY_RESULT_CODE = 1;
@@ -33,7 +38,7 @@ public class CommonValues
 
     // Global Strings
     public static final String NOTE = "Note";
-    public static final String COLLECTION = "Collection";
+    public static final String RECIPES = "Recipes";
     public static final String CINEMA_SEATS = "Cinema Seats";
     public static final String CINEMA_CITY = "Cinema City";
     public static final String HOT_CINEMA = "Hot Cinema";
@@ -42,4 +47,18 @@ public class CommonValues
 
     // Preferences
     public static final String FIRST_USE = "firstUse";
+    public static final ArrayList<CategoryType> COMING_SOON_FEATURES = new ArrayList<CategoryType>(){{
+        add(CategoryType.TRAVEL);
+        add(CategoryType.RECIPES);
+    }};
+    public static final HashMap<CategoryType, String> COMING_SOON_FEATURES_DATES = new HashMap<CategoryType, String>() {{
+        put(CategoryType.TRAVEL, "15/04/2019 00:00:00");
+        put(CategoryType.RECIPES, "10/04/2019 00:00:00");
+    }};
+    public static final HashMap<CategoryType, String> FEATURE_AVAILABLE_PREF_NAME = new HashMap<CategoryType, String>() {{
+        put(CategoryType.TRAVEL, TRAVEL_FEATURE_AVAILABLE);
+        put(CategoryType.RECIPES, RECIPES_FEATURE_AVAILABLE);
+    }};
+    public static final String TRAVEL_FEATURE_AVAILABLE = "travelFeatureAvailable";
+    public static final String RECIPES_FEATURE_AVAILABLE = "recipesFeatureAvailable";
 }

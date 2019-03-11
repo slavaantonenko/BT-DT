@@ -12,8 +12,8 @@ public class CategoryTypeConverter
     {
         if (type == CategoryType.NOTES.getCode())
             return CategoryType.NOTES;
-        else if (type == CategoryType.COLLECTION.getCode())
-            return CategoryType.COLLECTION;
+        else if (type == CategoryType.RECIPES.getCode())
+            return CategoryType.RECIPES;
         else if (type == CategoryType.CINEMA_SEATS.getCode())
             return CategoryType.CINEMA_SEATS;
         else if (type == CategoryType.TRAVEL.getCode())

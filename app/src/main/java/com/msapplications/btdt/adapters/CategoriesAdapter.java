@@ -1,6 +1,10 @@
 package com.msapplications.btdt.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.Animatable2;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
@@ -10,6 +14,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,6 +37,10 @@ import java.util.List;
 import java.util.Random;
 
 import cn.iwgang.countdownview.CountdownView;
+import nl.dionsegijn.konfetti.KonfettiView;
+import nl.dionsegijn.konfetti.models.Shape;
+import nl.dionsegijn.konfetti.models.Size;
+import okhttp3.internal.Util;
 
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.ViewHolder>
 {
@@ -52,54 +64,74 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
             View.OnClickListener
     {
         public TextView title, tvNewFeatureTitle;
-        public ImageView overflow;
-        public CardView cardView;
+        public ImageView overflow, lock;
+        public CardView cvCategory, cvNewFeatureCountDown;
         public CountdownView mCvCountdownView; //for future features
+        public KonfettiView kvFeatureAvailable;
 
         public ViewHolder(View view)
         {
             super(view);
-            if (!CategoryType.TRAVEL.equals(getItem(viewPositionAtCreation).getType()))
+            title = view.findViewById(R.id.tvCategoryTitle);
+            overflow = view.findViewById(R.id.overflow);
+            cvCategory = view.findViewById(R.id.cvCategory);
+            cvCategory.setOnClickListener(this);
+            overflow.setOnClickListener(this);
+
+            if (CommonValues.COMING_SOON_FEATURES.contains(getItem(viewPositionAtCreation).getType()))
             {
-                title = view.findViewById(R.id.tvCategoryTitle);
-                overflow = view.findViewById(R.id.overflow);
-                cardView = view.findViewById(R.id.cvCategory);
-                cardView.setOnClickListener(this);
-                overflow.setOnClickListener(this);
-
-                Random random = new Random();
-
-                //randomize height for a category card
-                int height = random.nextInt((CommonValues.CATEGORY_CARD_SIZE_MAX - CommonValues.CATEGORY_CARD_SIZE_MIN) + 1)
-                        + CommonValues.CATEGORY_CARD_SIZE_MIN; // new Random().nextInt((max - min) + 1) + min;
-
-                StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) cardView.getLayoutParams();
-                layoutParams.height = Utils.dpToPx(context.getResources(), height);
-                cardView.setLayoutParams(layoutParams);
-            }
-            else {
                 tvNewFeatureTitle = view.findViewById(R.id.tvNewFeatureTitle);
                 mCvCountdownView = view.findViewById(R.id.countDownNewFeature);
+                cvNewFeatureCountDown = view.findViewById(R.id.cvNewFeatureCountDown);
+                lock = view.findViewById(R.id.ivLock);
+                kvFeatureAvailable = view.findViewById(R.id.kvFeatureAvailable);
             }
         }
 
-        public void onBindViewHolder(Category category) {
-            if (!getItem(getAdapterPosition()).getType().equals(CategoryType.TRAVEL)) {
-                title.setText(category.getName());
-                cardView.setCardBackgroundColor(category.getBackgroundColor());
-            }
-            else
-            {   //future feature
-                tvNewFeatureTitle.setText(CommonValues.TRAVEL);
+        public void onBindViewHolder(Category category, final int position)
+        {
+            final CategoryType type = getItem(position).getType();
+            final String prefName = CommonValues.FEATURE_AVAILABLE_PREF_NAME.get(type);
 
+            title.setText(category.getName());
+            cvCategory.setCardBackgroundColor(category.getBackgroundColor());
+            StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) cvCategory.getLayoutParams();
+            layoutParams.height = getCardViewHeight(type, prefName);
+            cvCategory.setLayoutParams(layoutParams);
+
+            if (CommonValues.COMING_SOON_FEATURES.contains(type))
+            {
+                // Future feature
                 try
                 {
                     Date currentDate = Calendar.getInstance().getTime();
-                    String date = "01/04/2019";
-                    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-                    Date finalDate = formatter.parse(date);
-                    long diff = finalDate.getTime() - currentDate.getTime();
-                    mCvCountdownView.start(diff);
+                    String date = CommonValues.COMING_SOON_FEATURES_DATES.get(type);
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                    long diff = formatter.parse(date).getTime() - formatter.parse(formatter.format(currentDate)).getTime();
+
+                    if (diff >= 0)
+                    {
+                        mCvCountdownView.start(diff);
+                        cvNewFeatureCountDown.setVisibility(View.VISIBLE);
+                        tvNewFeatureTitle.setText(category.getName());
+
+                        mCvCountdownView.setOnCountdownEndListener(new CountdownView.OnCountdownEndListener() {
+                            @Override
+                            public void onEnd(CountdownView cv)
+                            {
+                                featureAvailableAnimation(cvNewFeatureCountDown,
+                                        kvFeatureAvailable,
+                                        lock,
+                                        prefName);
+                            }
+                        });
+                    }
+                    else if (!Utils.getBooleanFromCache(context, prefName, false)) // Unlock animation not yet shown
+                    {
+                        cvNewFeatureCountDown.setVisibility(View.VISIBLE);
+                        tvNewFeatureTitle.setText(category.getName());
+                        featureAvailableAnimation(cvNewFeatureCountDown, kvFeatureAvailable, lock, prefName);
+                    }
                 }
                 catch (Exception e) {
                     e.printStackTrace();
@@ -112,9 +144,6 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
         @Override
         public void onClick(View view)
         {
-            if (getItem(getAdapterPosition()).getType().equals(CategoryType.TRAVEL)) //TODO remove when Travel will be finished
-                return;
-
             switch (view.getId())
             {
                 case (R.id.cvCategory):
@@ -134,10 +163,8 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
         }
 
         @Override
-        public boolean onMenuItemClick(MenuItem menuItem) {
-            if (getItem(getAdapterPosition()).getType().equals(CategoryType.TRAVEL)) //TODO remove when Travel will be finished
-                return false;
-
+        public boolean onMenuItemClick(MenuItem menuItem)
+        {
             if (menuItem.getItemId() != R.id.action_delete)
                 adapterPosition = getAdapterPosition();
 
@@ -148,25 +175,17 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-        int layout;
-
-        if (CategoryType.TRAVEL.equals(getItem(viewType).getType()))
-            layout = R.layout.new_feature_countdown_card;
-        else
-            layout = R.layout.category_card;
-
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    {
         viewPositionAtCreation = viewType;
-
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(layout, parent, false);
+                .inflate(R.layout.category_card, parent, false);
         return new ViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.onBindViewHolder(categoriesList.get(position));
+        holder.onBindViewHolder(categoriesList.get(position), position);
     }
 
     @Override
@@ -205,5 +224,72 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
 
     public void resetPosition() {
         adapterPosition = -1;
+    }
+
+    private int getCardViewHeight(CategoryType type, String prefName)
+    {
+        Random random = new Random();
+
+        // Randomize height for a category card, formula: new Random().nextInt((max - min) + 1) + min
+        int height = random.nextInt((CommonValues.CATEGORY_CARD_SIZE_MAX - CommonValues.CATEGORY_CARD_SIZE_MIN) + 1)
+                + CommonValues.CATEGORY_CARD_SIZE_MIN;
+
+        if (CommonValues.COMING_SOON_FEATURES.contains(type) && !Utils.getBooleanFromCache(context, prefName, false)) {
+            height = (int) context.getResources().getDimension(R.dimen.nfcc_height);
+            return height;
+        }
+
+        return Utils.dpToPx(context.getResources(), height);
+    }
+
+    private void featureAvailableAnimation(final CardView cvNewFeatureCountDown, final KonfettiView kvFeatureAvailable,
+                                           ImageView lock, final String prefName)
+    {
+        AnimatedVectorDrawable animatedVectorDrawable = (AnimatedVectorDrawable) context.getDrawable(R.drawable.animated_ic_lock);
+        lock.setImageDrawable(animatedVectorDrawable);
+
+        if (animatedVectorDrawable != null)
+        {
+            animatedVectorDrawable.registerAnimationCallback(new Animatable2.AnimationCallback()
+            {
+                @Override
+                public void onAnimationEnd(Drawable drawable)
+                {
+                    super.onAnimationEnd(drawable);
+                    kvFeatureAvailable.build()
+                            .addColors(context.getResources().getIntArray(R.array.feature_available))
+                            .setDirection(0.0, 359.0)
+                            .setSpeed(1f, 5f)
+                            .setFadeOutEnabled(true)
+                            .setTimeToLive(2000L)
+                            .addShapes(Shape.RECT, Shape.CIRCLE)
+                            .addSizes(new Size(12, 5))
+                            .setPosition(kvFeatureAvailable.getWidth() / 2, kvFeatureAvailable.getHeight() / 3)
+                            .burst(300);
+
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            // Fade out countdown layout and remove it from screen at the end.
+                            Animation fadeOut = new AlphaAnimation(1, 0);
+                            fadeOut.setInterpolator(new AccelerateInterpolator());
+                            fadeOut.setStartOffset(1000);
+                            fadeOut.setDuration(1000);
+                            AnimationSet animation = new AnimationSet(false); //change to false
+                            animation.addAnimation(fadeOut);
+                            cvNewFeatureCountDown.startAnimation(animation);
+                            cvNewFeatureCountDown.setVisibility(View.GONE);
+
+                            Utils.saveBooleanToCache(context, prefName, true);
+                        }
+
+                    }, 0);
+                }
+            });
+            animatedVectorDrawable.start();
+        }
     }
 }

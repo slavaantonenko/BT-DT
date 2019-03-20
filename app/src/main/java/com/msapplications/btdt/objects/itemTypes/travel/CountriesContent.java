@@ -10,7 +10,7 @@ public class CountriesContent
         COUNTRIES.clear();
     }
 
-    public static void addMovie(CountryModel country) {
+    public static void addCountry(CountryModel country) {
         COUNTRIES.add(country);
     }
 }

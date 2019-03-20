@@ -1,5 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="MissingTranslation">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
     <string name="app_name">BT;DT</string>
     <string name="action_settings">Settings</string>
@@ -43,10 +42,10 @@
     <string name="category_renamed">Category renamed</string>
 
     <!--<string-array name="category_types">-->
-        <!--<item>Note</item>-->
-        <!--<item>Recipes</item>-->
-        <!--<item>Cinema Seats</item>-->
-        <!--<item>Travel</item>-->
+    <!--<item>Note</item>-->
+    <!--<item>Recipes</item>-->
+    <!--<item>Cinema Seats</item>-->
+    <!--<item>Travel</item>-->
     <!--</string-array>-->
 
     <string-array name="category_types">
@@ -123,12 +122,15 @@
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_travel_country">TravelCountryActivity</string>
+    <string name="area_size_proportion">%1$s km\u00B2</string>
+    <string name="calling_code">+%1$s</string>
+    <string name="country_codes">%1$s, %2$s</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">Map</string>
     <string name="menu_travel_map_search">Search</string>
-    <string name="title_activity_main2">Main2Activity</string>
     <!-- Travel -->
 
 </resources>

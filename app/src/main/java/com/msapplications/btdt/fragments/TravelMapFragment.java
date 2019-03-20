@@ -150,31 +150,31 @@ public class TravelMapFragment extends Fragment implements OnMapReadyCallback
 //            }
 //        }
 
-        Gson gson = new Gson();
-        CountriesCoordinatesResults results = gson.fromJson(Utils.loadJSONFromAsset(
-                getContext(), "countries_coordinates"), CountriesCoordinatesResults.class);
-
-        double latitude = 0;
-        double longitude = 0;
-
-        for (CountriesCoordinates country : results.getResults()) {
-            if (country.getCountryCode().equals("AT")) {
-                latitude = country.getLatitude();
-                longitude = country.getLongitude();
-                break;
-            }
-        }
+//        Gson gson = new Gson();
+//        CountriesCoordinatesResults results = gson.fromJson(Utils.loadJSONFromAsset(
+//                getContext(), "countries_coordinates"), CountriesCoordinatesResults.class);
+//
+//        double latitude = 0;
+//        double longitude = 0;
+//
+//        for (CountriesCoordinates country : results.getResults()) {
+//            if (country.getCountryCode().equals("AT")) {
+//                latitude = country.getLatitude();
+//                longitude = country.getLongitude();
+//                break;
+//            }
+//        }
 
         // Move the camera to location
-        LatLng country = new LatLng(latitude, longitude);
+//        LatLng country = new LatLng(latitude, longitude);
 //        LatLng country = new LatLng(49.75, 6.16666666);
 //        map.addMarker(new MarkerOptions().position(country).title("Marker in Sydney"));
-        map.moveCamera(CameraUpdateFactory.newLatLng(country));
+//        map.moveCamera(CameraUpdateFactory.newLatLng(country));
 
         // For zooming automatically to the location of the marker
 //        CameraPosition cameraPosition = new CameraPosition.Builder().target(country).zoom((float) 5.5).build();
-        CameraPosition cameraPosition = new CameraPosition.Builder().target(country).zoom(5.5F).build();
-        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+//        CameraPosition cameraPosition = new CameraPosition.Builder().target(country).zoom(5.5F).build();
+//        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
         try
         {

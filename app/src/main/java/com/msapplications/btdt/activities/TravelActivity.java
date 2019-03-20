@@ -1,16 +1,6 @@
 package com.msapplications.btdt.activities;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.content.Context;
-import android.content.res.Resources;
-import android.content.res.TypedArray;
-import android.os.Build;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -19,24 +9,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewAnimationUtils;
-import android.view.ViewGroup;
-
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.TranslateAnimation;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.msapplications.btdt.R;
+import com.msapplications.btdt.fragments.TravelCountriesFragment;
 import com.msapplications.btdt.fragments.TravelCountryFragment;
 import com.msapplications.btdt.fragments.TravelMapFragment;
-import com.msapplications.btdt.fragments.TravelPlanFragment;
 
 public class TravelActivity extends AppCompatActivity
 {
@@ -69,7 +48,7 @@ public class TravelActivity extends AppCompatActivity
         sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        viewPager = findViewById(R.id.container);
+        viewPager = findViewById(R.id.vpTravelContainer);
         viewPager.setAdapter(sectionsPagerAdapter);
 
         TabLayout tabLayout = findViewById(R.id.tabs);
@@ -167,12 +146,12 @@ public class TravelActivity extends AppCompatActivity
             {
                 case 0:
 //                    fragment = new TravelCountryFragment();
-                    fragment = new TravelPlanFragment();
+                    fragment = new TravelCountriesFragment();
 //                    fragment = new TravelMapFragment();
                     break;
                 case 1:
                     fragment = new TravelMapFragment();
-//                    fragment = new TravelPlanFragment();
+//                    fragment = new TravelCountriesFragment();
             }
 
             return fragment;

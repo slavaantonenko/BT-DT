@@ -116,4 +116,6 @@
     <!-- Text Editor Toolbar -->
     <dimen name="tet_height">30dp</dimen>
     <dimen name="tet_margin_sides">80dp</dimen>
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="item_width">200dp</dimen>
 </resources>

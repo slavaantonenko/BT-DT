@@ -49,6 +49,8 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
+import okhttp3.internal.Util;
+
 public class Utils
 {
     // set activity title in the center
@@ -242,9 +244,8 @@ public class Utils
     public static int calculateNoOfColumns(Context context)
     {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-        int noOfColumns = (int) (dpWidth / 100);
-        return noOfColumns;
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density - Utils.dpToPx(context.getResources() ,40);
+        return (int) (dpWidth / 100);
     }
 
     /**

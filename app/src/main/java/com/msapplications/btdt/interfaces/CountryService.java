@@ -16,7 +16,7 @@ public interface CountryService
     String BASE_URL = "https://restcountries.eu";
     String BASE_FLAGS_URL = "https://www.countryflags.io";
 
-    String BASE_API_URL = BASE_URL + "/com/msapplications/btdt/rest/v2/";
+    String BASE_API_URL = BASE_URL + "/rest/v2/";
 
     String COUNTRY_ID = "country_code";
     String FLAG_QUERY_PATH = BASE_FLAGS_URL + "/{" + COUNTRY_ID + "}/flat/48.png";

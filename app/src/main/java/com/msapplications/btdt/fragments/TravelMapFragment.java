@@ -1,8 +1,16 @@
 package com.msapplications.btdt.fragments;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcel;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -22,7 +30,10 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
@@ -32,6 +43,8 @@ import com.msapplications.btdt.R;
 import com.msapplications.btdt.Utils;
 import com.msapplications.btdt.objects.itemTypes.travel.CountriesCoordinates;
 import com.msapplications.btdt.objects.itemTypes.travel.CountriesCoordinatesResults;
+import com.msapplications.btdt.objects.itemTypes.travel.CountryModel;
+import com.msapplications.btdt.room_storage.travel.CountryViewModel;
 
 import org.json.JSONException;
 
@@ -58,6 +71,7 @@ public class TravelMapFragment extends Fragment implements OnMapReadyCallback
     private String mParam1;
     private String mParam2;
     private GoogleMap map;
+    private CountryViewModel countryViewModel;
 //    private GoogleMap googleMap;
 //    MapView mapView;
 
@@ -107,6 +121,8 @@ public class TravelMapFragment extends Fragment implements OnMapReadyCallback
     {
         super.onViewCreated(view, savedInstanceState);
 
+        countryViewModel = ViewModelProviders.of(this).get(CountryViewModel.class);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -126,6 +142,25 @@ public class TravelMapFragment extends Fragment implements OnMapReadyCallback
     {
         map = googleMap;
 
+        countryViewModel.getTravelListCountries().observe(this, new Observer<List<CountryModel>>()
+        {
+            @Override
+            public void onChanged(@Nullable List<CountryModel> countries)
+            {
+                for (CountryModel country : countries)
+                {
+                    LatLng latLng = new LatLng(country.getLatitude(), country.getLongitude());
+                    int iconID = R.drawable.ic_place_marker;
+
+                    if (country.isBeenThere())
+                        iconID = R.drawable.ic_place_marker_been_there;
+
+                    map.addMarker(new MarkerOptions()
+                            .position(latLng)
+                            .icon(bitmapDescriptorFromVector(getContext(), iconID)));
+                }
+            }
+        });
 
 //        Gson gson = new Gson();
 //        BufferedReader br = null;
@@ -176,24 +211,75 @@ public class TravelMapFragment extends Fragment implements OnMapReadyCallback
 //        CameraPosition cameraPosition = new CameraPosition.Builder().target(country).zoom(5.5F).build();
 //        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-        try
-        {
-            GeoJsonLayer layer = new GeoJsonLayer(map, R.raw.deu_geojson, getContext());
-            GeoJsonPolygonStyle style = layer.getDefaultPolygonStyle();
-            style.setFillColor(ContextCompat.getColor(getContext(), R.color.highlightCountry));
-            style.setStrokeColor(ContextCompat.getColor(getContext(), R.color.highlightCountry));
-//            style.setStrokeWidth(1F);
-//            style.setFillColor(R.color.highlightCountry);
-//            style.setStrokeColor(R.color.highlightCountry);
+//        BitmapDescriptor bitmapDescriptor;
+//
+//        ivCountryFlag.invalidate();
+//        BitmapDrawable drawable = (BitmapDrawable) ivCountryFlag.getDrawable();
+//        Bitmap bitmap = drawable.getBitmap();
+//        bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(bitmap);
+//
+//        GroundOverlayOptions newarkMap = new GroundOverlayOptions()
+////                                .image(BitmapDescriptorFactory.fromResource(R.drawable.newark_nj_1922))
+//                .image(bitmapDescriptor)
+//                .positionFromBounds(bounds);
+//        map.addGroundOverlay(newarkMap);
 
-            layer.addLayerToMap();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        catch (JSONException e) {
-            e.printStackTrace();
-        }
+
+
+//        private Target target = new Target() {
+//            @Override
+//            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+//            }
+//
+//            @Override
+//            public void onBitmapFailed(Drawable errorDrawable) {
+//            }
+//
+//            @Override
+//            public void onPrepareLoad(Drawable placeHolderDrawable) {
+//            }
+//        }
+//
+//        private void someMethod() {
+//        Picasso.with(this).load("url").into(target);
+//    }
+//
+//        @Override
+//        public void onDestroy() {  // could be in onPause or onStop
+//        Picasso.with(this).cancelRequest(target);
+//        super.onDestroy();
+//    }
+
+
+
+//        try
+//        {
+////            GeoJsonLayer layer = new GeoJsonLayer(map, R.raw.deu_geojson, getContext());
+////            GeoJsonPolygonStyle style = layer.getDefaultPolygonStyle();
+////            style.setFillColor(ContextCompat.getColor(getContext(), R.color.highlightCountry));
+////            style.setStrokeColor(ContextCompat.getColor(getContext(), R.color.highlightCountry));
+////            style.setStrokeWidth(1F);
+////            style.setFillColor(R.color.highlightCountry);
+////            style.setStrokeColor(R.color.highlightCountry);
+//
+////            layer.addLayerToMap();
+//        }
+//        catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+    }
+
+    private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId)
+    {
+        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
+        vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
+        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        vectorDrawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

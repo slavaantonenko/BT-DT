@@ -1,11 +1,16 @@
 package com.msapplications.btdt.interfaces;
 
+import com.msapplications.btdt.APIKeys;
 import com.msapplications.btdt.objects.itemTypes.travel.Country;
+import com.msapplications.btdt.objects.itemTypes.travel.CountryImage;
+import com.msapplications.btdt.objects.itemTypes.travel.CountryImagesList;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface CountryService
 {
@@ -14,12 +19,24 @@ public interface CountryService
 //    String YOUTUBE_BASE_URL = "https://www.youtube.com/watch?v=";
 
     String BASE_URL = "https://restcountries.eu";
-    String BASE_FLAGS_URL = "https://www.countryflags.io";
+    String BASE_FLAGS_URL = "https://www.countryflags.io/";
+    String BASE_IMAGES_URL = "https://pixabay.com";
 
     String BASE_API_URL = BASE_URL + "/rest/v2/";
+    String BASE_IMAGES_API_URL = BASE_IMAGES_URL + "/api/";
 
-    String COUNTRY_ID = "country_code";
-    String FLAG_QUERY_PATH = BASE_FLAGS_URL + "/{" + COUNTRY_ID + "}/flat/48.png";
+//    String IMAGES_API_KEY = "11950979-55036b31079bdab3557135c84";
+    String IMAGES_KEY_QUERY = "?key=" + APIKeys.IMAGES_API_KEY;
+// + "&q=berlin&image_type=photo&orientation=horizontal&per_page=3"
+
+
+
+//    String IMAGES_QUERY_PATH = IMAGES_KEY_QUERY + "&q=berlin&image_type=photo&orientation=horizontal&per_page=3";
+    String IMAGES_QUERY_PATH = IMAGES_KEY_QUERY + "&category=travel&image_type=photo&orientation=horizontal&per_page=3";
+
+
+//    String COUNTRY_ID = "country_code";
+//    String FLAG_QUERY_PATH = BASE_FLAGS_URL + "/{" + COUNTRY_ID + "}/flat/48.png";
 
 //    String POPULAR = "movie/popular";
 
@@ -38,4 +55,7 @@ public interface CountryService
 //    Call<MovieListResult> searchImage();
     @GET(".")
     Call<List<Country>> getCountries();
+
+    @GET(IMAGES_QUERY_PATH)
+    Call<CountryImagesList> getCountryImages(@Query("q") String capitalCity);
 }

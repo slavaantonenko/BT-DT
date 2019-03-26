@@ -120,7 +120,6 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
                 dialogFragment.show(ft, CommonValues.NEW_CATEGORY_DIALOG_FRAGMENT_TAG);
             }
         };
-
     }
 
     @Override

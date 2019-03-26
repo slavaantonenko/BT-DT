@@ -1,18 +1,29 @@
 package com.msapplications.btdt.activities;
 
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.gson.Gson;
@@ -24,9 +35,15 @@ import com.google.maps.android.data.geojson.GeoJsonPolygonStyle;
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.R;
 import com.msapplications.btdt.Utils;
+import com.msapplications.btdt.interfaces.CountryService;
+import com.msapplications.btdt.interfaces.OnFloatingActionClick;
+import com.msapplications.btdt.objects.itemTypes.travel.CountriesContent;
 import com.msapplications.btdt.objects.itemTypes.travel.CountriesCoordinates;
 import com.msapplications.btdt.objects.itemTypes.travel.CountriesCoordinatesResults;
+import com.msapplications.btdt.objects.itemTypes.travel.CountryImagesList;
 import com.msapplications.btdt.objects.itemTypes.travel.CountryModel;
+import com.msapplications.btdt.rest.RestClientManager;
+import com.msapplications.btdt.room_storage.travel.CountryViewModel;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -34,12 +51,18 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.List;
 
-public class TravelCountryActivity extends AppCompatActivity  implements OnMapReadyCallback
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class TravelCountryActivity extends AppCompatActivity  implements OnMapReadyCallback, OnFloatingActionClick
 {
+    private CountryViewModel countryViewModel;
     private CountryModel country;
     private Picasso picasso;
     private GoogleMap map;
     private ImageView ivCountryFlag;
+    private FloatingActionButton fabCountry;
     private TextView tvCountryName, tvNativeNameValue, tvCapitalCityName, tvLanguageName, tvNativeLanguageName, tvRegionName,
             tvAreaSize, tvPopulationSize, tvCurrencyValue, tvTimeZoneValue, tvCallingCodeValue, tvCountryCodeValues;
 
@@ -49,6 +72,7 @@ public class TravelCountryActivity extends AppCompatActivity  implements OnMapRe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_travel_country);
         ivCountryFlag = findViewById(R.id.ivCountryFlag);
+        fabCountry = findViewById(R.id.fabCountry);
         tvCountryName = findViewById(R.id.tvCountryName);
         tvNativeNameValue = findViewById(R.id.tvNativeNameValue);
         tvCapitalCityName = findViewById(R.id.tvCapitalCityName);
@@ -63,6 +87,7 @@ public class TravelCountryActivity extends AppCompatActivity  implements OnMapRe
         tvCountryCodeValues = findViewById(R.id.tvCountryCodeValues);
 
         picasso = Picasso.get();
+
         country = getIntent().getParcelableExtra(CommonValues.COUNTRY_EXTRA);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -70,6 +95,30 @@ public class TravelCountryActivity extends AppCompatActivity  implements OnMapRe
         mapFragment.getMapAsync(this);
 
         initializeView();
+
+        countryViewModel = ViewModelProviders.of(this).get(CountryViewModel.class);
+        fabCountry.setOnClickListener(onFabClick());
+//        fabCountry.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                if (!country.isInTravelList())
+//                {
+//                    Intent resultIntent = new Intent();
+//                    resultIntent.putExtra(CommonValues.COUNTRY_EXTRA, country);
+//                    setResult(CommonValues.ADDED_TO_TRAVEL_LIST, resultIntent);
+//
+//                    country.setInTravelList(true);
+//                    getImage();
+//                    Toast.makeText(getBaseContext(), "Congrats! You just added " + country.getName() + " to your travel list."
+//                            , Toast.LENGTH_LONG).show();
+//                }
+//                else
+//                    Toast.makeText(getBaseContext(), "You already plan to visit " + country.getName()
+//                            , Toast.LENGTH_LONG).show();
+//            }
+//        });
     }
 
     /**
@@ -159,6 +208,33 @@ public class TravelCountryActivity extends AppCompatActivity  implements OnMapRe
         }
     }
 
+    @Override
+    public View.OnClickListener onFabClick()
+    {
+        return new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                if (!country.isInTravelList())
+                {
+//                    Intent resultIntent = new Intent();
+//                    resultIntent.putExtra(CommonValues.COUNTRY_EXTRA, country);
+//                    setResult(CommonValues.ADDED_TO_TRAVEL_LIST, resultIntent);
+
+                    Utils.saveBooleanToCache(getBaseContext(), CommonValues.TRAVEL_LIST_CHANGED, true);
+                    country.setInTravelList(true);
+                    getImage();
+                    Toast.makeText(getBaseContext(), "Congrats! You just added " + country.getName() + " to your travel list."
+                            , Toast.LENGTH_LONG).show();
+                }
+                else
+                    Toast.makeText(getBaseContext(), "You already plan to visit " + country.getName()
+                            , Toast.LENGTH_LONG).show();
+            }
+        };
+    }
+
     private void initializeView()
     {
         picasso.load(country.getFlag()).into(ivCountryFlag);
@@ -174,6 +250,29 @@ public class TravelCountryActivity extends AppCompatActivity  implements OnMapRe
         tvTimeZoneValue.setText(country.getTimezone());
         tvCallingCodeValue.setText(getString(R.string.calling_code, country.getCallingCode()));
         tvCountryCodeValues.setText(getString(R.string.country_codes, country.getCode(), country.getSecondaryCode()));
+    }
+
+    private void getImage()
+    {
+        if (country.getImage() == null)
+        {
+            CountryService countryService = RestClientManager.getCountryServiceInstance(CountryService.BASE_IMAGES_API_URL);
+            countryService.getCountryImages(country.getCapital()).enqueue(new Callback<CountryImagesList>()
+            {
+                @Override
+                public void onResponse(Call<CountryImagesList> call, Response<CountryImagesList> response)
+                {
+                    country.setImage(response.body().getHits().get(0).getWebformatURL());
+                    countryViewModel.updateIsInTravelList(country);
+                }
+
+                @Override
+                public void onFailure(Call<CountryImagesList> call, Throwable t)
+                {
+                    Log.i("failure", t.getMessage());
+                }
+            });
+        }
     }
 
     /**

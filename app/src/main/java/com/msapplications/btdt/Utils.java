@@ -244,7 +244,7 @@ public class Utils
     public static int calculateNoOfColumns(Context context)
     {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        float dpWidth = displayMetrics.widthPixels / displayMetrics.density - Utils.dpToPx(context.getResources() ,40);
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density; //- Utils.dpToPx(context.getResources() ,40);
         return (int) (dpWidth / 100);
     }
 

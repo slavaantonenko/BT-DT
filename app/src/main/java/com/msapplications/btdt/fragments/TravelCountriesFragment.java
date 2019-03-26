@@ -1,14 +1,14 @@
 package com.msapplications.btdt.fragments;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,21 +19,14 @@ import com.msapplications.btdt.R;
 import com.msapplications.btdt.Utils;
 import com.msapplications.btdt.activities.TravelCountryActivity;
 import com.msapplications.btdt.adapters.CountriesAdapter;
-import com.msapplications.btdt.dialogs.AddCinemaDialogFragment;
-import com.msapplications.btdt.interfaces.CountryService;
+//import com.msapplications.btdt.interfaces.OnCompleteLoadCountriesListener;
+import com.msapplications.btdt.interfaces.OnCompleteLoadCountriesListener;
 import com.msapplications.btdt.interfaces.OnCountryClickListener;
 import com.msapplications.btdt.objects.itemTypes.travel.CountriesContent;
-import com.msapplications.btdt.objects.itemTypes.travel.Country;
 import com.msapplications.btdt.objects.itemTypes.travel.CountryModel;
-import com.msapplications.btdt.objects.itemTypes.travel.CountryModelConverter;
-import com.msapplications.btdt.room_storage.RoomDatabase;
+import com.msapplications.btdt.room_storage.travel.CountryViewModel;
 
 import java.util.List;
-
-import com.msapplications.btdt.rest.RestClientManager;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 ///**
 // * A simple {@link Fragment} subclass.
@@ -43,7 +36,7 @@ import retrofit2.Response;
 // * Use the {@link TravelCountriesFragment#newInstance} factory method to
 // * create an instance of this fragment.
 // */
-public class TravelCountriesFragment extends Fragment implements OnCountryClickListener
+public class TravelCountriesFragment extends Fragment implements OnCountryClickListener//, OnCompleteLoadCountriesListener
 {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -56,6 +49,10 @@ public class TravelCountriesFragment extends Fragment implements OnCountryClickL
     private ProgressBar progressBar;
     private CountriesAdapter adapter;
     private RecyclerView recyclerView;
+    private int clickedPosition;
+    private CountryViewModel countryViewModel;
+//    OnFragmentInteractionListener onFragmentInteractionListener;
+//    OnCompleteLoadCountriesListener callback;
 
 //    private OnFragmentInteractionListener mListener;
 
@@ -105,8 +102,9 @@ public class TravelCountriesFragment extends Fragment implements OnCountryClickL
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-
+        progressBar = view.findViewById(R.id.pbCountries);
         recyclerView = view.findViewById(R.id.rvCountries);
+
         int mNoOfColumns = Utils.calculateNoOfColumns(getContext());
 
 //        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
@@ -117,16 +115,53 @@ public class TravelCountriesFragment extends Fragment implements OnCountryClickL
 //        recyclerView.addItemDecoration(new Utils.SpacesItemDecoration(spacingInPixels));
         Utils.ItemOffsetDecoration itemDecoration = new Utils.ItemOffsetDecoration(getContext(), R.dimen.spacing);
         recyclerView.addItemDecoration(itemDecoration);
-        progressBar = view.findViewById(R.id.pbCountries);
 
-        loadCountries();
+        adapter = new CountriesAdapter(getContext(), CountriesContent.COUNTRIES, this);
+        recyclerView.setAdapter(adapter);
+
+        countryViewModel = ViewModelProviders.of(this).get(CountryViewModel.class);
+        countryViewModel.getTravelListCountries().observe(this, new Observer<List<CountryModel>>()
+        {
+            @Override
+            public void onChanged(@Nullable List<CountryModel> countries)
+            {
+                boolean travelListChanged = Utils.getBooleanFromCache(getContext(), CommonValues.TRAVEL_LIST_CHANGED, false);
+
+                if (travelListChanged)
+                {
+                    Utils.saveBooleanToCache(getContext(), CommonValues.TRAVEL_LIST_CHANGED, false);
+                    adapter.updateTravelListCountries(countries);
+//                    for (CountryModel country : countries)
+//                    {
+//                        for (CountryModel adapterCountry : adapter.getCountries())
+//                        {
+//                            if (country.getId() == adapterCountry.getId())
+//                            {
+//                                adapterCountry.setInTravelList(true);
+//
+//                                if (adapterCountry.getImage() == null)
+//                                    adapterCountry.setImage(country.getImage());
+//                            }
+//                            else
+//                                adapterCountry.setInTravelList(false);
+//                        }
+//                    }
+                }
+            }
+        });
+
+//        progressBar.setVisibility(View.VISIBLE);
+//        TravelActivity.loadCountries(getContext(), this);
+//        onFragmentInteractionListener.onFragmentInteraction();
     }
 
     @Override
     public void onCountryClick(View view, int position)
     {
+        clickedPosition = position;
         Intent intent = new Intent(getActivity(), TravelCountryActivity.class);
         intent.putExtra(CommonValues.COUNTRY_EXTRA, adapter.getItem(position));
+//        startActivityForResult(intent, CommonValues.ADDED_TO_TRAVEL_LIST);
         startActivity(intent);
 //        TravelCountryFragment fragment = new TravelCountryFragment();//.newInstance(CountriesContent.COUNTRIES.get(position));
 //        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
@@ -135,21 +170,33 @@ public class TravelCountriesFragment extends Fragment implements OnCountryClickL
 //                ft.addToBackStack(this.getClass().getName());
 //                ft.commit();
     }
-
-    // TODO: Rename method, update argument and hook method into UI event
-//    public void onButtonPressed(Uri uri)
+//
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data)
 //    {
-//        if (mListener != null) {
-//            mListener.onFragmentInteraction(uri);
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (requestCode == resultCode)
+//        {
+//            CountryModel country = data.getParcelableExtra(CommonValues.COUNTRY_EXTRA);
+//            adapter.getItem(clickedPosition).setInTravelList(country.isInTravelList());
+//            adapter.getItem(clickedPosition).setImage(country.getImage());
 //        }
 //    }
+
+    //    @Override
+//    public void onCompleteLoadCountries()
+//    {
+//
+//    }
+
 //
 //    @Override
 //    public void onAttach(Context context)
 //    {
 //        super.onAttach(context);
 //        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
+//            onFragmentInteractionListener = (OnFragmentInteractionListener) context;
 //        } else {
 //            throw new RuntimeException(context.toString()
 //                    + " must implement OnFragmentInteractionListener");
@@ -157,64 +204,109 @@ public class TravelCountriesFragment extends Fragment implements OnCountryClickL
 //    }
 //
 //    @Override
-//    public void onDetach()
-//    {
+//    public void onDetach() {
 //        super.onDetach();
-//        mListener = null;
+//        onFragmentInteractionListener = null;
+//    }
+
+
+//    @Override
+//    public void onCompleteLoadCountries() {
+//        adapter = new CountriesAdapter(getContext(), CountriesContent.COUNTRIES, this);
+//        recyclerView.setAdapter(adapter);
+//        progressBar.setVisibility(View.GONE);
+//    }
+
+//    public void setOnCompleteLoadCountriesListener(OnCompleteLoadCountriesListener callback) {
+//        this.callback = callback;
 //    }
 //
-//    /**
-//     * This interface must be implemented by activities that contain this
-//     * fragment to allow an interaction in this fragment to be communicated
-//     * to the activity and potentially other fragments contained in that
-//     * activity.
-//     * <p>
-//     * See the Android Training lesson <a href=
-//     * "http://developer.android.com/training/basics/fragments/communicating.html"
-//     * >Communicating with Other Fragments</a> for more information.
-//     */
+
+
+//    @Override
+//    public void onCompleteLoadCountries()
+//    {
+//        adapter = new CountriesAdapter(getContext(), CountriesContent.COUNTRIES, this);
+//        recyclerView.setAdapter(adapter);
+//        progressBar.setVisibility(View.GONE);
+//    }
+
+//    public void setOnCompleteLoadCountriesListener(OnCompleteLoadCountriesListener callback) {
+//        this.callback = callback;
+//    }
+
+//    public interface OnCompleteLoadCountriesListener {
+//        void onCompleteLoadCountries();
+//    }
+
+
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
 //    public interface OnFragmentInteractionListener
 //    {
 //        // TODO: Update argument type and name
-//        void onFragmentInteraction(Uri uri);
+//        List<CountryModel> onFragmentInteraction();
 //    }
 
-    private void loadCountries()
-    {
-        CountriesContent.clear();
-        List<CountryModel> cachedMovies = RoomDatabase.getDatabase(getActivity()).countryDao().getCountries();
-        CountriesContent.COUNTRIES.addAll(cachedMovies);
-        adapter = new CountriesAdapter(getContext(), CountriesContent.COUNTRIES, this);
-        recyclerView.setAdapter(adapter);
 
-        if (cachedMovies.size() == 0)
-            progressBar.setVisibility(View.VISIBLE);
+//    private void loadCountries()
+//    {
+//        TravelActivity.loadCountries(getContext(), progressBar);
 
-        CountryService countryService = RestClientManager.getCountryServiceInstance(getContext());
-        countryService.getCountries().enqueue(new Callback<List<Country>>()
-        {
-            @Override
-            public void onResponse(Call<List<Country>> call, Response<List<Country>> response)
-            {
-                Log.i("response", "response");
-                progressBar.setVisibility(View.GONE);
+//        adapter = new CountriesAdapter(getContext(), CountriesContent.COUNTRIES, this);
+//        recyclerView.setAdapter(adapter);
+//    }
 
-                if (response.code() == 200 && response.body() != null)
-                {
-                    CountriesContent.clear();
-                    CountriesContent.COUNTRIES.addAll(CountryModelConverter.convertResult(response.body()));
-                    adapter.setData(CountriesContent.COUNTRIES);
-//                    RoomDatabase.getDatabase(getActivity()).countryDao().deleteAll();
-                    RoomDatabase.getDatabase(getActivity()).countryDao().insertAll(CountriesContent.COUNTRIES);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Country>> call, Throwable t)
-            {
-                progressBar.setVisibility(View.GONE);
-                Log.i("failure", t.getMessage());
-            }
-        });
-    }
+//    private void loadCountries()
+//    {
+//        CountriesContent.clear();
+//        List<CountryModel> cachedMovies = RoomDatabase.getDatabase(getActivity()).countryDao().getCountries();
+//        CountriesContent.COUNTRIES.addAll(cachedMovies);
+//
+//        if (CountriesContent.COUNTRIES.size() == 0)
+//        {
+//            progressBar.setVisibility(View.VISIBLE);
+//
+//            CountryService countryService = RestClientManager.getCountryServiceInstance(CountryService.BASE_API_URL);
+//            countryService.getCountries().enqueue(new Callback<List<Country>>()
+//            {
+//                @Override
+//                public void onResponse(Call<List<Country>> call, Response<List<Country>> response)
+//                {
+//                    Log.i("response", "response");
+//
+//                    if (response.code() == 200 && response.body() != null)
+//                    {
+//                        CountriesContent.clear();
+//                        CountriesContent.COUNTRIES.addAll(CountryModelConverter.convertResult(response.body()));
+//                        adapter.setData(CountriesContent.COUNTRIES);
+//                        RoomDatabase.getDatabase(getActivity()).countryDao().deleteAll();
+//                        RoomDatabase.getDatabase(getActivity()).countryDao().insertAll(CountriesContent.COUNTRIES);
+//                    }
+//
+//                    progressBar.setVisibility(View.GONE);
+//                }
+//
+//                @Override
+//                public void onFailure(Call<List<Country>> call, Throwable t)
+//                {
+//                    progressBar.setVisibility(View.GONE);
+//                    Log.i("failure", t.getMessage());
+//                }
+//            });
+//        }
+//        else {
+//            adapter = new CountriesAdapter(getContext(), CountriesContent.COUNTRIES, this);
+//            recyclerView.setAdapter(adapter);
+//        }
+//    }
 }

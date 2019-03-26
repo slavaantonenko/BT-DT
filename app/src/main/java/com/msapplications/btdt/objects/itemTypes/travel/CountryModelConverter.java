@@ -1,5 +1,7 @@
 package com.msapplications.btdt.objects.itemTypes.travel;
 
+import com.msapplications.btdt.interfaces.CountryService;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,10 +26,10 @@ public class CountryModelConverter
                         country.getLatlng().get(1),
                         country.getArea(),
                         country.getTimezones().get(0),
-                        getCurrencies1(country.getCurrencies()),
+                        getCurrenciesFromList(country.getCurrencies()),
                         getLanguages(country.getLanguages(), false),
                         getLanguages(country.getLanguages(), true),
-                        "https://www.countryflags.io/" + country.getAlpha2Code() + "/flat/64.png"));
+                        CountryService.BASE_FLAGS_URL + country.getAlpha2Code() + "/flat/64.png"));
         }
 
         return result;
@@ -38,7 +40,7 @@ public class CountryModelConverter
      * @param currenciesList
      * @return
      */
-    private static String getCurrencies1(List<Currency> currenciesList)
+    private static String getCurrenciesFromList(List<Currency> currenciesList)
     {
         StringBuilder currencies = new StringBuilder();
 

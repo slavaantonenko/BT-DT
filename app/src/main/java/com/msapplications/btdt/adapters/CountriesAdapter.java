@@ -1,8 +1,10 @@
 package com.msapplications.btdt.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.PictureDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,7 +40,7 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
     private Picasso picasso;
     private OnCountryClickListener countryClickListener;
 
-    public CountriesAdapter(Context context, List<CountryModel> items, OnCountryClickListener countryClickListener)
+    public  CountriesAdapter(Context context, List<CountryModel> items, OnCountryClickListener countryClickListener)
     {
         this.context = context;
         this.countryClickListener = countryClickListener;
@@ -106,7 +108,53 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
         notifyDataSetChanged();
     }
 
+    public List<CountryModel> getCountries() {
+        return countries;
+    }
+
     public CountryModel getItem(int position) {
         return countries.get(position);
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    public void updateTravelListCountries(final List<CountryModel> travelListCountries)
+    {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected void onPreExecute() {
+                //...
+            }
+
+            @Override
+            protected Void doInBackground(Void... voids)
+            {
+                for (CountryModel country : travelListCountries)
+                {
+                    for (CountryModel adapterCountry : countries)
+                    {
+                        if (country.getId() == adapterCountry.getId())
+                        {
+                            adapterCountry.setInTravelList(true);
+
+                            if (adapterCountry.getImage() == null)
+                                adapterCountry.setImage(country.getImage());
+                        }
+                        else
+                            adapterCountry.setInTravelList(false);
+                    }
+                }
+
+                Log.d("Background Task", "Finished update countries adapter!");
+
+                return null;
+            }
+
+            @Override
+            protected void onProgressUpdate(Void... progress) {}
+
+            @Override
+            protected void onPostExecute(Void result) { }
+
+        }.execute();
     }
 }

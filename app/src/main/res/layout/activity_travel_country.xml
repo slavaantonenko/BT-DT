@@ -27,6 +27,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/ic_flag_sample" />
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabCountry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:scaleType="center"
+            app:backgroundTint="@color/colorAccent"
+            app:elevation="10dp"
+            app:layout_constraintBottom_toBottomOf="@id/mapCountry"
+            app:layout_constraintTop_toBottomOf="@id/mapCountry"
+            app:layout_constraintEnd_toEndOf="@id/mapCountry"
+            app:srcCompat="@drawable/ic_flight" />
+
         <TextView
             android:id="@+id/tvCountryName"
             android:layout_width="wrap_content"
@@ -34,8 +47,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginStart="15dp"
             android:text="Germany"
-            android:textSize="20sp"
-            android:textStyle="bold"
+            android:textSize="30sp"
             android:textColor="@android:color/black"
             app:layout_constraintTop_toBottomOf="@id/mapCountry"
             app:layout_constraintStart_toStartOf="parent" />

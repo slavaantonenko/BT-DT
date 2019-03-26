@@ -37,6 +37,7 @@ public class CommonValues
     public static final int ADD_CINEMA_REQUEST_CODE = 1;
     public static final int EDIT_HALL_REQUEST_CODE = 2;
     public static final int RENAME_CATEGORY_RESULT_CODE = 1;
+    public static final int ADDED_TO_TRAVEL_LIST = 1;
 
     // Global Strings
     public static final String NOTE = "Note";
@@ -50,7 +51,7 @@ public class CommonValues
     // Preferences
     public static final String FIRST_USE = "firstUse";
     public static final ArrayList<CategoryType> COMING_SOON_FEATURES = new ArrayList<CategoryType>(){{
-        add(CategoryType.TRAVEL);
+//        add(CategoryType.TRAVEL);
         add(CategoryType.RECIPES);
     }};
     public static final HashMap<CategoryType, String> COMING_SOON_FEATURES_DATES = new HashMap<CategoryType, String>() {{
@@ -63,4 +64,5 @@ public class CommonValues
     }};
     public static final String TRAVEL_FEATURE_AVAILABLE = "travelFeatureAvailable";
     public static final String RECIPES_FEATURE_AVAILABLE = "recipesFeatureAvailable";
+    public static final String TRAVEL_LIST_CHANGED = "travelListChanged";
 }

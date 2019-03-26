@@ -4,6 +4,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -31,6 +32,9 @@ public class CountryModel implements Parcelable
     private String language;
     private String nativeLanguage;
     private String flag;
+    private boolean isInTravelList;
+    private String image;
+    private boolean beenThere;
 
     public CountryModel(int id, String name, String nativeName, String code, String secondaryCode, String callingCode,
                         String capital, String region, Integer population, Double latitude, Double longitude, Double area,
@@ -53,6 +57,8 @@ public class CountryModel implements Parcelable
         this.language = language;
         this.nativeLanguage = nativeLanguage;
         this.flag = flag;
+        isInTravelList = false;
+        beenThere = false;
     }
 
     // Parcelling part
@@ -76,6 +82,9 @@ public class CountryModel implements Parcelable
         language = in.readString();
         nativeLanguage = in.readString();
         flag = in.readString();
+        isInTravelList = in.readByte() != 0;
+        image = in.readString();
+        beenThere = in.readByte() != 0;
     }
 
     public static final Parcelable.Creator<CountryModel> CREATOR = new Parcelable.Creator<CountryModel>()
@@ -117,5 +126,8 @@ public class CountryModel implements Parcelable
         dest.writeString(language);
         dest.writeString(nativeLanguage);
         dest.writeString(flag);
+        dest.writeByte((byte) (isInTravelList ? 1 : 0));
+        dest.writeString(image);
+        dest.writeByte((byte) (beenThere ? 1 : 0));
     }
 }

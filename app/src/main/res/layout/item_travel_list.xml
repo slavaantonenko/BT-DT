@@ -32,7 +32,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
-
         <ImageView
             android:id="@+id/ivRemoveFromTravelList"
             android:layout_width="30dp"
@@ -54,7 +53,7 @@
             android:focusable="true"
             app:layout_constraintBottom_toBottomOf="@id/ivRemoveFromTravelList"
             app:layout_constraintEnd_toStartOf="@id/ivRemoveFromTravelList"
-            app:srcCompat="@drawable/ic_unchecked_circle" />
+            app:srcCompat="@drawable/ic_flight_take_off" />
 
     </android.support.constraint.ConstraintLayout>
 

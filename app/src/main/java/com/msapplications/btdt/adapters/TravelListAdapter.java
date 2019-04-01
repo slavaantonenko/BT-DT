@@ -51,9 +51,9 @@ public class TravelListAdapter extends RecyclerView.Adapter<TravelListAdapter.Vi
             picasso.load(country.getImage()).fit().into(ivCountryImage);
 
             if (country.isBeenThere())
-                ivBeenThere.setImageDrawable(context.getDrawable(R.drawable.ic_checked));
+                ivBeenThere.setImageDrawable(context.getDrawable(R.drawable.ic_flight_land));
             else
-                ivBeenThere.setImageDrawable(context.getDrawable(R.drawable.ic_unchecked_circle));
+                ivBeenThere.setImageDrawable(context.getDrawable(R.drawable.ic_flight_take_off));
 
         }
 

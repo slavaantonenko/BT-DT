@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvNativeName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="5dp"
+        android:text="Native Name:  "
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:id="@+id/tvNativeNameValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="Deutschland"
+        android:textSize="15sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toTopOf="@id/tvNativeName"
+        app:layout_constraintStart_toEndOf="@id/tvNativeName"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvCapitalCity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Capital City:  "
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/tvNativeNameValue"
+        app:layout_constraintStart_toStartOf="@id/tvNativeName" />
+
+    <TextView
+        android:id="@+id/tvCapitalCityName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="Berlin"
+        android:textSize="15sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toTopOf="@id/tvCapitalCity"
+        app:layout_constraintStart_toEndOf="@id/tvCapitalCity"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvLanguage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Language:  "
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/tvCapitalCityName"
+        app:layout_constraintStart_toStartOf="@id/tvNativeName" />
+
+    <TextView
+        android:id="@+id/tvLanguageName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="German"
+        android:textSize="15sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toTopOf="@id/tvLanguage"
+        app:layout_constraintStart_toEndOf="@id/tvLanguage"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvNativeLanguage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Native Language Name:  "
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/tvLanguageName"
+        app:layout_constraintStart_toStartOf="@id/tvNativeName" />
+
+    <TextView
+        android:id="@+id/tvNativeLanguageName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="Deutsch"
+        android:textSize="15sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toTopOf="@id/tvNativeLanguage"
+        app:layout_constraintStart_toEndOf="@id/tvNativeLanguage"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvRegion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Region:  "
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/tvNativeLanguageName"
+        app:layout_constraintStart_toStartOf="@id/tvNativeName" />
+
+    <TextView
+        android:id="@+id/tvRegionName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="Europe"
+        android:textSize="15sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toTopOf="@id/tvRegion"
+        app:layout_constraintStart_toEndOf="@id/tvRegion"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvArea"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Area:  "
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/tvRegionName"
+        app:layout_constraintStart_toStartOf="@id/tvNativeName" />
+
+    <TextView
+        android:id="@+id/tvAreaSize"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="357,386 km^2"
+        android:textSize="15sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toTopOf="@id/tvArea"
+        app:layout_constraintStart_toEndOf="@id/tvArea"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvPopulation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Population:  "
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/tvAreaSize"
+        app:layout_constraintStart_toStartOf="@id/tvNativeName" />
+
+    <TextView
+        android:id="@+id/tvPopulationSize"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="83,000,000"
+        android:textSize="15sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toTopOf="@id/tvPopulation"
+        app:layout_constraintStart_toEndOf="@id/tvPopulation"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvCurrency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Currency:  "
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/tvPopulationSize"
+        app:layout_constraintStart_toStartOf="@id/tvNativeName" />
+
+    <TextView
+        android:id="@+id/tvCurrencyValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="Euro (€) (EUR)"
+        android:textSize="15sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toTopOf="@id/tvCurrency"
+        app:layout_constraintStart_toEndOf="@id/tvCurrency"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTimeZone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time zone:  "
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/tvCurrencyValue"
+        app:layout_constraintStart_toStartOf="@id/tvNativeName" />
+
+    <TextView
+        android:id="@+id/tvTimeZoneValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="UTC+1"
+        android:textSize="15sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toTopOf="@id/tvTimeZone"
+        app:layout_constraintStart_toEndOf="@id/tvTimeZone"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvCallingCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Calling code:  "
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/tvTimeZoneValue"
+        app:layout_constraintStart_toStartOf="@id/tvNativeName" />
+
+    <TextView
+        android:id="@+id/tvCallingCodeValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="+49"
+        android:textSize="15sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toTopOf="@id/tvCallingCode"
+        app:layout_constraintStart_toEndOf="@id/tvCallingCode"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvCountryCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Country code:  "
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/tvCallingCodeValue"
+        app:layout_constraintStart_toStartOf="@id/tvNativeName" />
+
+    <TextView
+        android:id="@+id/tvCountryCodeValues"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="DE"
+        android:textSize="15sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toTopOf="@id/tvCountryCode"
+        app:layout_constraintStart_toEndOf="@id/tvCountryCode"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

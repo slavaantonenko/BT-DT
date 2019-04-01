@@ -1,14 +1,11 @@
 package com.msapplications.btdt.activities;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,13 +17,9 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.gson.Gson;
 import com.google.maps.android.data.Geometry;
 import com.google.maps.android.data.geojson.GeoJsonLayer;
 import com.google.maps.android.data.geojson.GeoJsonMultiPolygon;
@@ -37,14 +30,13 @@ import com.msapplications.btdt.R;
 import com.msapplications.btdt.Utils;
 import com.msapplications.btdt.interfaces.CountryService;
 import com.msapplications.btdt.interfaces.OnFloatingActionClick;
-import com.msapplications.btdt.objects.itemTypes.travel.CountriesContent;
-import com.msapplications.btdt.objects.itemTypes.travel.CountriesCoordinates;
-import com.msapplications.btdt.objects.itemTypes.travel.CountriesCoordinatesResults;
 import com.msapplications.btdt.objects.itemTypes.travel.CountryImagesList;
 import com.msapplications.btdt.objects.itemTypes.travel.CountryModel;
 import com.msapplications.btdt.rest.RestClientManager;
 import com.msapplications.btdt.room_storage.travel.CountryViewModel;
 import com.squareup.picasso.Picasso;
+
+import net.cachapa.expandablelayout.ExpandableLayout;
 
 import org.json.JSONException;
 
@@ -61,7 +53,9 @@ public class TravelCountryActivity extends AppCompatActivity  implements OnMapRe
     private CountryModel country;
     private Picasso picasso;
     private GoogleMap map;
-    private ImageView ivCountryFlag;
+    private ConstraintLayout clOverview;
+    private ExpandableLayout elOverview;
+    private ImageView ivCountryFlag, ivExpand;
     private FloatingActionButton fabCountry;
     private TextView tvCountryName, tvNativeNameValue, tvCapitalCityName, tvLanguageName, tvNativeLanguageName, tvRegionName,
             tvAreaSize, tvPopulationSize, tvCurrencyValue, tvTimeZoneValue, tvCallingCodeValue, tvCountryCodeValues;
@@ -71,6 +65,9 @@ public class TravelCountryActivity extends AppCompatActivity  implements OnMapRe
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_travel_country);
+        clOverview = findViewById(R.id.clOverview);
+        elOverview = findViewById(R.id.elOverview);
+        ivExpand = findViewById(R.id.ivExpandOverview);
         ivCountryFlag = findViewById(R.id.ivCountryFlag);
         fabCountry = findViewById(R.id.fabCountry);
         tvCountryName = findViewById(R.id.tvCountryName);
@@ -237,6 +234,22 @@ public class TravelCountryActivity extends AppCompatActivity  implements OnMapRe
 
     private void initializeView()
     {
+        clOverview.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                if (elOverview.isExpanded()) {
+                    elOverview.collapse();
+                    ivExpand.setImageResource(R.drawable.ic_collapse);
+                }
+                else {
+                    elOverview.expand();
+                    ivExpand.setImageResource(R.drawable.ic_expand);
+                }
+            }
+        });
+
+
         picasso.load(country.getFlag()).into(ivCountryFlag);
         tvCountryName.setText(country.getName());
         tvNativeNameValue.setText(country.getNativeName());

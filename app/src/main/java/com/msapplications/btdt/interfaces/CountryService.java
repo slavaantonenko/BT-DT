@@ -1,15 +1,13 @@
 package com.msapplications.btdt.interfaces;
 
-import com.msapplications.btdt.APIKeys;
+import com.msapplications.btdt.rest.APIKeys;
 import com.msapplications.btdt.objects.itemTypes.travel.Country;
-import com.msapplications.btdt.objects.itemTypes.travel.CountryImage;
 import com.msapplications.btdt.objects.itemTypes.travel.CountryImagesList;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface CountryService

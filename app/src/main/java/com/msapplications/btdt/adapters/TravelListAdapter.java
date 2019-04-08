@@ -31,8 +31,8 @@ public class TravelListAdapter extends RecyclerView.Adapter<TravelListAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        public ImageView ivCountryImage, ivRemoveFromTravelList, ivBeenThere;
         public TextView tvCountryName;
+        public ImageView ivCountryImage, ivRemoveFromTravelList, ivBeenThere;
 
         public ViewHolder(View view) {
             super(view);
@@ -50,10 +50,14 @@ public class TravelListAdapter extends RecyclerView.Adapter<TravelListAdapter.Vi
             tvCountryName.setText(country.getName());
             picasso.load(country.getImage()).fit().into(ivCountryImage);
 
-            if (country.isBeenThere())
+            if (country.isBeenThere()) {
+                ivCountryImage.setAlpha(0.5f);
                 ivBeenThere.setImageDrawable(context.getDrawable(R.drawable.ic_flight_land));
-            else
+            }
+            else {
+                ivCountryImage.setAlpha(1f);
                 ivBeenThere.setImageDrawable(context.getDrawable(R.drawable.ic_flight_take_off));
+            }
 
         }
 

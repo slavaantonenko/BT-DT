@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -74,6 +75,8 @@ public class TravelListFragment extends Fragment implements OnCountryClickListen
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+
         if (getArguments() != null) {}
     }
 
@@ -89,6 +92,7 @@ public class TravelListFragment extends Fragment implements OnCountryClickListen
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
+
 //        progressBar = view.findViewById(R.id.pbTravelList);
         recyclerView = view.findViewById(R.id.rvTravelList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
@@ -108,6 +112,12 @@ public class TravelListFragment extends Fragment implements OnCountryClickListen
         });
 //        progressBar.setVisibility(View.VISIBLE);
 //        TravelActivity.loadCountries(getContext(), this);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        menu.findItem(R.id.action_filter_countries).setVisible(false);
     }
 
     @Override

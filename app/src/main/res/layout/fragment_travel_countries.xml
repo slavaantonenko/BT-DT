@@ -6,16 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.TravelCountriesFragment">
 
-    <!--<GridView-->
-        <!--android:id="@+id/gvCountries"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:gravity="center"-->
-        <!--android:columnWidth="150dp"-->
-        <!--android:numColumns="3"-->
-        <!--android:horizontalSpacing="15dp"-->
-        <!--android:stretchMode="spacingWidthUniform" />-->
-
     <ProgressBar
         android:id="@+id/pbCountries"
         android:layout_width="56dp"
@@ -30,9 +20,12 @@
         android:id="@+id/rvCountries"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/transparent"
-        android:clipToPadding="false"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"/>
+        android:background="@android:color/transparent" />
+
+    <TextView
+        android:id="@+id/posTest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

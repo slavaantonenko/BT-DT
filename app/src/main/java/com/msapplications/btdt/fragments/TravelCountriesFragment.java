@@ -9,10 +9,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.R;
@@ -20,13 +26,14 @@ import com.msapplications.btdt.Utils;
 import com.msapplications.btdt.activities.TravelCountryActivity;
 import com.msapplications.btdt.adapters.CountriesAdapter;
 //import com.msapplications.btdt.interfaces.OnCompleteLoadCountriesListener;
-import com.msapplications.btdt.interfaces.OnCompleteLoadCountriesListener;
 import com.msapplications.btdt.interfaces.OnCountryClickListener;
 import com.msapplications.btdt.objects.itemTypes.travel.CountriesContent;
 import com.msapplications.btdt.objects.itemTypes.travel.CountryModel;
 import com.msapplications.btdt.room_storage.travel.CountryViewModel;
 
 import java.util.List;
+
+import okhttp3.internal.Util;
 
 ///**
 // * A simple {@link Fragment} subclass.
@@ -84,6 +91,8 @@ public class TravelCountriesFragment extends Fragment implements OnCountryClickL
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -104,20 +113,53 @@ public class TravelCountriesFragment extends Fragment implements OnCountryClickL
         super.onViewCreated(view, savedInstanceState);
         progressBar = view.findViewById(R.id.pbCountries);
         recyclerView = view.findViewById(R.id.rvCountries);
+        final TextView test = view.findViewById(R.id.posTest);
+        test.post(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                test.getX();
+            }
+        });
 
-        int mNoOfColumns = Utils.calculateNoOfColumns(getContext());
+        int contentRowPixels = (int) getResources().getDimension(R.dimen.ic_width) + Utils.dpToPx(getResources(), 20);
+
+//        int mNoOfColumns = Utils.calculateNoOfColumns(getContext(),
+//                (int) getResources().getDimension(R.dimen.ic_width) + Utils.dpToPx(getResources(), 20));
+        int mNoOfColumns = Utils.calculateNoOfColumns(getContext(), contentRowPixels);
+
+        int margin = getResources().getDisplayMetrics().widthPixels % contentRowPixels;
 
 //        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
 //        gridLayoutManager.scrollHorizontallyBy()
-
+//        GridLayout.LayoutParams params =
+//                new GridLayout.LayoutParams(view.getLayoutParams());
+//        params.width = 0;
+//        params.height = 0;
+//        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), mNoOfColumns);
+//        gridLayoutManager.generateLayoutParams(params);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), mNoOfColumns));
+//        recyclerView.setLayoutManager(gridLayoutManager);
+
+
+//        recyclerView.setPaddingRelative(margin / 2, 0, margin / 2, 0);
 //        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
 //        recyclerView.addItemDecoration(new Utils.SpacesItemDecoration(spacingInPixels));
-        Utils.ItemOffsetDecoration itemDecoration = new Utils.ItemOffsetDecoration(getContext(), R.dimen.spacing);
-        recyclerView.addItemDecoration(itemDecoration);
+//        Utils.ItemOffsetDecoration itemDecoration = new Utils.ItemOffsetDecoration(getContext(), R.dimen.recycler_view_grid_spacing);
+//        recyclerView.addItemDecoration(itemDecoration);
 
         adapter = new CountriesAdapter(getContext(), CountriesContent.COUNTRIES, this);
         recyclerView.setAdapter(adapter);
+
+        recyclerView.post(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                recyclerView.getX();
+            }
+        });
 
         countryViewModel = ViewModelProviders.of(this).get(CountryViewModel.class);
         countryViewModel.getTravelListCountries().observe(this, new Observer<List<CountryModel>>()
@@ -153,6 +195,35 @@ public class TravelCountriesFragment extends Fragment implements OnCountryClickL
 //        progressBar.setVisibility(View.VISIBLE);
 //        TravelActivity.loadCountries(getContext(), this);
 //        onFragmentInteractionListener.onFragmentInteraction();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+        inflater.inflate(R.menu.menu_travel, menu);
+
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_filter_countries).getActionView();
+        searchView.setIconified(true);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
+        {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                adapter.filter(s);
+                return false;
+            }
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

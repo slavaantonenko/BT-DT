@@ -28,6 +28,7 @@ import com.squareup.picasso.Picasso;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /*
 not used until travel category is implemented
@@ -37,6 +38,7 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
     private LayoutInflater inflater;
     private Context context;
     private List<CountryModel> countries;
+    private List<CountryModel> originList;
     private Picasso picasso;
     private OnCountryClickListener countryClickListener;
 
@@ -46,6 +48,7 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
         this.countryClickListener = countryClickListener;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         countries = new ArrayList<>(items);
+        originList = new ArrayList<>(items); // This is for filter
         picasso = Picasso.get();
     }
 
@@ -53,12 +56,23 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
     {
         private final ImageView ivFlag;
         private final TextView tvName;
+        View view1;
 
         public ViewHolder(View view)
         {
             super(view);
             ivFlag = view.findViewById(R.id.ivCountryFlagItem);
             tvName = view.findViewById(R.id.tvCountryName);
+//            view1 = view;
+//
+//            view1.post(new Runnable()
+//            {
+//                @Override
+//                public void run()
+//                {
+//                    view1.getX();
+//                }
+//            });
             view.setOnClickListener(this);
         }
 
@@ -114,6 +128,26 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
 
     public CountryModel getItem(int position) {
         return countries.get(position);
+    }
+
+    // Filter countries list according to searched text.
+    public void filter(String str)
+    {
+        str = str.toLowerCase(Locale.getDefault());
+
+        if (str.length() == 0 && originList.size() > countries.size()) {
+            countries.clear();
+            countries.addAll(originList);
+        }
+        else if (str.length() > 0)
+        {
+            countries.clear();
+            for (CountryModel country : originList)
+                if (country.getName().toLowerCase(Locale.getDefault()).startsWith(str))
+                    countries.add(country);
+        }
+
+        notifyDataSetChanged();
     }
 
     @SuppressLint("StaticFieldLeak")

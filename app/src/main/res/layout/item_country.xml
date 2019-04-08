@@ -8,21 +8,21 @@
 
     <ImageView
         android:id="@+id/ivCountryFlagItem"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="@dimen/ic_width"
+        android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         tools:src="@drawable/ic_flag_sample" />
 
     <TextView
         android:id="@+id/tvCountryName"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/ic_width"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
-        android:textSize="15sp"
         android:gravity="center"
+        android:textSize="15sp"
+        android:textColor="@android:color/black"
         tools:text="Germany"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivCountryFlagItem"/>
+        app:layout_constraintTop_toBottomOf="@id/ivCountryFlagItem"
+        app:layout_constraintStart_toStartOf="@id/ivCountryFlagItem"
+        app:layout_constraintEnd_toEndOf="@id/ivCountryFlagItem" />
 
 </android.support.constraint.ConstraintLayout>

@@ -15,7 +15,7 @@ import java.util.List;
 @Dao
 public interface CountryDao
 {
-    @Query("SELECT * from countries_table WHERE isInTravelList=1")
+    @Query("SELECT * from countries_table WHERE isInTravelList=1 ORDER BY beenThere")
     LiveData<List<CountryModel>> getTravelListCountries();
 
     @Query("SELECT * from countries_table")

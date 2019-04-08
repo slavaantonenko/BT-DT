@@ -241,11 +241,12 @@ public class Utils
         viewModelDeletable.deleteCategory(id);
     }
 
-    public static int calculateNoOfColumns(Context context)
+    public static int calculateNoOfColumns(Context context, int itemWidth)
     {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        float dpWidth = displayMetrics.widthPixels / displayMetrics.density; //- Utils.dpToPx(context.getResources() ,40);
-        return (int) (dpWidth / 100);
+//        float dpWidth = displayMetrics.widthPixels / displayMetrics.density; //- Utils.dpToPx(context.getResources() ,40);
+//        return (int) (dpWidth / 100);
+        return displayMetrics.widthPixels / itemWidth;
     }
 
     /**
@@ -315,8 +316,8 @@ public class Utils
         }
     }
 
-    public static class ItemOffsetDecoration extends RecyclerView.ItemDecoration {
-
+    public static class ItemOffsetDecoration extends RecyclerView.ItemDecoration
+    {
         private int mItemOffset;
 
         public ItemOffsetDecoration(int itemOffset) {

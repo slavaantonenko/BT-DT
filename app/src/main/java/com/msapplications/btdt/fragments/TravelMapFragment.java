@@ -19,6 +19,7 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.text.Html;
 import android.util.JsonReader;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -105,6 +106,8 @@ public class TravelMapFragment extends Fragment implements OnMapReadyCallback
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -127,6 +130,13 @@ public class TravelMapFragment extends Fragment implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        menu.findItem(R.id.action_filter_countries).setVisible(false);
+    }
+
 
     /**
      * Manipulates the map once available.

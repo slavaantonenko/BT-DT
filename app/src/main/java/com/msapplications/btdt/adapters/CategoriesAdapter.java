@@ -24,7 +24,7 @@ import android.widget.TextView;
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.Utils;
 import com.msapplications.btdt.interfaces.OnCategoryClickListener;
-import com.msapplications.btdt.interfaces.OnCategoryMenuClickListener;
+import com.msapplications.btdt.interfaces.OnObjectMenuClickListener;
 import com.msapplications.btdt.interfaces.OnMenuItemClickListener;
 import com.msapplications.btdt.R;
 import com.msapplications.btdt.objects.Category;
@@ -40,14 +40,13 @@ import cn.iwgang.countdownview.CountdownView;
 import nl.dionsegijn.konfetti.KonfettiView;
 import nl.dionsegijn.konfetti.models.Shape;
 import nl.dionsegijn.konfetti.models.Size;
-import okhttp3.internal.Util;
 
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.ViewHolder>
 {
     private Context context;
     private List<Category> categoriesList;
     private OnCategoryClickListener categoryClickListener;
-    private OnCategoryMenuClickListener categoryMenuClickListener;
+    private OnObjectMenuClickListener categoryMenuClickListener;
     private OnMenuItemClickListener menuItemClickListener;
     private int adapterPosition = -1;
     private int viewPositionAtCreation = -1;
@@ -56,7 +55,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
     {
         this.context = context;
         categoryClickListener = (OnCategoryClickListener) context;
-        categoryMenuClickListener = (OnCategoryMenuClickListener) context;
+        categoryMenuClickListener = (OnObjectMenuClickListener) context;
         menuItemClickListener = (OnMenuItemClickListener) context;
     }
 
@@ -157,7 +156,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
                     if (categoryMenuClickListener == null)
                         return;
 
-                    categoryMenuClickListener.onCategoryMenuClick(view, getAdapterPosition());
+                    categoryMenuClickListener.onObjectMenuClick(view, getAdapterPosition());
                     break;
             }
         }

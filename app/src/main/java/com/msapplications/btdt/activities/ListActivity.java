@@ -108,7 +108,7 @@ public class ListActivity extends AppCompatActivity
                 openFragment(new NotesFragment().newInstance(categoryName, categoryID), CommonValues.NOTES_FRAGMENT);
                 break;
             case RECIPES:
-                openFragment(new RecipesFragment(), CommonValues.RECIPES_FRAGMENT);
+                openFragment(new RecipesFragment().newInstance(categoryName), CommonValues.RECIPES_FRAGMENT);
                 break;
             case CINEMA_SEATS:
                 openFragment(new CinemaSeatsFragment().newInstance(categoryName), CommonValues.CINEMA_SEATS_FRAGMENT);

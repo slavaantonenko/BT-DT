@@ -8,7 +8,7 @@
     tools:context=".fragments.RecipesFragment">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvReipes"
+        android:id="@+id/rvRecipes"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"/>

@@ -13,9 +13,13 @@
         android:layout_height="match_parent">
 
         <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/recipe_preview"
             android:layout_width="match_parent"
-            android:layout_height="170dp"
-            tools:src="@drawable/cinema_city"/>
+            android:layout_height="160dp"
+            android:src="@drawable/recipe_default"
+            android:scaleType="center"
+            android:fitsSystemWindows="true"/>
+
         <Button
             android:id="@+id/btn_color_recipe"
             android:layout_width="@dimen/btn_size_recipe"
@@ -27,6 +31,7 @@
             tools:background="@color/colorPrimary"/>
 
         <TextView
+            android:id="@+id/recipe_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textSize="@dimen/tv_recipe_name"
@@ -34,7 +39,17 @@
             android:layout_margin="5dp"
             app:layout_constraintStart_toEndOf="@id/btn_color_recipe"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:text="yam anyma"/>
+            tools:text="pizza"/>
+
+        <ImageView
+            android:id="@+id/overflow"
+            android:layout_width="@dimen/cc_ic_category_overflow_width"
+            android:layout_height="@dimen/cc_ic_category_overflow_height"
+            android:layout_marginTop="@dimen/cc_overflow_margin_top"
+            android:scaleType="centerCrop"
+            app:layout_constraintTop_toTopOf="@id/recipe_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_menu_dots" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

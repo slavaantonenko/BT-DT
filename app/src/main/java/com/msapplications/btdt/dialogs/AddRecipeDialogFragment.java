@@ -1,5 +1,6 @@
 package com.msapplications.btdt.dialogs;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,11 +15,17 @@ import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.R;
 import com.msapplications.btdt.Utils;
 import com.msapplications.btdt.objects.itemTypes.cinema.Cinema;
+import com.msapplications.btdt.objects.itemTypes.recipes.Recipe;
+import com.msapplications.btdt.room_storage.recipe.RecipeViewModel;
+
+import java.util.OptionalDouble;
 
 import static android.app.Activity.RESULT_OK;
 
 public class AddRecipeDialogFragment extends DialogFragment
 {
+    private RecipeViewModel recipeViewModel = null;
+
     public AddRecipeDialogFragment() {
         // Required empty public constructor
     }
@@ -32,13 +39,14 @@ public class AddRecipeDialogFragment extends DialogFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        return inflater.inflate(R.layout.dialog_add_cinema, container, false);
+        return inflater.inflate(R.layout.dialog_add_recipe, container, false);
     }
 
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
+        recipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
         initializeDialog(view);
 
 //        cinemaViewModel = ViewModelProviders.of(this).get(CinemaViewModel.class);
@@ -54,10 +62,10 @@ public class AddRecipeDialogFragment extends DialogFragment
 
     private void initializeDialog(View view)
     {
-        final Button btnSaveCinema = view.findViewById(R.id.btnSaveCinema);
+        final Button btnSaveRecipe = view.findViewById(R.id.btnSaveRecipe);
         final EditText etRecipeName = view.findViewById(R.id.etNewRecipeName);
 
-        btnSaveCinema.setOnClickListener(new View.OnClickListener()
+        btnSaveRecipe.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -71,8 +79,8 @@ public class AddRecipeDialogFragment extends DialogFragment
 
                 int color = Utils.randomColor(getContext());
 
-//                getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, new Intent());
-//                cinemaViewModel.insert(new Cinema(0, cinemaName, cinemaCity.toString(), logoID));
+                getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, new Intent());
+                recipeViewModel.insert(new Recipe(0, recipeName, color));
                 dismiss();
             }
         });

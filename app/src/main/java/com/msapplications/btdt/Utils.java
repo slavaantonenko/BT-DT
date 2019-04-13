@@ -37,6 +37,7 @@ import com.msapplications.btdt.room_storage.category.CategoryViewModel;
 import com.msapplications.btdt.room_storage.cinema.CinemaHallsViewModel;
 import com.msapplications.btdt.room_storage.cinema.CinemaViewModel;
 import com.msapplications.btdt.room_storage.note.NoteItemViewModel;
+import com.msapplications.btdt.room_storage.recipe.RecipeViewModel;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -243,6 +244,11 @@ public class Utils
     public static void deleteCategory(ViewModelDeletable viewModelDeletable, int id) {
         viewModelDeletable.deleteCategory(id);
     }
+
+    public static void deleteRecipe(RecipeViewModel recipeViewModel, int id) {
+        recipeViewModel.deleteRecipe(id);
+    }
+
 
     public static int calculateNoOfColumns(Context context)
     {

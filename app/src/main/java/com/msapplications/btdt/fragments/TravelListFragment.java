@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.R;
@@ -47,6 +48,7 @@ import retrofit2.Response;
 public class TravelListFragment extends Fragment implements OnCountryClickListener
 {
     private TravelListAdapter adapter;
+    private TextView tvEmptyList;
     private RecyclerView recyclerView;
     private CountryViewModel countryViewModel;
 
@@ -93,11 +95,10 @@ public class TravelListFragment extends Fragment implements OnCountryClickListen
     {
         super.onViewCreated(view, savedInstanceState);
 
-//        progressBar = view.findViewById(R.id.pbTravelList);
+        tvEmptyList = view.findViewById(R.id.tvEmptyList);
         recyclerView = view.findViewById(R.id.rvTravelList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-//        adapter = new TravelListAdapter(CountriesContent.getTravelListCountries());
         adapter = new TravelListAdapter(getContext(), this);
         recyclerView.setAdapter(adapter);
 
@@ -107,11 +108,14 @@ public class TravelListFragment extends Fragment implements OnCountryClickListen
             @Override
             public void onChanged(@Nullable List<CountryModel> countries)
             {
+                if (countries != null && countries.size() == 0)
+                    tvEmptyList.setVisibility(View.VISIBLE);
+                else if (tvEmptyList.getVisibility() != View.GONE)
+                    tvEmptyList.setVisibility(View.GONE);
+
                 adapter.setCountries(countries);
             }
         });
-//        progressBar.setVisibility(View.VISIBLE);
-//        TravelActivity.loadCountries(getContext(), this);
     }
 
     @Override
@@ -146,56 +150,4 @@ public class TravelListFragment extends Fragment implements OnCountryClickListen
         intent.putExtra(CommonValues.COUNTRY_EXTRA, country);
         startActivityForResult(intent, CommonValues.ADDED_TO_TRAVEL_LIST);
     }
-
-    //    @Override
-//    public void onCompleteLoadCountries()
-//    {
-//        adapter = new TravelListAdapter(CountriesContent.getTravelListCountries());
-//        recyclerView.setAdapter(adapter);
-//        progressBar.setVisibility(View.GONE);
-//    }
-
-//    private void loadCountries()
-//    {
-//        TravelActivity.loadCountries(getContext(), progressBar);
-//    }
-
-//    private void loadCountries()
-//    {
-//        CountriesContent.clear();
-//        List<CountryModel> cachedMovies = RoomDatabase.getDatabase(getActivity()).countryDao().getCountries();
-//        CountriesContent.COUNTRIES.addAll(cachedMovies);
-//        adapter = new CountriesAdapter(getContext(), CountriesContent.COUNTRIES, this);
-//        recyclerView.setAdapter(adapter);
-//
-//        if (cachedMovies.size() == 0)
-//            progressBar.setVisibility(View.VISIBLE);
-//
-//        CountryService countryService = RestClientManager.getCountryServiceInstance(CountryService.BASE_API_URL);
-//        countryService.getCountries().enqueue(new Callback<List<Country>>()
-//        {
-//            @Override
-//            public void onResponse(Call<List<Country>> call, Response<List<Country>> response)
-//            {
-//                Log.i("response", "response");
-//                progressBar.setVisibility(View.GONE);
-//
-//                if (response.code() == 200 && response.body() != null)
-//                {
-//                    CountriesContent.clear();
-//                    CountriesContent.COUNTRIES.addAll(CountryModelConverter.convertResult(response.body()));
-//                    adapter.setData(CountriesContent.COUNTRIES);
-//                    RoomDatabase.getDatabase(getActivity()).countryDao().deleteAll();
-//                    RoomDatabase.getDatabase(getActivity()).countryDao().insertAll(CountriesContent.COUNTRIES);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Country>> call, Throwable t)
-//            {
-//                progressBar.setVisibility(View.GONE);
-//                Log.i("failure", t.getMessage());
-//            }
-//        });
-//    }
 }

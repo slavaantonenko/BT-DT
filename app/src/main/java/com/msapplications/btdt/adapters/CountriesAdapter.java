@@ -17,7 +17,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.StreamEncoder;
+import com.google.android.gms.common.util.CollectionUtils;
+import com.google.android.gms.common.util.Predicate;
 import com.msapplications.btdt.R;
+import com.msapplications.btdt.Utils;
 import com.msapplications.btdt.interfaces.OnCountryClickListener;
 import com.msapplications.btdt.objects.itemTypes.cinema.Cinema;
 import com.msapplications.btdt.objects.itemTypes.travel.Country;
@@ -27,6 +30,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -36,15 +40,13 @@ not used until travel category is implemented
 public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.ViewHolder>
 {
     private LayoutInflater inflater;
-    private Context context;
     private List<CountryModel> countries;
     private List<CountryModel> originList;
     private Picasso picasso;
     private OnCountryClickListener countryClickListener;
 
-    public  CountriesAdapter(Context context, List<CountryModel> items, OnCountryClickListener countryClickListener)
+    public CountriesAdapter(Context context, List<CountryModel> items, OnCountryClickListener countryClickListener)
     {
-        this.context = context;
         this.countryClickListener = countryClickListener;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         countries = new ArrayList<>(items);
@@ -56,23 +58,12 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
     {
         private final ImageView ivFlag;
         private final TextView tvName;
-        View view1;
 
         public ViewHolder(View view)
         {
             super(view);
             ivFlag = view.findViewById(R.id.ivCountryFlagItem);
             tvName = view.findViewById(R.id.tvCountryName);
-//            view1 = view;
-//
-//            view1.post(new Runnable()
-//            {
-//                @Override
-//                public void run()
-//                {
-//                    view1.getX();
-//                }
-//            });
             view.setOnClickListener(this);
         }
 
@@ -162,20 +153,25 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
             @Override
             protected Void doInBackground(Void... voids)
             {
-                for (CountryModel country : travelListCountries)
+                for (final CountryModel adapterCountry : countries)
                 {
-                    for (CountryModel adapterCountry : countries)
-                    {
-                        if (country.getId() == adapterCountry.getId())
-                        {
-                            adapterCountry.setInTravelList(true);
 
-                            if (adapterCountry.getImage() == null)
-                                adapterCountry.setImage(country.getImage());
+                    Predicate<CountryModel> isInList = new Predicate<CountryModel>() {
+                        public boolean apply(CountryModel countryModel) {
+                            // binds a boolean method in User to a reference
+                            return countryModel.getId() == adapterCountry.getId();
                         }
-                        else
-                            adapterCountry.setInTravelList(false);
+                    };
+
+                    List<CountryModel> sameCountry = Utils.filter(travelListCountries, isInList);
+
+                    if(sameCountry.size() != 0) {
+                        adapterCountry.setInTravelList(true);
+                        if (adapterCountry.getImage() == null)
+                            adapterCountry.setImage(sameCountry.get(0).getImage());
                     }
+                    else
+                        adapterCountry.setInTravelList(false);
                 }
 
                 Log.d("Background Task", "Finished update countries adapter!");

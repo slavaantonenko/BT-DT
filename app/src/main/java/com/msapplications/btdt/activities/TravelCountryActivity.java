@@ -53,12 +53,12 @@ public class TravelCountryActivity extends AppCompatActivity  implements OnMapRe
     private CountryModel country;
     private Picasso picasso;
     private GoogleMap map;
-    private ConstraintLayout clOverview;
-    private ExpandableLayout elOverview;
-    private ImageView ivCountryFlag, ivExpand;
+    private ConstraintLayout clOverview, clWhenToTravel;
+    private ExpandableLayout elOverview, elWhenToTravel;
+    private ImageView ivCountryFlag, ivCountryClose, ivExpandOverview, ivWhenToTravel;
     private FloatingActionButton fabCountry;
     private TextView tvCountryName, tvNativeNameValue, tvCapitalCityName, tvLanguageName, tvNativeLanguageName, tvRegionName,
-            tvAreaSize, tvPopulationSize, tvCurrencyValue, tvTimeZoneValue, tvCallingCodeValue, tvCountryCodeValues;
+            tvAreaSize, tvPopulationSize, tvCurrencyValue, tvTimeZoneValue, tvCallingCodeValue, tvCountryCodeValues, tvWhenToTravel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -66,9 +66,13 @@ public class TravelCountryActivity extends AppCompatActivity  implements OnMapRe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_travel_country);
         clOverview = findViewById(R.id.clOverview);
+        ivExpandOverview = findViewById(R.id.ivExpandOverview);
         elOverview = findViewById(R.id.elOverview);
-        ivExpand = findViewById(R.id.ivExpandOverview);
+        clWhenToTravel = findViewById(R.id.clWhenToTravel);
+        ivWhenToTravel = findViewById(R.id.ivExpandWhenToTravel);
+        elWhenToTravel = findViewById(R.id.elWhenToTravel);
         ivCountryFlag = findViewById(R.id.ivCountryFlag);
+        ivCountryClose = findViewById(R.id.ivCountryClose);
         fabCountry = findViewById(R.id.fabCountry);
         tvCountryName = findViewById(R.id.tvCountryName);
         tvNativeNameValue = findViewById(R.id.tvNativeNameValue);
@@ -82,6 +86,7 @@ public class TravelCountryActivity extends AppCompatActivity  implements OnMapRe
         tvTimeZoneValue = findViewById(R.id.tvTimeZoneValue);
         tvCallingCodeValue = findViewById(R.id.tvCallingCodeValue);
         tvCountryCodeValues = findViewById(R.id.tvCountryCodeValues);
+        tvWhenToTravel = findViewById(R.id.tvWhenToTravel);
 
         picasso = Picasso.get();
 
@@ -95,27 +100,7 @@ public class TravelCountryActivity extends AppCompatActivity  implements OnMapRe
 
         countryViewModel = ViewModelProviders.of(this).get(CountryViewModel.class);
         fabCountry.setOnClickListener(onFabClick());
-//        fabCountry.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View v)
-//            {
-//                if (!country.isInTravelList())
-//                {
-//                    Intent resultIntent = new Intent();
-//                    resultIntent.putExtra(CommonValues.COUNTRY_EXTRA, country);
-//                    setResult(CommonValues.ADDED_TO_TRAVEL_LIST, resultIntent);
-//
-//                    country.setInTravelList(true);
-//                    getImage();
-//                    Toast.makeText(getBaseContext(), "Congrats! You just added " + country.getName() + " to your travel list."
-//                            , Toast.LENGTH_LONG).show();
-//                }
-//                else
-//                    Toast.makeText(getBaseContext(), "You already plan to visit " + country.getName()
-//                            , Toast.LENGTH_LONG).show();
-//            }
-//        });
+        ivCountryClose.setOnClickListener(onCountryCloseClick());
     }
 
     /**
@@ -215,19 +200,23 @@ public class TravelCountryActivity extends AppCompatActivity  implements OnMapRe
             {
                 if (!country.isInTravelList())
                 {
-//                    Intent resultIntent = new Intent();
-//                    resultIntent.putExtra(CommonValues.COUNTRY_EXTRA, country);
-//                    setResult(CommonValues.ADDED_TO_TRAVEL_LIST, resultIntent);
-
                     Utils.saveBooleanToCache(getBaseContext(), CommonValues.TRAVEL_LIST_CHANGED, true);
                     country.setInTravelList(true);
-                    getImage();
-                    Toast.makeText(getBaseContext(), "Congrats! You just added " + country.getName() + " to your travel list."
-                            , Toast.LENGTH_LONG).show();
+                    getImage(country.getCapital());
+
                 }
                 else
-                    Toast.makeText(getBaseContext(), "You already plan to visit " + country.getName()
+                    Toast.makeText(getBaseContext(), getString(R.string.already_added_to_travel_list, country.getName())
                             , Toast.LENGTH_LONG).show();
+            }
+        };
+    }
+
+    public View.OnClickListener onCountryCloseClick() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         };
     }
@@ -240,15 +229,30 @@ public class TravelCountryActivity extends AppCompatActivity  implements OnMapRe
             public void onClick(View v) {
                 if (elOverview.isExpanded()) {
                     elOverview.collapse();
-                    ivExpand.setImageResource(R.drawable.ic_collapse);
+                    ivExpandOverview.setImageResource(R.drawable.ic_collapse);
                 }
                 else {
                     elOverview.expand();
-                    ivExpand.setImageResource(R.drawable.ic_expand);
+                    ivExpandOverview.setImageResource(R.drawable.ic_expand);
                 }
             }
         });
 
+        clWhenToTravel.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                if (elWhenToTravel.isExpanded()) {
+                    elWhenToTravel.collapse();
+                    ivWhenToTravel.setImageResource(R.drawable.ic_collapse);
+                }
+                else {
+                    elWhenToTravel.expand();
+                    ivWhenToTravel.setImageResource(R.drawable.ic_expand);
+                }
+            }
+        });
 
         picasso.load(country.getFlag()).into(ivCountryFlag);
         tvCountryName.setText(country.getName());
@@ -263,20 +267,28 @@ public class TravelCountryActivity extends AppCompatActivity  implements OnMapRe
         tvTimeZoneValue.setText(country.getTimezone());
         tvCallingCodeValue.setText(getString(R.string.calling_code, country.getCallingCode()));
         tvCountryCodeValues.setText(getString(R.string.country_codes, country.getCode(), country.getSecondaryCode()));
+        tvWhenToTravel.setText(getResources().getIdentifier(
+                "when_to_travel_to_" + country.getCode().toLowerCase(), "string", getPackageName()));
     }
 
-    private void getImage()
+    private void getImage(final String searchParameter)
     {
         if (country.getImage() == null)
         {
             CountryService countryService = RestClientManager.getCountryServiceInstance(CountryService.BASE_IMAGES_API_URL);
-            countryService.getCountryImages(country.getCapital()).enqueue(new Callback<CountryImagesList>()
+            countryService.getCountryImages(searchParameter).enqueue(new Callback<CountryImagesList>()
             {
                 @Override
                 public void onResponse(Call<CountryImagesList> call, Response<CountryImagesList> response)
                 {
-                    country.setImage(response.body().getHits().get(0).getWebformatURL());
-                    countryViewModel.updateIsInTravelList(country);
+                    if (response.body().getTotalHits() > 0)
+                        country.setImage(response.body().getHits().get(0).getWebformatURL());
+                    else if (!searchParameter.equals(country.getName()))
+                        getImage(country.getName());
+                    else
+                        country.setImage(getString(R.string.default_vacation_image));
+
+                    updateTravelList();
                 }
 
                 @Override
@@ -286,6 +298,17 @@ public class TravelCountryActivity extends AppCompatActivity  implements OnMapRe
                 }
             });
         }
+        else
+            updateTravelList();
+    }
+
+    /**
+     * This method updates travel list data in all screens and shows a message that the country was added to that list.
+     */
+    private void updateTravelList() {
+        countryViewModel.updateIsInTravelList(country);
+        Toast.makeText(getBaseContext(), getString(R.string.added_to_travel_list, country.getName())
+                , Toast.LENGTH_LONG).show();
     }
 
     /**

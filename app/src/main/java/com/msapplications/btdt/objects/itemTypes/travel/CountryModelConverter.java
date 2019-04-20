@@ -14,7 +14,7 @@ public class CountryModelConverter
         {
             if (country.getLatlng().size() == 2)
                 result.add(new CountryModel(0,
-                        country.getName(),
+                        removeBracketStringFromName(country.getName()),
                         country.getNativeName(),
                         country.getAlpha2Code(),
                         country.getAlpha3Code(),
@@ -84,5 +84,24 @@ public class CountryModelConverter
         }
 
         return languages.toString();
+    }
+
+    /**
+     * This method removes string which is between brackets in a name.
+     * @param name full country name.
+     * @return
+     */
+    private static String removeBracketStringFromName(String name)
+    {
+        if (name.contains("(") && name.contains(")"))
+        {
+            int startIndex = name.indexOf("(");
+            int endIndex = name.indexOf(")");
+            String toBeReplaced = name.substring(startIndex, endIndex + 1);
+
+            return name.replace(toBeReplaced, "");
+        }
+        else
+            return name;
     }
 }

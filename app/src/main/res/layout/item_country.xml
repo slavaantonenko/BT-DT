@@ -18,7 +18,7 @@
         android:layout_width="@dimen/ic_width"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="15sp"
+        android:textSize="@dimen/ic_tv_size"
         android:textColor="@android:color/black"
         tools:text="Germany"
         app:layout_constraintTop_toBottomOf="@id/ivCountryFlagItem"

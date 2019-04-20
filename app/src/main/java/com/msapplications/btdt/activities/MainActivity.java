@@ -128,7 +128,6 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
         TextView name = view.findViewById(R.id.tvCategoryTitle);
 
         if (name.getText().equals(CommonValues.TRAVEL))
-//            startActivity(new Intent(this, TravelCountryActivity.class));
             startActivity(new Intent(this, TravelActivity.class));
         else
         {
@@ -211,6 +210,12 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.category_menu, popup.getMenu());
         popup.setOnMenuItemClickListener((CategoriesAdapter.ViewHolder)recyclerView.findViewHolderForAdapterPosition(position));
+
+        CategoryType type = adapter.getItem(position).getType();
+
+        if (type.equals(CategoryType.CINEMA_SEATS) || type.equals(CategoryType.TRAVEL))
+            popup.getMenu().findItem(R.id.action_rename).setEnabled(false);
+
         popup.show();
     }
 

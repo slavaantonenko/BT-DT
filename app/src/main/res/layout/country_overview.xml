@@ -9,12 +9,11 @@
         android:id="@+id/tvNativeName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="5dp"
-        android:text="Native Name:  "
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/black" />
+        android:layout_marginTop="@dimen/co_margin_top"
+        android:layout_marginStart="@dimen/co_margin_start"
+        android:text="@string/co_tv_native_name"
+        android:textSize="@dimen/atc_tv_text_size"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvNativeNameValue"
@@ -22,9 +21,8 @@
         android:layout_height="wrap_content"
         android:maxLines="2"
         android:ellipsize="end"
-        android:text="Deutschland"
-        android:textSize="15sp"
-        android:textColor="@android:color/black"
+        android:text="@string/co_tv_native_name_value"
+        android:textSize="@dimen/atc_tv_text_size"
         app:layout_constraintTop_toTopOf="@id/tvNativeName"
         app:layout_constraintStart_toEndOf="@id/tvNativeName"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -33,10 +31,9 @@
         android:id="@+id/tvCapitalCity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Capital City:  "
-        android:textSize="15sp"
+        android:text="@string/co_tv_capital_city"
+        android:textSize="@dimen/atc_tv_text_size"
         android:textStyle="bold"
-        android:textColor="@android:color/black"
         app:layout_constraintTop_toBottomOf="@id/tvNativeNameValue"
         app:layout_constraintStart_toStartOf="@id/tvNativeName" />
 
@@ -46,9 +43,8 @@
         android:layout_height="wrap_content"
         android:maxLines="2"
         android:ellipsize="end"
-        android:text="Berlin"
-        android:textSize="15sp"
-        android:textColor="@android:color/black"
+        android:text="@string/co_tv_capital_city_name"
+        android:textSize="@dimen/atc_tv_text_size"
         app:layout_constraintTop_toTopOf="@id/tvCapitalCity"
         app:layout_constraintStart_toEndOf="@id/tvCapitalCity"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -57,10 +53,9 @@
         android:id="@+id/tvLanguage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Language:  "
-        android:textSize="15sp"
+        android:text="@string/co_tv_language"
+        android:textSize="@dimen/atc_tv_text_size"
         android:textStyle="bold"
-        android:textColor="@android:color/black"
         app:layout_constraintTop_toBottomOf="@id/tvCapitalCityName"
         app:layout_constraintStart_toStartOf="@id/tvNativeName" />
 
@@ -70,9 +65,8 @@
         android:layout_height="wrap_content"
         android:maxLines="2"
         android:ellipsize="end"
-        android:text="German"
-        android:textSize="15sp"
-        android:textColor="@android:color/black"
+        android:text="@string/co_tv_language_name"
+        android:textSize="@dimen/atc_tv_text_size"
         app:layout_constraintTop_toTopOf="@id/tvLanguage"
         app:layout_constraintStart_toEndOf="@id/tvLanguage"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -81,10 +75,9 @@
         android:id="@+id/tvNativeLanguage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Native Language Name:  "
-        android:textSize="15sp"
+        android:text="@string/co_tv_native_language"
+        android:textSize="@dimen/atc_tv_text_size"
         android:textStyle="bold"
-        android:textColor="@android:color/black"
         app:layout_constraintTop_toBottomOf="@id/tvLanguageName"
         app:layout_constraintStart_toStartOf="@id/tvNativeName" />
 
@@ -94,9 +87,8 @@
         android:layout_height="wrap_content"
         android:maxLines="2"
         android:ellipsize="end"
-        android:text="Deutsch"
-        android:textSize="15sp"
-        android:textColor="@android:color/black"
+        android:text="@string/co_tv_native_language_name"
+        android:textSize="@dimen/atc_tv_text_size"
         app:layout_constraintTop_toTopOf="@id/tvNativeLanguage"
         app:layout_constraintStart_toEndOf="@id/tvNativeLanguage"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -105,10 +97,9 @@
         android:id="@+id/tvRegion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Region:  "
-        android:textSize="15sp"
+        android:text="@string/co_tv_region"
+        android:textSize="@dimen/atc_tv_text_size"
         android:textStyle="bold"
-        android:textColor="@android:color/black"
         app:layout_constraintTop_toBottomOf="@id/tvNativeLanguageName"
         app:layout_constraintStart_toStartOf="@id/tvNativeName" />
 
@@ -118,9 +109,8 @@
         android:layout_height="wrap_content"
         android:maxLines="2"
         android:ellipsize="end"
-        android:text="Europe"
-        android:textSize="15sp"
-        android:textColor="@android:color/black"
+        android:text="@string/co_tv_region_name"
+        android:textSize="@dimen/atc_tv_text_size"
         app:layout_constraintTop_toTopOf="@id/tvRegion"
         app:layout_constraintStart_toEndOf="@id/tvRegion"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -129,10 +119,9 @@
         android:id="@+id/tvArea"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Area:  "
-        android:textSize="15sp"
+        android:text="@string/co_tv_area"
+        android:textSize="@dimen/atc_tv_text_size"
         android:textStyle="bold"
-        android:textColor="@android:color/black"
         app:layout_constraintTop_toBottomOf="@id/tvRegionName"
         app:layout_constraintStart_toStartOf="@id/tvNativeName" />
 
@@ -142,9 +131,8 @@
         android:layout_height="wrap_content"
         android:maxLines="2"
         android:ellipsize="end"
-        android:text="357,386 km^2"
-        android:textSize="15sp"
-        android:textColor="@android:color/black"
+        android:text="@string/co_tv_area_size"
+        android:textSize="@dimen/atc_tv_text_size"
         app:layout_constraintTop_toTopOf="@id/tvArea"
         app:layout_constraintStart_toEndOf="@id/tvArea"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -153,10 +141,9 @@
         android:id="@+id/tvPopulation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Population:  "
-        android:textSize="15sp"
+        android:text="@string/co_tv_population"
+        android:textSize="@dimen/atc_tv_text_size"
         android:textStyle="bold"
-        android:textColor="@android:color/black"
         app:layout_constraintTop_toBottomOf="@id/tvAreaSize"
         app:layout_constraintStart_toStartOf="@id/tvNativeName" />
 
@@ -166,9 +153,8 @@
         android:layout_height="wrap_content"
         android:maxLines="2"
         android:ellipsize="end"
-        android:text="83,000,000"
-        android:textSize="15sp"
-        android:textColor="@android:color/black"
+        android:text="@string/co_tv_population_size"
+        android:textSize="@dimen/atc_tv_text_size"
         app:layout_constraintTop_toTopOf="@id/tvPopulation"
         app:layout_constraintStart_toEndOf="@id/tvPopulation"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -177,10 +163,9 @@
         android:id="@+id/tvCurrency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Currency:  "
-        android:textSize="15sp"
+        android:text="@string/co_tv_currency"
+        android:textSize="@dimen/atc_tv_text_size"
         android:textStyle="bold"
-        android:textColor="@android:color/black"
         app:layout_constraintTop_toBottomOf="@id/tvPopulationSize"
         app:layout_constraintStart_toStartOf="@id/tvNativeName" />
 
@@ -190,9 +175,8 @@
         android:layout_height="wrap_content"
         android:maxLines="2"
         android:ellipsize="end"
-        android:text="Euro (€) (EUR)"
-        android:textSize="15sp"
-        android:textColor="@android:color/black"
+        android:text="@string/co_tv_currency_value"
+        android:textSize="@dimen/atc_tv_text_size"
         app:layout_constraintTop_toTopOf="@id/tvCurrency"
         app:layout_constraintStart_toEndOf="@id/tvCurrency"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -201,10 +185,9 @@
         android:id="@+id/tvTimeZone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Time zone:  "
-        android:textSize="15sp"
+        android:text="@string/co_tv_time_zone"
+        android:textSize="@dimen/atc_tv_text_size"
         android:textStyle="bold"
-        android:textColor="@android:color/black"
         app:layout_constraintTop_toBottomOf="@id/tvCurrencyValue"
         app:layout_constraintStart_toStartOf="@id/tvNativeName" />
 
@@ -214,9 +197,8 @@
         android:layout_height="wrap_content"
         android:maxLines="2"
         android:ellipsize="end"
-        android:text="UTC+1"
-        android:textSize="15sp"
-        android:textColor="@android:color/black"
+        android:text="@string/co_tv_time_zone_value"
+        android:textSize="@dimen/atc_tv_text_size"
         app:layout_constraintTop_toTopOf="@id/tvTimeZone"
         app:layout_constraintStart_toEndOf="@id/tvTimeZone"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -225,10 +207,9 @@
         android:id="@+id/tvCallingCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Calling code:  "
-        android:textSize="15sp"
+        android:text="@string/co_tv_calling_code"
+        android:textSize="@dimen/atc_tv_text_size"
         android:textStyle="bold"
-        android:textColor="@android:color/black"
         app:layout_constraintTop_toBottomOf="@id/tvTimeZoneValue"
         app:layout_constraintStart_toStartOf="@id/tvNativeName" />
 
@@ -238,9 +219,8 @@
         android:layout_height="wrap_content"
         android:maxLines="2"
         android:ellipsize="end"
-        android:text="+49"
-        android:textSize="15sp"
-        android:textColor="@android:color/black"
+        android:text="@string/co_tv_calling_code_value"
+        android:textSize="@dimen/atc_tv_text_size"
         app:layout_constraintTop_toTopOf="@id/tvCallingCode"
         app:layout_constraintStart_toEndOf="@id/tvCallingCode"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -249,10 +229,9 @@
         android:id="@+id/tvCountryCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Country code:  "
-        android:textSize="15sp"
+        android:text="@string/co_tv_country_code"
+        android:textSize="@dimen/atc_tv_text_size"
         android:textStyle="bold"
-        android:textColor="@android:color/black"
         app:layout_constraintTop_toBottomOf="@id/tvCallingCodeValue"
         app:layout_constraintStart_toStartOf="@id/tvNativeName" />
 
@@ -262,9 +241,8 @@
         android:layout_height="wrap_content"
         android:maxLines="2"
         android:ellipsize="end"
-        android:text="DE"
-        android:textSize="15sp"
-        android:textColor="@android:color/black"
+        android:text="@string/co_tv_country_code_values"
+        android:textSize="@dimen/atc_tv_text_size"
         app:layout_constraintTop_toTopOf="@id/tvCountryCode"
         app:layout_constraintStart_toEndOf="@id/tvCountryCode"
         app:layout_constraintEnd_toEndOf="parent" />

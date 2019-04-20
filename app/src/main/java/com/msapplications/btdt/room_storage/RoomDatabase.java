@@ -56,12 +56,4 @@ public abstract class RoomDatabase extends android.arch.persistence.room.RoomDat
             database.execSQL("ALTER TABLE countries_table ADD COLUMN beenThere TINYINT NOT NULL DEFAULT 0");
         }
     };
-
-    static final Migration MIGRATION_10_11 = new Migration(10, 11) {
-        @Override
-        public void migrate(SupportSQLiteDatabase database) {
-            // Since we didn't alter the table, there's nothing else to do here.
-//            database.execSQL("ALTER TABLE countries_table ADD COLUMN beenThere TINYINT NOT NULL DEFAULT 0");
-        }
-    };
 }

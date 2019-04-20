@@ -1,9 +1,6 @@
 package com.msapplications.btdt.activities;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.database.DataSetObserver;
-import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -17,24 +14,20 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ProgressBar;
 
 import com.msapplications.btdt.R;
-import com.msapplications.btdt.adapters.CountriesAdapter;
 import com.msapplications.btdt.fragments.TravelCountriesFragment;
-import com.msapplications.btdt.fragments.TravelCountryFragment;
 import com.msapplications.btdt.fragments.TravelListFragment;
 import com.msapplications.btdt.fragments.TravelMapFragment;
 import com.msapplications.btdt.interfaces.CountryService;
-import com.msapplications.btdt.interfaces.OnCompleteLoadCountriesListener;
 import com.msapplications.btdt.objects.itemTypes.travel.CountriesContent;
 import com.msapplications.btdt.objects.itemTypes.travel.Country;
 import com.msapplications.btdt.objects.itemTypes.travel.CountryModel;
 import com.msapplications.btdt.objects.itemTypes.travel.CountryModelConverter;
 import com.msapplications.btdt.rest.RestClientManager;
 import com.msapplications.btdt.room_storage.RoomDatabase;
-import com.msapplications.btdt.room_storage.travel.CountryViewModel;
 
 import java.util.List;
 
@@ -53,9 +46,6 @@ public class TravelActivity extends AppCompatActivity //implements TravelCountri
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter sectionsPagerAdapter;
-    private TravelCountriesFragment travelCountriesFragment;
-    private TravelListFragment travelListFragment;
-    private TravelMapFragment travelMapFragment;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -73,8 +63,12 @@ public class TravelActivity extends AppCompatActivity //implements TravelCountri
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         pbTravel = findViewById(R.id.pbTravel);
         pbTravel.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -82,12 +76,7 @@ public class TravelActivity extends AppCompatActivity //implements TravelCountri
 
         // Set up the ViewPager with the sections adapter.
         viewPager = findViewById(R.id.vpTravelContainer);
-//        viewPager.setAdapter(sectionsPagerAdapter);
-
         tabLayout = findViewById(R.id.tabs);
-
-//        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-//        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
 
         loadCountries(this);
     }
@@ -107,10 +96,8 @@ public class TravelActivity extends AppCompatActivity //implements TravelCountri
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (item.getItemId() == android.R.id.home) {
+            this.finish();
             return true;
         }
 
@@ -123,19 +110,8 @@ public class TravelActivity extends AppCompatActivity //implements TravelCountri
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
         pbTravel.setVisibility(View.GONE);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
-
-    //    @Override
-//    public void onCompleteLoadCountries()
-//    {
-//
-//    }
-
-//    @Override
-//    public void onFragmentInteraction()
-//    {
-//
-//    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -201,7 +177,7 @@ public class TravelActivity extends AppCompatActivity //implements TravelCountri
                         CountriesContent.COUNTRIES.addAll(CountryModelConverter.convertResult(response.body()));
                         RoomDatabase.getDatabase(context).countryDao().insertAll(CountriesContent.COUNTRIES);
 
-                        loadViewPager();
+                        loadCountries(context);
                     }
                 }
 
@@ -211,8 +187,7 @@ public class TravelActivity extends AppCompatActivity //implements TravelCountri
                 }
             });
         }
-        else {
+        else
             loadViewPager();
-        }
     }
 }

@@ -105,6 +105,42 @@
 
     <!-- Travel -->
     <dimen name="ic_width">70dp</dimen>
+    <dimen name="atc_tv_text_size">16sp</dimen>
+    <dimen name="at_pb_size">56dp</dimen>
+    <dimen name="atc_padding_bottom">10dp</dimen>
+    <dimen name="atc_fragment_height">300dp</dimen>
+    <dimen name="atc_iv_size">40dp</dimen>
+    <dimen name="atc_iv_margin_start">5dp</dimen>
+    <dimen name="atc_fab_margin_end">15dp</dimen>
+    <dimen name="atc_fab_elevation">10dp</dimen>
+    <dimen name="atc_frame_layout_country_height">100dp</dimen>
+    <dimen name="atc_tvcn_margin_start">20dp</dimen>
+    <dimen name="atc_tvcn_text_size">30sp</dimen>
+    <dimen name="atc_clo_padding">20dp</dimen>
+    <dimen name="atc_ivo_size">30dp</dimen>
+    <dimen name="atc_tv_overview_margin_start">40dp</dimen>
+    <dimen name="atc_tv_overview_text_size">20sp</dimen>
+    <dimen name="atc_iveo_size">30dp</dimen>
+    <dimen name="atc_el_padding">20dp</dimen>
+    <dimen name="atc_divider_line_height">1dp</dimen>
+    <dimen name="atc_ivtt_size">30dp</dimen>
+    <dimen name="atc_tv_when_to_travel_margin_start">40dp</dimen>
+    <dimen name="atc_tv_when_to_travel_text_size">20sp</dimen>
+    <dimen name="atc_ivwtt_size">30dp</dimen>
+    <dimen name="co_margin_top">5dp</dimen>
+    <dimen name="co_margin_start">5dp</dimen>
+    <dimen name="ftl_pb_size">56dp</dimen>
+    <dimen name="ftl_tv_size">16sp</dimen>
+    <dimen name="ic_tv_size">15sp</dimen>
+    <dimen name="itl_height">250dp</dimen>
+    <dimen name="itl_margin">8dp</dimen>
+    <dimen name="itl_card_elevation">10dp</dimen>
+    <dimen name="itl_tv_margin">20dp</dimen>
+    <dimen name="itl_tv_size">24sp</dimen>
+    <dimen name="itl_iv_size">30dp</dimen>
+    <dimen name="itl_ivr_margin_bottom">20dp</dimen>
+    <dimen name="itl_ivr_margin_end">20dp</dimen>
+    <dimen name="itl_ivb_margin_end">30dp</dimen>
 
     <dimen name="activity_padding_horizontal">16dp</dimen>
     <dimen name="thumbnail">90dp</dimen>
@@ -113,8 +149,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
 
-
-    <dimen name="recycler_view_grid_spacing">0dp</dimen>
+    <dimen name="recycler_view_grid_spacing">70dp</dimen>
     <dimen name="ich_padding">10dp</dimen>
 
     <!-- Text Editor Toolbar -->

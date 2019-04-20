@@ -1,14 +1,10 @@
 package com.msapplications.btdt.activities;
 
-import android.app.AlertDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
@@ -19,17 +15,11 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.android.colorpicker.ColorPickerDialog;
-import com.android.colorpicker.ColorPickerPalette;
-import com.android.colorpicker.ColorPickerSwatch;
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.adapters.CategoriesAdapter;
 import com.msapplications.btdt.dialogs.ChooseColorDialogFragment;
@@ -47,8 +37,6 @@ import com.msapplications.btdt.room_storage.category.CategoryViewModel;
 import com.msapplications.btdt.room_storage.cinema.CinemaViewModel;
 
 import java.util.List;
-
-import okhttp3.internal.Util;
 
 /*
 Main activity, shows all categories of the user
@@ -132,7 +120,6 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
                 dialogFragment.show(ft, CommonValues.NEW_CATEGORY_DIALOG_FRAGMENT_TAG);
             }
         };
-
     }
 
     @Override
@@ -223,6 +210,12 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.category_menu, popup.getMenu());
         popup.setOnMenuItemClickListener((CategoriesAdapter.ViewHolder)recyclerView.findViewHolderForAdapterPosition(position));
+
+        CategoryType type = adapter.getItem(position).getType();
+
+        if (type.equals(CategoryType.CINEMA_SEATS) || type.equals(CategoryType.TRAVEL))
+            popup.getMenu().findItem(R.id.action_rename).setEnabled(false);
+
         popup.show();
     }
 

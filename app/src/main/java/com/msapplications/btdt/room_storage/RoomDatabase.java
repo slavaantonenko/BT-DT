@@ -18,7 +18,7 @@ import com.msapplications.btdt.room_storage.note.NoteItemDao;
 import com.msapplications.btdt.room_storage.travel.CountryDao;
 
 // version = 1 is CinemaHall hall and row in int and not String.
-@Database(entities = {Cinema.class, CinemaHall.class, CountryModel.class, NoteItem.class, Category.class}, version = 9)
+@Database(entities = {Cinema.class, CinemaHall.class, CountryModel.class, NoteItem.class, Category.class}, version = 10)
 public abstract class RoomDatabase extends android.arch.persistence.room.RoomDatabase
 {
     public abstract CinemaDao cinemaDao();
@@ -39,7 +39,7 @@ public abstract class RoomDatabase extends android.arch.persistence.room.RoomDat
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             RoomDatabase.class, "room_database")
                             .allowMainThreadQueries()
-                            .addMigrations(MIGRATION_8_9)
+                            .addMigrations(MIGRATION_9_10)
                             .build();
             }
         }
@@ -47,10 +47,13 @@ public abstract class RoomDatabase extends android.arch.persistence.room.RoomDat
         return INSTANCE;
     }
     
-    static final Migration MIGRATION_8_9 = new Migration(8, 9) {
+    static final Migration MIGRATION_9_10 = new Migration(9, 10) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             // Since we didn't alter the table, there's nothing else to do here.
+            database.execSQL("ALTER TABLE countries_table ADD COLUMN isInTravelList TINYINT NOT NULL DEFAULT 0");
+            database.execSQL("ALTER TABLE countries_table ADD COLUMN image VARCHAR(255)");
+            database.execSQL("ALTER TABLE countries_table ADD COLUMN beenThere TINYINT NOT NULL DEFAULT 0");
         }
     };
 }

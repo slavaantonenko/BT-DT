@@ -1,5 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="MissingTranslation">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
     <string name="app_name">BT;DT</string>
     <string name="action_settings">Settings</string>
@@ -42,16 +41,11 @@
     <string name="category_exist_error">Category name already exists</string>
     <string name="category_renamed">Category renamed</string>
 
-    <!--<string-array name="category_types">-->
-        <!--<item>Note</item>-->
-        <!--<item>Recipes</item>-->
-        <!--<item>Cinema Seats</item>-->
-        <!--<item>Travel</item>-->
-    <!--</string-array>-->
-
     <string-array name="category_types">
         <item>Note</item>
+        <!--<item>Recipes</item>-->
         <item>Cinema Seats</item>
+        <item>Travel</item>
     </string-array>
 
     <!-- Dialogs General -->
@@ -111,7 +105,7 @@
     <string name="ic_hall">Hall:&#160;</string>
     <string name="ic_row">Row:&#160;</string>
     <string name="cinema_hall_empty_error">Hall can not be empty</string>
-    <string name="cinema_hall_row_empty_error">"Row can't be empty"</string>
+    <string name="cinema_hall_row_empty_error">"Row can\'t be empty"</string>
     <string name="dch_ethn_hint">Hall</string>
     <string name="dch_etrn_hint">Row</string>
 
@@ -120,15 +114,45 @@
 
     <!-- Travel -->
     <string name="title_activity_travel">Travel</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_travel_list">TRAVEL LIST</string>
+    <string name="tab_countries">COUNTRIES</string>
+    <string name="tab_map">MAP</string>
+    <string name="atc_tvcn">Germany</string>
+    <string name="atc_tv_overview">Overview</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_travel_country">TravelCountryActivity</string>
+    <string name="area_size_proportion">%1$s km\u00B2</string>
+    <string name="calling_code">+%1$s</string>
+    <string name="country_codes">%1$s, %2$s</string>
+    <string name="added_to_travel_list">Congrats! You just added %1$s to your travel list.</string>
+    <string name="already_added_to_travel_list">You already plan to visit %1$s</string>
+    <string name="default_vacation_image">https://pixabay.com/get/e83cb80c2ff4053ed1584d05fb1d4797ea72e2dc1eb80c4090f5c47ea7ebb3bdd9_640.jpg</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_maps">Map</string>
     <string name="menu_travel_map_search">Search</string>
-    <string name="title_activity_main2">Main2Activity</string>
+    <string name="atc_tv_when_to_travel">When to travel</string>
+    <string name="co_tv_native_name">Native Name:&#160;&#160;</string>
+    <string name="co_tv_native_name_value">Deutschland</string>
+    <string name="co_tv_capital_city">Capital City:&#160;&#160;</string>
+    <string name="co_tv_capital_city_name">Berlin</string>
+    <string name="co_tv_language">Language:&#160;&#160;</string>
+    <string name="co_tv_language_name">German</string>
+    <string name="co_tv_native_language">Native Language Name:&#160;&#160;</string>
+    <string name="co_tv_native_language_name">Deutsch</string>
+    <string name="co_tv_region">Region:&#160;&#160;</string>
+    <string name="co_tv_region_name">Europe</string>
+    <string name="co_tv_area">Area:&#160;&#160;</string>
+    <string name="co_tv_area_size">357,386 km\u00B2</string>
+    <string name="co_tv_population">Population:&#160;&#160;</string>
+    <string name="co_tv_population_size">83,000,000</string>
+    <string name="co_tv_currency">Currency:&#160;&#160;</string>
+    <string name="co_tv_currency_value">Euro (€) (EUR)</string>
+    <string name="co_tv_time_zone">Time zone:&#160;&#160;</string>
+    <string name="co_tv_time_zone_value">UTC+1</string>
+    <string name="co_tv_calling_code">Calling code:&#160;&#160;</string>
+    <string name="co_tv_calling_code_value">+49</string>
+    <string name="co_tv_country_code">Country code:&#160;&#160;</string>
+    <string name="co_tv_country_code_values">DE</string>
+    <string name="ftl_empty_list">Not yet decided where to go :(</string>
     <!-- Travel -->
 
 </resources>

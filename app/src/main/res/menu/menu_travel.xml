@@ -2,24 +2,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.msapplications.btdt.activities.TravelActivity">
-    <!--<item-->
-        <!--android:id="@+id/action_settings"-->
-        <!--android:orderInCategory="100"-->
-        <!--android:title="@string/action_settings"-->
-        <!--app:showAsAction="never" />-->
-
-    <!--<item-->
-        <!--android:id="@+id/m_search"-->
-        <!--android:icon="@drawable/ic_action_search"-->
-        <!--android:title="@string/menu_travel_map_search"-->
-        <!--app:actionLayout="@layout/map_search_view"-->
-        <!--app:showAsAction="ifRoom|collapseActionView" />-->
 
     <item
-        android:id="@+id/action_search_places"
-        android:icon="@drawable/ic_action_search"
+        android:id="@+id/action_filter_countries"
+        android:icon="@drawable/ic_search"
         android:title="@string/menu_travel_map_search"
-        android:orderInCategory="100"
-        app:actionViewClass="android.widget.SearchView"
-        app:showAsAction="always" />
+        android:orderInCategory="1"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="always|collapseActionView" />
 </menu>

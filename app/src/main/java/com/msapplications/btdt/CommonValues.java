@@ -14,16 +14,16 @@ public class CommonValues
     public static final int CATEGORY_CARD_SIZE_MIN = 150;
     public static final int CATEGORY_CARD_SIZE_MAX = 250;
 
-    // ListActivity
+    // Activities
     public static final String CATEGORY_ID_EXTRA = "CategoryID";
     public static final String CATEGORY_NAME_EXTRA = "CategoryName";
+    public static final String COUNTRY_EXTRA = "Country";
+
+    // Fragments
     public static final String NOTES_FRAGMENT = "NotesFragment";
     public static final String RECIPES_FRAGMENT = "RecipesFragment";
     public static final String CINEMA_SEATS_FRAGMENT = "CinemaSeatsFragment";
     public static final String FRAGMENT_TITLE = "FragmentTitle";
-    public static final int RENAME_CATEGORY_RESULT_CODE = 1;
-
-    // Fragments
     public static final String ADD_CINEMA_DIALOG_FRAGMENT_TAG = "AddCinemaDialogFragment";
     public static final String ADD_HALL_DIALOG_FRAGMENT_TAG = "AddEditHallDialogFragment";
     public static final String NEW_CATEGORY_DIALOG_FRAGMENT_TAG = "NewCategoryDialogFragment";
@@ -35,6 +35,8 @@ public class CommonValues
     public static final String CATEGORY_BUNDLE = "Category";
     public static final int ADD_CINEMA_REQUEST_CODE = 1;
     public static final int EDIT_HALL_REQUEST_CODE = 2;
+    public static final int RENAME_CATEGORY_RESULT_CODE = 1;
+    public static final int ADDED_TO_TRAVEL_LIST = 1;
 
     // Global Strings
     public static final String NOTE = "Note";
@@ -53,7 +55,7 @@ public class CommonValues
     }};
     public static final HashMap<CategoryType, String> COMING_SOON_FEATURES_DATES = new HashMap<CategoryType, String>() {{
         put(CategoryType.TRAVEL, "15/04/2019 00:00:00");
-        put(CategoryType.RECIPES, "10/04/2019 00:00:00");
+        put(CategoryType.RECIPES, "15/05/2019 00:00:00");
     }};
     public static final HashMap<CategoryType, String> FEATURE_AVAILABLE_PREF_NAME = new HashMap<CategoryType, String>() {{
         put(CategoryType.TRAVEL, TRAVEL_FEATURE_AVAILABLE);
@@ -61,4 +63,5 @@ public class CommonValues
     }};
     public static final String TRAVEL_FEATURE_AVAILABLE = "travelFeatureAvailable";
     public static final String RECIPES_FEATURE_AVAILABLE = "recipesFeatureAvailable";
+    public static final String TRAVEL_LIST_CHANGED = "travelListChanged";
 }

@@ -1,5 +1,7 @@
 package com.msapplications.btdt.objects.itemTypes.travel;
 
+import com.msapplications.btdt.interfaces.CountryService;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +14,7 @@ public class CountryModelConverter
         {
             if (country.getLatlng().size() == 2)
                 result.add(new CountryModel(0,
-                        country.getName(),
+                        removeBracketStringFromName(country.getName()),
                         country.getNativeName(),
                         country.getAlpha2Code(),
                         country.getAlpha3Code(),
@@ -24,13 +26,82 @@ public class CountryModelConverter
                         country.getLatlng().get(1),
                         country.getArea(),
                         country.getTimezones().get(0),
-                        country.getCurrencies().get(0).getName(),
-                        country.getLanguages().get(0).getName(),
-                        country.getLanguages().get(0).getNativeName(),
-                        "https://www.countryflags.io/" + country.getAlpha2Code() + "/flat/64.png"));
-//                        country.getFlag()));
+                        getCurrenciesFromList(country.getCurrencies()),
+                        getLanguages(country.getLanguages(), false),
+                        getLanguages(country.getLanguages(), true),
+                        CountryService.BASE_FLAGS_URL + country.getAlpha2Code() + "/flat/64.png"));
         }
 
         return result;
+    }
+
+    /**
+     * This method builds a string of all country currency.
+     * @param currenciesList
+     * @return
+     */
+    private static String getCurrenciesFromList(List<Currency> currenciesList)
+    {
+        StringBuilder currencies = new StringBuilder();
+
+        for (int i = 0; i < currenciesList.size(); i++)
+        {
+            Currency currency = currenciesList.get(i);
+
+            if (currency.getSymbol() != null)
+                currencies.append(currency.getName() + " (" + currency.getSymbol() + ")" + " (" + currency.getCode() + ")");
+            else
+                currencies.append(currency.getName() + " (" + currency.getCode() + ")");
+
+            if (i < currenciesList.size() - 1)
+                currencies.append(", ");
+        }
+
+        return currencies.toString();
+    }
+
+    /**
+     * This method builds a string of all country language.
+     * @param languagesList
+     * @param nativeName if false build only language names otherwise only native names.
+     * @return
+     */
+    private static String getLanguages(List<Language> languagesList, boolean nativeName)
+    {
+        StringBuilder languages = new StringBuilder();
+
+        for (int i = 0; i < languagesList.size(); i++)
+        {
+            Language language = languagesList.get(i);
+
+            if (!nativeName)
+                languages.append(language.getName());
+            else
+                languages.append(language.getNativeName());
+
+            if (i < languagesList.size() - 1)
+                languages.append(", ");
+        }
+
+        return languages.toString();
+    }
+
+    /**
+     * This method removes string which is between brackets in a name.
+     * @param name full country name.
+     * @return
+     */
+    private static String removeBracketStringFromName(String name)
+    {
+        if (name.contains("(") && name.contains(")"))
+        {
+            int startIndex = name.indexOf("(");
+            int endIndex = name.indexOf(")");
+            String toBeReplaced = name.substring(startIndex, endIndex + 1);
+
+            return name.replace(toBeReplaced, "");
+        }
+        else
+            return name;
     }
 }

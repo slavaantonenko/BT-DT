@@ -12,17 +12,15 @@
         android:layout_width="@dimen/ic_logo_width"
         android:layout_height="@dimen/ic_logo_height"
         android:adjustViewBounds="true"
-        android:focusableInTouchMode="false"
-        android:padding="@dimen/ic_logo_padding"
         tools:src="@drawable/cinema_city" />
 
     <TextView
         android:id="@+id/tvCinemaName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ic_tv_margin_start"
         android:textSize="@dimen/ic_tvcn_text_size"
         android:textColor="@android:color/black"
-        android:textStyle="bold"
         tools:text="@string/ic_tvcn_sample"
         app:layout_constraintBottom_toTopOf="@id/guideline"
         app:layout_constraintStart_toEndOf="@id/ivCinemaLogo" />
@@ -31,6 +29,7 @@
         android:id="@+id/tvCinemaCity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ic_tv_margin_start"
         android:textSize="@dimen/ic_tvcc_text_size"
         android:textColor="@android:color/black"
         tools:text="@string/ic_tvcc_sample"

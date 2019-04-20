@@ -23,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/Applications/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material_design_icons/content/ic_add_circle_outline_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/Applications/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_close_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -33,8 +33,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_add_circle" />
-                            <entry key="sourceFile" value="$USER_HOME$/Downloads/baseline-lock_open-24px.svg" />
+                            <entry key="color" value="ffffff" />
+                            <entry key="outputName" value="ic_close" />
+                            <entry key="sourceFile" value="$USER_HOME$/Downloads/iconfinder_Info_Circle_Symbol_Information_Letter_1396823.svg" />
                           </map>
                         </option>
                       </PersistentState>

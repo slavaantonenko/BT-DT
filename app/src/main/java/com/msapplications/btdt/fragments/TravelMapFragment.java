@@ -124,6 +124,7 @@ public class TravelMapFragment extends Fragment implements OnMapReadyCallback
             {
                 for (CountryModel country : countries)
                 {
+                    map.clear();
                     LatLng latLng = new LatLng(country.getLatitude(), country.getLongitude());
                     int iconID = R.drawable.ic_place_marker;
 

@@ -6,25 +6,25 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.R;
-import com.msapplications.btdt.fragments.CinemaSeatsFragment;
+import com.msapplications.btdt.interfaces.Renamable;
 import com.msapplications.btdt.objects.Category;
+import com.msapplications.btdt.objects.itemTypes.recipes.Recipe;
+import com.msapplications.btdt.room_storage.ViewModelRenamable;
 import com.msapplications.btdt.room_storage.category.CategoryViewModel;
+import com.msapplications.btdt.room_storage.recipe.RecipeViewModel;
 
 public class RenameCategoryDialogFragment extends DialogFragment
 {
-    private CategoryViewModel categoryViewModel;
-    private Category category;
+    private ViewModelRenamable viewModelRenamable;
+    private Renamable renamableObject;
     private OnRenameListener onRenameListener;
 
     public RenameCategoryDialogFragment() {
@@ -35,14 +35,14 @@ public class RenameCategoryDialogFragment extends DialogFragment
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param category category object.
+     * @param renamable renamableObject object.
      * @return A new instance of fragment CheckListFragment.
      */
-    public static RenameCategoryDialogFragment newInstance(Category category)
+    public static RenameCategoryDialogFragment newInstance(Renamable renamable)
     {
         RenameCategoryDialogFragment fragment = new RenameCategoryDialogFragment();
         Bundle args = new Bundle();
-        args.putParcelable(CommonValues.CATEGORY_BUNDLE, category);
+        args.putParcelable(CommonValues.CATEGORY_BUNDLE, renamable);
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,7 +53,7 @@ public class RenameCategoryDialogFragment extends DialogFragment
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            category = getArguments().getParcelable(CommonValues.CATEGORY_BUNDLE);
+            renamableObject = getArguments().getParcelable(CommonValues.CATEGORY_BUNDLE);
         }
     }
 
@@ -68,7 +68,13 @@ public class RenameCategoryDialogFragment extends DialogFragment
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-        categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel.class);
+        if(renamableObject != null) {
+            if(renamableObject instanceof Category)
+                viewModelRenamable = ViewModelProviders.of(this).get(CategoryViewModel.class);
+
+            if(renamableObject instanceof Recipe)
+                viewModelRenamable = ViewModelProviders.of(this).get(RecipeViewModel.class);
+        }
         initializeDialog(view);
     }
 
@@ -107,7 +113,7 @@ public class RenameCategoryDialogFragment extends DialogFragment
         EditText oldName = view.findViewById(R.id.etRenameCategory);
         Button btnSaveRename = view.findViewById(R.id.btnSaveRename);
 
-        oldName.setHint(category.getName());
+        oldName.setHint(renamableObject.getName());
         oldName.requestFocus();
 
         btnSaveRename.setOnClickListener(new View.OnClickListener()
@@ -122,13 +128,13 @@ public class RenameCategoryDialogFragment extends DialogFragment
                     return;
                 }
 
-                if (categoryViewModel.categoryNameExists(newName.getText().toString()) > 0) {
-                    newName.setError(getString(R.string.category_exist_error));
+                if (viewModelRenamable.nameExists(newName.getText().toString()) > 0) {
+                    newName.setError(getString(R.string.name_exist_error));
                     return;
                 }
 
-                category.setName(newName.getText().toString());
-                categoryViewModel.rename(category);
+                renamableObject.setName(newName.getText().toString());
+                viewModelRenamable.rename(renamableObject);
                 onRenameListener.onRename(newName.getText().toString());
                 dismiss();
             }

@@ -4,13 +4,15 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 
+import com.msapplications.btdt.interfaces.Renamable;
 import com.msapplications.btdt.objects.Category;
 import com.msapplications.btdt.objects.CategoryType;
 import com.msapplications.btdt.room_storage.ViewModelDeletable;
+import com.msapplications.btdt.room_storage.ViewModelRenamable;
 
 import java.util.List;
 
-public class CategoryViewModel extends AndroidViewModel implements ViewModelDeletable
+public class CategoryViewModel extends AndroidViewModel implements ViewModelDeletable, ViewModelRenamable
 {
     private CategoryRepository repository;
     private LiveData<List<Category>> categories;
@@ -28,11 +30,11 @@ public class CategoryViewModel extends AndroidViewModel implements ViewModelDele
         return repository.getCategory(id);
     }
 
-    public int categoryNameExists(String name) { return repository.categoryNameExists(name); }
+    public int nameExists(String name) { return repository.categoryNameExists(name); }
 
     public int categoryTypeExists(int typeCode) { return repository.categoryTypeExists(typeCode); }
 
-    public void rename(Category category) { repository.rename(category); }
+    public void rename(Renamable category) { repository.rename((Category)category); }
 
     public void updateColor(int color, int id) { repository.updateColor(color, id); }
 

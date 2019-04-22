@@ -19,9 +19,18 @@ public interface RecipeDao {
     @Query("SELECT * FROM recipes_table WHERE id=:id")
     Recipe getRecipe(int id);
 
+    @Query("SELECT id FROM recipes_table WHERE recipe_name=:name")
+    int getRecipeIdByName(String name);
+
     @Insert
     void insert(Recipe recipe);
 
     @Delete
     void delete(Recipe recipe);
+
+    @Query("UPDATE recipes_table SET recipe_name=:name WHERE id=:id")
+    void rename(String name, int id);
+
+    @Query("SELECT COUNT(recipe_name) FROM recipes_table WHERE recipe_name=:name")
+    int recipeNameExists(String name);
 }

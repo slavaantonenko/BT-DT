@@ -2,6 +2,7 @@ package com.msapplications.btdt.adapters;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.msapplications.btdt.R;
 import com.msapplications.btdt.interfaces.OnMenuItemClickListener;
 import com.msapplications.btdt.interfaces.OnObjectMenuClickListener;
+import com.msapplications.btdt.interfaces.OnRecipeClickListener;
 import com.msapplications.btdt.objects.itemTypes.recipes.Recipe;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,18 +24,23 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
     private List<Recipe> recipeList = new ArrayList<>();
     private OnObjectMenuClickListener recipeMenuClickListener;
     private OnMenuItemClickListener menuItemClickListener;
+    private OnRecipeClickListener onRecipeClickListener;
+
     private int adapterPosition = -1;
 
     public RecipesAdapter(Fragment fragment)
     {
         recipeMenuClickListener = (OnObjectMenuClickListener) fragment;
         menuItemClickListener = (OnMenuItemClickListener) fragment;
+        onRecipeClickListener = (OnRecipeClickListener) fragment;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements PopupMenu.OnMenuItemClickListener, View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder
+            implements PopupMenu.OnMenuItemClickListener, View.OnClickListener{
         public TextView recipeTitle;
         public ImageView preview, overflow;
         public Button btnColor;
+        public CardView cvRecipe;
 
         public ViewHolder(View view) {
             super(view);
@@ -42,6 +49,9 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
             btnColor = view.findViewById(R.id.btn_color_recipe);
             overflow = view.findViewById(R.id.overflow);
             overflow.setOnClickListener(this);
+            cvRecipe = view.findViewById(R.id.recipe_card);
+            cvRecipe.setOnClickListener(this);
+
         }
 
         public void onBindViewHolder(Recipe recipe, final int position) {
@@ -54,11 +64,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
             switch (view.getId())
             {
                 case (R.id.recipe_card):
-//                    if (categoryClickListener == null)
-//                        return;
-//
-//                    adapterPosition = getAdapterPosition();
-//                    categoryClickListener.onCategoryClick(view);
+                    onRecipeClickListener.onRecipeClick(view);
                     break;
                 case (R.id.overflow):
                     if (recipeMenuClickListener == null)

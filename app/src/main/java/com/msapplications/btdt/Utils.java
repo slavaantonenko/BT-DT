@@ -29,6 +29,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.msapplications.btdt.dialogs.RenameCategoryDialogFragment;
+import com.msapplications.btdt.interfaces.Renamable;
 import com.msapplications.btdt.objects.Category;
 import com.msapplications.btdt.objects.CategoryType;
 import com.msapplications.btdt.objects.itemTypes.NoteItem;
@@ -234,10 +235,10 @@ public class Utils
         return categoryBackground[randomNum];
     }
 
-    public static void renameCategory(FragmentManager fragmentManager, Category category)
+    public static void renameCategory(FragmentManager fragmentManager, Renamable renamable)
     {
         FragmentTransaction ft = fragmentManager.beginTransaction().addToBackStack(null);
-        RenameCategoryDialogFragment dialogFragment = new RenameCategoryDialogFragment().newInstance(category);
+        RenameCategoryDialogFragment dialogFragment = new RenameCategoryDialogFragment().newInstance(renamable);
         dialogFragment.show(ft, CommonValues.RENAME_CATEGORY_DIALOG_FRAGMENT_TAG);
     }
 

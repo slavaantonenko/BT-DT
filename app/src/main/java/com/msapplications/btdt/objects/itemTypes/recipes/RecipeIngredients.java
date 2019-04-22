@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity(tableName = "note_item_table")
-public class RecipeItem implements Comparable<RecipeItem>
+public class RecipeIngredients implements Comparable<RecipeIngredients>
 {
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -23,19 +23,14 @@ public class RecipeItem implements Comparable<RecipeItem>
     @ColumnInfo(name = "text")
     private String text;
 
-    @ColumnInfo(name = "info_type")
-    private int recipeInfoType; // 0 for grocery ,1 for process
-
-
-    public RecipeItem(int id, int recipeID, int lineNumber, int recipeInfoType) {
+    public RecipeIngredients(int id, int recipeID, int lineNumber) {
         this.id = id;
         this.recipeID = recipeID;
         this.lineNumber = lineNumber;
-        this.recipeInfoType = recipeInfoType;
     }
 
     @Override
-    public int compareTo(RecipeItem o) {
+    public int compareTo(RecipeIngredients o) {
         return this.getLineNumber() - o.getLineNumber();
     }
 }

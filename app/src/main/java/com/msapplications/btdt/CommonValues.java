@@ -18,7 +18,7 @@ public class CommonValues
     public static final String CATEGORY_ID_EXTRA = "CategoryID";
     public static final String CATEGORY_NAME_EXTRA = "CategoryName";
     public static final String NOTES_FRAGMENT = "NotesFragment";
-    public static final String RECIPES_FRAGMENT = "RecipesFragment";
+    public static final String RECIPES_FRAGMENT = "RecipesCollectionFragment";
     public static final String CINEMA_SEATS_FRAGMENT = "CinemaSeatsFragment";
     public static final String FRAGMENT_TITLE = "FragmentTitle";
     public static final int RENAME_CATEGORY_RESULT_CODE = 1;
@@ -33,10 +33,13 @@ public class CommonValues
     public static final String CINEMA_HALL_BUNDLE = "CinemaHall";
     public static final String CINEMA_INFO_BUNDLE = "CinemaInfo";
     public static final String CINEMA_HALL_ACTION_BUNDLE = "CinemaHallAction";
+    public static final String RECIPE_FRAGMENT = "RecipeFragment";
     public static final String CATEGORY_BUNDLE = "Category";
     public static final int ADD_CINEMA_REQUEST_CODE = 1;
     public static final int EDIT_HALL_REQUEST_CODE = 2;
     public static final int ADD_RECIPE_REQUEST_CODE = 3;
+    public static final String RECIPE_ID_EXTRA = "RecipeID";
+
 
 
     // Global Strings

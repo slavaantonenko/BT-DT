@@ -9,6 +9,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.msapplications.btdt.adapters.CategoriesAdapter;
+import com.msapplications.btdt.interfaces.Renamable;
 import com.msapplications.btdt.objects.itemTypes.cinema.CinemaHall;
 
 import java.io.Serializable;
@@ -19,7 +20,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity(tableName = "categories_table")
-public class Category implements Parcelable
+public class Category implements Parcelable, Renamable
 {
     @PrimaryKey(autoGenerate = true)
     int id;

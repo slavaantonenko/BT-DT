@@ -14,14 +14,14 @@ import com.msapplications.btdt.dialogs.RenameCategoryDialogFragment;
 import com.msapplications.btdt.fragments.NotesFragment;
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.fragments.CinemaSeatsFragment;
-import com.msapplications.btdt.fragments.RecipesFragment;
+import com.msapplications.btdt.fragments.RecipesCollectionFragment;
 import com.msapplications.btdt.R;
 import com.msapplications.btdt.objects.CategoryType;
 import com.msapplications.btdt.room_storage.category.CategoryViewModel;
 import com.msapplications.btdt.room_storage.cinema.CinemaViewModel;
 
 public class ListActivity extends AppCompatActivity
-        implements RecipesFragment.OnFragmentInteractionListener, CinemaSeatsFragment.OnFragmentInteractionListener,
+        implements RecipesCollectionFragment.OnFragmentInteractionListener, CinemaSeatsFragment.OnFragmentInteractionListener,
         NotesFragment.OnFragmentInteractionListener, RenameCategoryDialogFragment.OnRenameListener
 {
     CategoryViewModel categoryViewModel;
@@ -108,7 +108,7 @@ public class ListActivity extends AppCompatActivity
                 openFragment(new NotesFragment().newInstance(categoryName, categoryID), CommonValues.NOTES_FRAGMENT);
                 break;
             case RECIPES:
-                openFragment(new RecipesFragment().newInstance(categoryName), CommonValues.RECIPES_FRAGMENT);
+                openFragment(new RecipesCollectionFragment().newInstance(categoryName), CommonValues.RECIPES_FRAGMENT);
                 break;
             case CINEMA_SEATS:
                 openFragment(new CinemaSeatsFragment().newInstance(categoryName), CommonValues.CINEMA_SEATS_FRAGMENT);

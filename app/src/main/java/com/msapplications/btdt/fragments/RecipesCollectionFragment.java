@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -20,21 +19,26 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.R;
 import com.msapplications.btdt.Utils;
 import com.msapplications.btdt.adapters.RecipesAdapter;
 import com.msapplications.btdt.dialogs.AddRecipeDialogFragment;
+import com.msapplications.btdt.dialogs.RenameCategoryDialogFragment;
 import com.msapplications.btdt.interfaces.OnMenuItemClickListener;
 import com.msapplications.btdt.interfaces.OnObjectMenuClickListener;
+import com.msapplications.btdt.interfaces.OnRecipeClickListener;
 import com.msapplications.btdt.objects.itemTypes.recipes.Recipe;
 import com.msapplications.btdt.room_storage.recipe.RecipeViewModel;
 
 import java.util.List;
 
 
-public class RecipesFragment extends Fragment implements OnObjectMenuClickListener, OnMenuItemClickListener {
+public class RecipesCollectionFragment extends Fragment
+        implements OnObjectMenuClickListener, OnMenuItemClickListener, OnRecipeClickListener,
+        RenameCategoryDialogFragment.OnRenameListener{
 
     private String title = "";
     private OnFragmentInteractionListener onFragmentInteractionListener;
@@ -45,7 +49,7 @@ public class RecipesFragment extends Fragment implements OnObjectMenuClickListen
     private Fragment thisFragment = this;
     private boolean isRecipeAdded = false;
 
-    public RecipesFragment() {
+    public RecipesCollectionFragment() {
         // Required empty public constructor
     }
 
@@ -53,11 +57,11 @@ public class RecipesFragment extends Fragment implements OnObjectMenuClickListen
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment RecipesFragment.
+     * @return A new instance of fragment RecipesCollectionFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static RecipesFragment newInstance(String title) {
-        RecipesFragment fragment = new RecipesFragment();
+    public static RecipesCollectionFragment newInstance(String title) {
+        RecipesCollectionFragment fragment = new RecipesCollectionFragment();
         Bundle args = new Bundle();
         args.putString(CommonValues.FRAGMENT_TITLE, title);
         fragment.setArguments(args);
@@ -78,7 +82,7 @@ public class RecipesFragment extends Fragment implements OnObjectMenuClickListen
             onFragmentInteractionListener.onFragmentInteraction(title);
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recipes, container, false);
+        return inflater.inflate(R.layout.fragment_recipes_collection, container, false);
     }
 
     @Override
@@ -107,13 +111,20 @@ public class RecipesFragment extends Fragment implements OnObjectMenuClickListen
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            onFragmentInteractionListener = (RecipesFragment.OnFragmentInteractionListener) context;
+            onFragmentInteractionListener = (RecipesCollectionFragment.OnFragmentInteractionListener) context;
         }
         catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
     }
+
+//    @Override
+//    public void onFragmentInteraction(String title) {
+//        ((ListActivity) getActivity()).set
+//        getActivity().getActionBar().setTitle(title);
+//        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(title);
+//    }
 
 //    // TODO: Rename method, update argument and hook method into UI event
 //    public void onButtonPressed()
@@ -157,7 +168,7 @@ public class RecipesFragment extends Fragment implements OnObjectMenuClickListen
         switch (menuItem.getItemId())
         {
             case R.id.action_rename:
-//                Utils.renameCategory(getSupportFragmentManager(), category);
+                Utils.renameCategory(getFragmentManager(), recipe);
                 return true;
 
             case R.id.action_choose_color:
@@ -181,6 +192,22 @@ public class RecipesFragment extends Fragment implements OnObjectMenuClickListen
         inflater.inflate(R.menu.category_menu, popup.getMenu());
         popup.setOnMenuItemClickListener((RecipesAdapter.ViewHolder)recyclerViewRecipe.findViewHolderForAdapterPosition(position));
         popup.show();
+    }
+
+    @Override
+    public void onRecipeClick(View view) {
+        String name = ((TextView) view.findViewById(R.id.recipe_title)).getText().toString();
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.listActivityContent,
+                        RecipeFragment.newInstance(name, recipeViewModel.getRecipeIdByName(name)),
+                        CommonValues.RECIPE_FRAGMENT)
+                .addToBackStack("RecipesCollection").commit();
+    }
+
+    @Override
+    public void onRename(String title) {
+
     }
 
     public interface OnFragmentInteractionListener

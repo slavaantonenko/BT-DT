@@ -7,8 +7,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ import com.google.maps.android.data.geojson.GeoJsonPolygonStyle;
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.R;
 import com.msapplications.btdt.Utils;
+import com.msapplications.btdt.fragments.CustomMapFragment;
 import com.msapplications.btdt.interfaces.CountryService;
 import com.msapplications.btdt.interfaces.OnFloatingActionClick;
 import com.msapplications.btdt.objects.itemTypes.travel.CountryImagesList;
@@ -52,7 +55,9 @@ public class TravelCountryActivity extends AppCompatActivity  implements OnMapRe
     private CountryViewModel countryViewModel;
     private CountryModel country;
     private Picasso picasso;
+    private CustomMapFragment mapFragment;
     private GoogleMap map;
+    private ScrollView svCountry;
     private ConstraintLayout clOverview, clWhenToTravel;
     private ExpandableLayout elOverview, elWhenToTravel;
     private ImageView ivCountryFlag, ivCountryClose, ivExpandOverview, ivWhenToTravel;
@@ -65,6 +70,7 @@ public class TravelCountryActivity extends AppCompatActivity  implements OnMapRe
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_travel_country);
+        svCountry = findViewById(R.id.svCountry);
         clOverview = findViewById(R.id.clOverview);
         ivExpandOverview = findViewById(R.id.ivExpandOverview);
         elOverview = findViewById(R.id.elOverview);
@@ -93,7 +99,8 @@ public class TravelCountryActivity extends AppCompatActivity  implements OnMapRe
         country = getIntent().getParcelableExtra(CommonValues.COUNTRY_EXTRA);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapCountry);
+//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapCountry);
+        mapFragment = (CustomMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapCountry);
         mapFragment.getMapAsync(this);
 
         initializeView();
@@ -169,6 +176,12 @@ public class TravelCountryActivity extends AppCompatActivity  implements OnMapRe
                 CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(8.0F).build();
                 map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             }
+
+            // Enable scroll map up and down inside a ScrollView
+            mapFragment.setListener(new CustomMapFragment.OnTouchListener() {
+                @Override
+                public void onTouch() { svCountry.requestDisallowInterceptTouchEvent(true); }
+            });
 
             map.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener()
             {

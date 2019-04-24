@@ -52,8 +52,6 @@ public class TravelListFragment extends Fragment implements OnCountryClickListen
     private RecyclerView recyclerView;
     private CountryViewModel countryViewModel;
 
-//    private OnFragmentInteractionListener mListener;
-
     public TravelListFragment()
     {
         // Required empty public constructor

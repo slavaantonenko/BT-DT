@@ -122,6 +122,8 @@ public class TravelMapFragment extends Fragment implements OnMapReadyCallback
             @Override
             public void onChanged(@Nullable List<CountryModel> countries)
             {
+                map.clear();
+
                 for (CountryModel country : countries)
                 {
                     LatLng latLng = new LatLng(country.getLatitude(), country.getLongitude());

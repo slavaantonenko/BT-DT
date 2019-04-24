@@ -18,11 +18,11 @@ public interface CountryDao
     @Query("SELECT * from countries_table WHERE isInTravelList=1 ORDER BY beenThere")
     LiveData<List<CountryModel>> getTravelListCountries();
 
-    @Query("SELECT * from countries_table")
+    @Query("SELECT * from countries_table WHERE code NOT LIKE 'PS'")
     List<CountryModel> getCountries();
 
-    @Query("UPDATE countries_table SET isInTravelList=:isInTravelList, image=:image WHERE id=:id")
-    void updateIsInTravelList(int id, boolean isInTravelList, String image);
+    @Query("UPDATE countries_table SET isInTravelList=:isInTravelList, beenThere=:isBeenThere, image=:image WHERE id=:id")
+    void updateIsInTravelList(int id, boolean isInTravelList, boolean isBeenThere, String image);
 
     @Query("UPDATE countries_table SET beenThere=:beenThere WHERE id=:id")
     void updateBeenThere(int id, boolean beenThere);

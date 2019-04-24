@@ -41,7 +41,8 @@ public class CountryRepository
 
         @Override
         protected Void doInBackground(final CountryModel... countries) {
-            asyncTaskDao.updateIsInTravelList(countries[0].getId(), countries[0].isInTravelList(), countries[0].getImage());
+            asyncTaskDao.updateIsInTravelList(countries[0].getId(), countries[0].isInTravelList(),
+                    countries[0].isBeenThere(), countries[0].getImage());
             return null;
         }
     }

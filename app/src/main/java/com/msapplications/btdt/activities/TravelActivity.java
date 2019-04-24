@@ -172,12 +172,11 @@ public class TravelActivity extends AppCompatActivity //implements TravelCountri
                 {
                     Log.i("response", "response");
 
-                    if (response.code() == 200 && response.body() != null)
-                    {
-                        CountriesContent.COUNTRIES.addAll(CountryModelConverter.convertResult(response.body()));
-                        RoomDatabase.getDatabase(context).countryDao().insertAll(CountriesContent.COUNTRIES);
+                    if (response.code() == 200 && response.body() != null) {
+                        RoomDatabase.getDatabase(context).countryDao().insertAll(CountryModelConverter.convertResult(response.body()));
+                        CountriesContent.COUNTRIES.addAll(RoomDatabase.getDatabase(context).countryDao().getCountries());
 
-                        loadCountries(context);
+                        loadViewPager();
                     }
                 }
 

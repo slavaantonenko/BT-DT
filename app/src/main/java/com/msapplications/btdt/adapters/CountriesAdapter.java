@@ -165,13 +165,17 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
 
                     List<CountryModel> sameCountry = Utils.filter(travelListCountries, isInList);
 
-                    if(sameCountry.size() != 0) {
+                    if (sameCountry.size() != 0)
+                    {
                         adapterCountry.setInTravelList(true);
+
                         if (adapterCountry.getImage() == null)
                             adapterCountry.setImage(sameCountry.get(0).getImage());
                     }
-                    else
+                    else {
+                        adapterCountry.setBeenThere(false);
                         adapterCountry.setInTravelList(false);
+                    }
                 }
 
                 Log.d("Background Task", "Finished update countries adapter!");

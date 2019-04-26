@@ -1,11 +1,13 @@
 package com.msapplications.btdt.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.graphics.drawable.Animatable2;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -93,7 +95,10 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
             final CategoryType type = getItem(position).getType();
             final String prefName = CommonValues.FEATURE_AVAILABLE_PREF_NAME.get(type);
 
+            Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/ARLRDBD.ttf");
+            title.setTypeface(font);
             title.setText(category.getName());
+
             cvCategory.setCardBackgroundColor(category.getBackgroundColor());
             StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) cvCategory.getLayoutParams();
             layoutParams.height = getCardViewHeight(type, prefName);
@@ -114,6 +119,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
                         mCvCountdownView.start(diff);
                         cvNewFeatureCountDown.setVisibility(View.VISIBLE);
                         tvNewFeatureTitle.setText(category.getName());
+                        lock.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_lock));
 
                         mCvCountdownView.setOnCountdownEndListener(new CountdownView.OnCountdownEndListener() {
                             @Override
@@ -136,7 +142,12 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
                 catch (Exception e) {
                     e.printStackTrace();
                 }
+            } else if(cvNewFeatureCountDown != null){
+                cvNewFeatureCountDown.setVisibility(View.INVISIBLE);
+                tvNewFeatureTitle.setVisibility(View.INVISIBLE);
+                mCvCountdownView.setVisibility(View.INVISIBLE);
             }
+
 
             viewPositionAtCreation = -1;
         }

@@ -42,8 +42,8 @@
         android:layout_height="@dimen/ic_icons_size"
         android:layout_marginEnd="@dimen/ic_add_seat_margin_end"
         android:background="@android:color/transparent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline"
+        app:layout_constraintBottom_toBottomOf="@id/guideline"
         app:layout_constraintEnd_toStartOf="@id/ibDeleteCinema"
         app:srcCompat="@drawable/ic_add_circle" />
 
@@ -53,9 +53,9 @@
         android:layout_height="@dimen/ic_icons_size"
         android:layout_marginEnd="@dimen/ic_delete_seat_margin_end"
         android:background="@android:color/transparent"
+        app:layout_constraintTop_toTopOf="@id/guideline"
+        app:layout_constraintBottom_toBottomOf="@id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:srcCompat="@drawable/ic_delete_black" />
 
     <android.support.constraint.Guideline

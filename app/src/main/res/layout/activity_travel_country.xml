@@ -25,8 +25,8 @@
             android:layout_height="@dimen/atc_iv_size"
             android:layout_marginStart="@dimen/atc_iv_margin_start"
             android:adjustViewBounds="true"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_flag_sample" />
 
         <ImageView
@@ -34,8 +34,8 @@
             android:layout_width="@dimen/atc_iv_size"
             android:layout_height="@dimen/atc_iv_size"
             android:layout_marginEnd="@dimen/atc_iv_margin_start"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_close" />
 
         <android.support.design.widget.FloatingActionButton
@@ -47,8 +47,8 @@
             app:backgroundTint="@color/colorAccent"
             app:elevation="@dimen/atc_fab_elevation"
             app:layout_constraintBottom_toBottomOf="@id/mapCountry"
-            app:layout_constraintTop_toBottomOf="@id/mapCountry"
             app:layout_constraintEnd_toEndOf="@id/mapCountry"
+            app:layout_constraintTop_toBottomOf="@id/mapCountry"
             app:srcCompat="@drawable/ic_flight_take_off" />
 
         <FrameLayout
@@ -62,48 +62,48 @@
                 android:id="@+id/tvCountryName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center|start"
                 android:layout_marginStart="@dimen/atc_tvcn_margin_start"
                 android:text="@string/atc_tvcn"
-                android:textSize="@dimen/atc_tvcn_text_size"
                 android:textColor="@android:color/white"
-                android:layout_gravity="center|start" />
+                android:textSize="@dimen/atc_tvcn_text_size" />
         </FrameLayout>
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/clOverview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/atc_clo_padding"
             android:clickable="true"
             android:focusable="true"
+            android:padding="@dimen/atc_clo_padding"
             app:layout_constraintTop_toBottomOf="@id/flCountryName">
 
             <ImageView
                 android:id="@+id/ivOverview"
                 android:layout_width="@dimen/atc_ivo_size"
                 android:layout_height="@dimen/atc_ivo_size"
-                app:srcCompat="@drawable/ic_info"
-                app:layout_constraintStart_toStartOf="parent" />
-            
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/ic_info" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/atc_tv_overview_margin_start"
                 android:text="@string/atc_tv_overview"
-                android:textSize="@dimen/atc_tv_overview_text_size"
                 android:textColor="@color/atc_titles"
-                app:layout_constraintTop_toTopOf="@id/ivOverview"
+                android:textSize="@dimen/atc_tv_info_text_size"
                 app:layout_constraintBottom_toBottomOf="@id/ivOverview"
-                app:layout_constraintStart_toEndOf="@id/ivOverview" />
-            
+                app:layout_constraintStart_toEndOf="@id/ivOverview"
+                app:layout_constraintTop_toTopOf="@id/ivOverview" />
+
             <ImageView
                 android:id="@+id/ivExpandOverview"
                 android:layout_width="@dimen/atc_iveo_size"
                 android:layout_height="@dimen/atc_iveo_size"
-                app:srcCompat="@drawable/ic_collapse"
-                app:layout_constraintTop_toTopOf="@id/ivOverview"
                 app:layout_constraintBottom_toBottomOf="@id/ivOverview"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/ivOverview"
+                app:srcCompat="@drawable/ic_collapse" />
 
         </android.support.constraint.ConstraintLayout>
 
@@ -127,43 +127,43 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/atc_divider_line_height"
             android:background="@color/atc_divider_line"
-            app:layout_constraintTop_toBottomOf="@id/elOverview"/>
+            app:layout_constraintTop_toBottomOf="@id/elOverview" />
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/clWhenToTravel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/atc_el_padding"
             android:clickable="true"
             android:focusable="true"
+            android:padding="@dimen/atc_el_padding"
             app:layout_constraintTop_toBottomOf="@id/viewOverviewDividerLine">
 
             <ImageView
                 android:id="@+id/ivWhenToTravel"
                 android:layout_width="@dimen/atc_ivtt_size"
                 android:layout_height="@dimen/atc_ivtt_size"
-                app:srcCompat="@drawable/ic_tips"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/ic_tips" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/atc_tv_when_to_travel_margin_start"
                 android:text="@string/atc_tv_when_to_travel"
-                android:textSize="@dimen/atc_tv_when_to_travel_text_size"
                 android:textColor="@color/atc_titles"
-                app:layout_constraintTop_toTopOf="@id/ivWhenToTravel"
+                android:textSize="@dimen/atc_tv_info_text_size"
                 app:layout_constraintBottom_toBottomOf="@id/ivWhenToTravel"
-                app:layout_constraintStart_toEndOf="@id/ivWhenToTravel" />
+                app:layout_constraintStart_toEndOf="@id/ivWhenToTravel"
+                app:layout_constraintTop_toTopOf="@id/ivWhenToTravel" />
 
             <ImageView
                 android:id="@+id/ivExpandWhenToTravel"
                 android:layout_width="@dimen/atc_ivwtt_size"
                 android:layout_height="@dimen/atc_ivwtt_size"
-                app:srcCompat="@drawable/ic_collapse"
-                app:layout_constraintTop_toTopOf="@id/ivWhenToTravel"
                 app:layout_constraintBottom_toBottomOf="@id/ivWhenToTravel"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/ivWhenToTravel"
+                app:srcCompat="@drawable/ic_collapse" />
 
         </android.support.constraint.ConstraintLayout>
 
@@ -186,7 +186,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/atc_divider_line_height"
             android:background="@color/atc_divider_line"
-            app:layout_constraintTop_toBottomOf="@id/elWhenToTravel"/>
+            app:layout_constraintTop_toBottomOf="@id/elWhenToTravel" />
 
     </android.support.constraint.ConstraintLayout>
 

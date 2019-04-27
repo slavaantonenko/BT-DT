@@ -70,13 +70,11 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
             @Override
             public void onChanged(@Nullable final List<Category> categories)
             {
-                int position = adapter.adapterPosition();
-
-                if (position > -1)
-                    adapter.setCategory(categoryViewModel.getCategory(adapter.getItem(position).getId()));
-                else
+                if (adapter.getItemCount() != categories.size())
                     // Update the cached copy of the categories in the adapter.
                     adapter.setCategories(categories);
+                else
+                    adapter.setCategory(categoryViewModel.getCategory(adapter.getItem(adapter.adapterPosition()).getId()));
             }
         });
 

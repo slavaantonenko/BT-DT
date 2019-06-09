@@ -4,6 +4,8 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import com.msapplications.btdt.objects.itemTypes.NoteItem;
+import com.msapplications.btdt.room_storage.ViewModelNoteable;
+
 import java.util.List;
 
 public class NoteItemViewModel extends AndroidViewModel
@@ -20,6 +22,11 @@ public class NoteItemViewModel extends AndroidViewModel
     public LiveData<List<NoteItem>> getNoteItems(int categoryID)
     {
         return repository.getNoteItems(categoryID);
+    }
+
+    public LiveData<List<NoteItem>> getRecipeNoteItems(int categoryID, int recipeID)
+    {
+        return repository.getRecipeNoteItems(categoryID, recipeID);
     }
 
     public void insert(NoteItem noteItem) { repository.insertNoteItem(noteItem); }

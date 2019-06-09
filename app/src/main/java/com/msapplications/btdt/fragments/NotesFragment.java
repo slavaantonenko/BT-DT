@@ -1,5 +1,6 @@
 package com.msapplications.btdt.fragments;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -31,6 +32,7 @@ import java.util.List;
 public class NotesFragment extends AbstractFragmentItems implements NotesEditor
 {
     private String title = "";
+    private int recipeId = -1;
     private ArrayList<NoteItem> notes = null;
     private Fragment thisFragment = this;
     private RecyclerView recyclerView;
@@ -46,19 +48,36 @@ public class NotesFragment extends AbstractFragmentItems implements NotesEditor
 
     public static NotesFragment newInstance(String title, int categoryID)
     {
-        NotesFragment fragment = new NotesFragment();
         Bundle args = new Bundle();
         args.putString(CommonValues.FRAGMENT_TITLE, title);
         args.putInt(CommonValues.CATEGORY_ID_EXTRA, categoryID);
-        fragment.setArguments(args);
+        return createInstanceWithBundle(args);
+    }
+
+    public static NotesFragment newInstance(int categoryID, int recipeID)
+    {
+        Bundle args = new Bundle();
+        args.putString(CommonValues.FRAGMENT_TITLE, "title");
+        args.putInt(CommonValues.CATEGORY_ID_EXTRA, categoryID);
+        args.putInt(CommonValues.RECIPE_ID_EXTRA, recipeID);
+        return createInstanceWithBundle(args);
+    }
+
+    private static NotesFragment createInstanceWithBundle(Bundle bundle) {
+        NotesFragment fragment = new NotesFragment();
+        fragment.setArguments(bundle);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null)
+        if (getArguments() != null) {
             title = getArguments().getString(CommonValues.FRAGMENT_TITLE);
+
+            if(getArguments().containsKey(CommonValues.RECIPE_ID_EXTRA))
+                recipeId = getArguments().getInt(CommonValues.RECIPE_ID_EXTRA);
+        }
     }
 
     @Override
@@ -87,7 +106,12 @@ public class NotesFragment extends AbstractFragmentItems implements NotesEditor
             adapter = new NotesAdapter(this, noteItemViewModel);
             recyclerView.setAdapter(adapter);
 
-            noteItemViewModel.getNoteItems(categoryID).observe(this, new Observer<List<NoteItem>>() {
+
+            LiveData<List<NoteItem>> listLiveData = noteItemViewModel.getNoteItems(categoryID);
+            if(recipeId != -1) {
+                listLiveData = noteItemViewModel.getRecipeNoteItems(categoryID, recipeId);
+            }
+            listLiveData.observe(this, new Observer<List<NoteItem>>() {
                 @Override
                 public void onChanged(@Nullable final List<NoteItem> noteItems) {
                     if(updateAdapter) {
@@ -109,6 +133,8 @@ public class NotesFragment extends AbstractFragmentItems implements NotesEditor
         noteItemViewModel.updateText(id, editText.getText().toString());
         noteItemViewModel.increaseLineNumbers(newLineNumber, categoryID);
         NoteItem newNoteItem = new NoteItem(0, categoryID, newLineNumber);
+        if(recipeId != -1 )
+            newNoteItem = new NoteItem(0, categoryID,recipeId, newLineNumber);
         newNoteItem.setCheckBox(isCheckBox);
         noteItemViewModel.insert(newNoteItem);
         updateAdapter = true;
@@ -136,7 +162,7 @@ public class NotesFragment extends AbstractFragmentItems implements NotesEditor
     }
 
     @Override
-    public void ocCheckedClickListener(int noteItemId, boolean newValue) {
+    public void onCheckedClickListener(int noteItemId, boolean newValue) {
         noteItemViewModel.updateChecked(noteItemId, newValue);
     }
 

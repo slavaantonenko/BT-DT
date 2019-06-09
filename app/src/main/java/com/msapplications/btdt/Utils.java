@@ -222,9 +222,12 @@ public class Utils
         categoryViewModel.insert(newCategory);
         int categoryID = categoryViewModel.getIdByName(newCategory.getName());
 
-        NoteItemViewModel noteItemViewModel = ViewModelProviders.of(activity).get(NoteItemViewModel.class);
-        NoteItem newEmptyItem = new NoteItem(0, categoryID, 0);
-        noteItemViewModel.insert(newEmptyItem);
+//        if(CategoryType.NOTES.equals(type)) {
+            NoteItemViewModel noteItemViewModel = ViewModelProviders.of(activity).get(NoteItemViewModel.class);
+            NoteItem newEmptyItem = new NoteItem(0, categoryID, 0);
+            newEmptyItem.setText("");
+            noteItemViewModel.insert(newEmptyItem);
+//        }
     }
 
     public static int randomColor(Context context) {

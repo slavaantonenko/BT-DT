@@ -2,6 +2,7 @@ package com.msapplications.btdt.objects.itemTypes;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 import lombok.Getter;
@@ -36,8 +37,21 @@ public class NoteItem implements Comparable<NoteItem>{
     @ColumnInfo(name = "is_italic")
     private boolean isItalic;
 
+    @ColumnInfo(name = "recipeID")
+    private int recipeID;
 
+    @Ignore
     public NoteItem(int id, int categoryID, int lineNumber) {
+        initValues(id, categoryID, lineNumber);
+        recipeID = -1;
+    }
+
+    public NoteItem(int id, int categoryID, int recipeID, int lineNumber) {
+        this.recipeID = recipeID;
+        initValues(id, categoryID, lineNumber);
+    }
+
+    private void initValues(int id, int categoryID, int lineNumber) {
         this.id = id;
         this.categoryID = categoryID;
         this.lineNumber = lineNumber;

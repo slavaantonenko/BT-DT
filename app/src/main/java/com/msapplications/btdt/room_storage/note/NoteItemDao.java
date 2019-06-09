@@ -19,6 +19,9 @@ public interface NoteItemDao
     @Query("SELECT * FROM note_item_table WHERE category_id=:categoryID")
     LiveData<List<NoteItem>> getNoteItems(int categoryID);
 
+    @Query("SELECT * FROM note_item_table WHERE category_id=:categoryID and recipeID=:recipeID")
+    LiveData<List<NoteItem>> getRecipeNoteItems(int categoryID, int recipeID);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(Collection<NoteItem> noteItems);
 

@@ -34,6 +34,7 @@ public class CommonValues
     public static final String CINEMA_INFO_BUNDLE = "CinemaInfo";
     public static final String CINEMA_HALL_ACTION_BUNDLE = "CinemaHallAction";
     public static final String RECIPE_FRAGMENT = "RecipeFragment";
+    public static final String RECIPE_INGREDIENTS = "RecipeIngredients";
     public static final String CATEGORY_BUNDLE = "Category";
     public static final int ADD_CINEMA_REQUEST_CODE = 1;
     public static final int EDIT_HALL_REQUEST_CODE = 2;

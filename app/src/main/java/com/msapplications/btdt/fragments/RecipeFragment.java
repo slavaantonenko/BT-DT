@@ -72,18 +72,18 @@ public class RecipeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         recipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
         categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel.class);
-        int recipesId = categoryViewModel.getIdByName(CommonValues.RECIPES);
+        int recipesCategoryId = categoryViewModel.getIdByName(CommonValues.RECIPES);
 
 
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.ingredients_frame, NotesFragment.newInstance("title", recipesId),
-                        CommonValues.RECIPE_FRAGMENT)
+                .replace(R.id.ingredients_frame, IngredientsFragment.newInstance(recipeID),
+                        CommonValues.RECIPE_INGREDIENTS)
                 .addToBackStack("RecipesCollection").commit();
 
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.method_frame, NotesFragment.newInstance("title", recipesId),
+                .replace(R.id.method_frame, NotesFragment.newInstance(recipesCategoryId, recipeID),
                         CommonValues.RECIPE_FRAGMENT)
                 .addToBackStack("RecipesCollection").commit();
     }

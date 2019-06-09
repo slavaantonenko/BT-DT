@@ -11,7 +11,6 @@ import java.util.List;
 public class NoteItemRepository
 {
     private NoteItemDao noteItemDao;
-    private LiveData<List<NoteItem>> noteItems;
 
     NoteItemRepository(Application application)
     {
@@ -21,6 +20,10 @@ public class NoteItemRepository
 
     public LiveData<List<NoteItem>> getNoteItems(int categoryID) {
         return noteItemDao.getNoteItems(categoryID);
+    }
+
+    public LiveData<List<NoteItem>> getRecipeNoteItems(int categoryID, int recipeID) {
+        return noteItemDao.getRecipeNoteItems(categoryID, recipeID);
     }
 
     public void insertNoteItem(NoteItem noteItem) {

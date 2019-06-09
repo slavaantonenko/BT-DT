@@ -29,6 +29,7 @@
     <string name="dnc_tv_nr_title">Create New Recipe</string>
     <string name="ingredients">Ingredients</string>
     <string name="method">Method</string>
+    <string name="bullet">• </string>
 
 
     <!-- Menus -->

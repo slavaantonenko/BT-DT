@@ -8,8 +8,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity(tableName = "note_item_table")
-public class RecipeIngredients implements Comparable<RecipeIngredients>
+@Entity(tableName = "ingredient_item_table")
+public class RecipeIngredient implements Comparable<RecipeIngredient>
 {
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -23,14 +23,14 @@ public class RecipeIngredients implements Comparable<RecipeIngredients>
     @ColumnInfo(name = "text")
     private String text;
 
-    public RecipeIngredients(int id, int recipeID, int lineNumber) {
+    public RecipeIngredient(int id, int recipeID, int lineNumber) {
         this.id = id;
         this.recipeID = recipeID;
         this.lineNumber = lineNumber;
     }
 
     @Override
-    public int compareTo(RecipeIngredients o) {
+    public int compareTo(RecipeIngredient o) {
         return this.getLineNumber() - o.getLineNumber();
     }
 }

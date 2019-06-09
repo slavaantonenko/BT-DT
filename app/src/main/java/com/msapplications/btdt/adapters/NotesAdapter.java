@@ -1,12 +1,9 @@
 package com.msapplications.btdt.adapters;
 
-import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
 import android.text.InputType;
-import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +12,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -62,7 +58,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
             }
 
         } else {
-            notifyItemRangeChanged(notifyFromIndex, notes.size() - notifyFromIndex);
+             notifyItemRangeChanged(notifyFromIndex, notes.size() - notifyFromIndex);
         }
     }
 
@@ -103,74 +99,70 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
         final View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_note, parent, false);
 
-        ConstraintLayout constraintLayoutParent = ((ConstraintLayout)parent.getParent());
-        btnBold = constraintLayoutParent.findViewById(R.id.bold);
-        btnItalic = constraintLayoutParent.findViewById(R.id.italic);
-        btnCheckbox = constraintLayoutParent.findViewById(R.id.checkbox_btn);
+        if(noteItemViewModel != null) {
+            ConstraintLayout constraintLayoutParent = ((ConstraintLayout) parent.getParent());
+            btnBold = constraintLayoutParent.findViewById(R.id.bold);
+            btnItalic = constraintLayoutParent.findViewById(R.id.italic);
+            btnCheckbox = constraintLayoutParent.findViewById(R.id.checkbox_btn);
 
-        //line un/bold
-        btnBold.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                if(parent.findFocus() == null) {
-                    parent.getChildAt(0).findViewById(R.id.etNote).requestFocus();
+            //line un/bold
+            btnBold.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (parent.findFocus() == null) {
+                        parent.getChildAt(0).findViewById(R.id.etNote).requestFocus();
+                    }
+
+                    String e = ((EditText) parent.findFocus()).getText().toString();
+                    NoteItem noteItem = notes.get(currentIndex);
+                    boolean newValue = !noteItem.isBold();
+                    noteItemViewModel.updateBold(noteItem.getId(), newValue);
+                    noteItem.setBold(newValue);
+                    noteItem.setText(e);
+                    setSelectionFocus = false;
+                    notifyItemChanged(currentIndex);
                 }
+            });
 
-                String e = ((EditText) parent.findFocus()).getText().toString();
-                NoteItem noteItem = notes.get(currentIndex);
-                boolean newValue = !noteItem.isBold();
-                noteItemViewModel.updateBold(noteItem.getId(), newValue);
-                noteItem.setBold(newValue);
-                noteItem.setText(e);
-                setSelectionFocus = false;
-                notifyItemChanged(currentIndex);
-            }
-        });
+            //line un/italic
+            btnItalic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (parent.findFocus() == null) {
+                        parent.getChildAt(0).findViewById(R.id.etNote).requestFocus();
+                    }
 
-        //line un/italic
-        btnItalic.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                if(parent.findFocus() == null) {
-                    parent.getChildAt(0).findViewById(R.id.etNote).requestFocus();
+                    String e = ((EditText) parent.findFocus()).getText().toString();
+                    NoteItem noteItem = notes.get(currentIndex);
+                    boolean newValue = !noteItem.isItalic();
+                    noteItemViewModel.updateItalic(noteItem.getId(), newValue);
+                    noteItem.setItalic(newValue);
+                    noteItem.setText(e);
+                    setSelectionFocus = false;
+                    notifyItemChanged(currentIndex);
+
                 }
+            });
 
-                String e = ((EditText) parent.findFocus()).getText().toString();
-                NoteItem noteItem = notes.get(currentIndex);
-                boolean newValue = !noteItem.isItalic();
-                noteItemViewModel.updateItalic(noteItem.getId(), newValue);
-                noteItem.setItalic(newValue);
-                noteItem.setText(e);
-                setSelectionFocus = false;
-                notifyItemChanged(currentIndex);
+            //line checkbox un/shown
+            btnCheckbox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (parent.findFocus() == null) {
+                        parent.getChildAt(0).findViewById(R.id.etNote).requestFocus();
+                    }
 
-            }
-        });
-
-        //line checkbox un/shown
-        btnCheckbox.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                if(parent.findFocus() == null) {
-                    parent.getChildAt(0).findViewById(R.id.etNote).requestFocus();
+                    String e = ((EditText) parent.findFocus()).getText().toString();
+                    NoteItem noteItem = notes.get(currentIndex);
+                    boolean newValue = !noteItem.isCheckBox();
+                    noteItemViewModel.updateCheckBox(noteItem.getId(), newValue);
+                    noteItem.setCheckBox(newValue);
+                    noteItem.setText(e);
+                    setSelectionFocus = false;
+                    notifyItemChanged(currentIndex);
                 }
-
-                String e = ((EditText) parent.findFocus()).getText().toString();
-                NoteItem noteItem = notes.get(currentIndex);
-                boolean newValue = !noteItem.isCheckBox();
-                noteItemViewModel.updateCheckBox(noteItem.getId(), newValue);
-                noteItem.setCheckBox(newValue);
-                noteItem.setText(e);
-                setSelectionFocus = false;
-                notifyItemChanged(currentIndex);
-            }
-        });
+            });
+        }
 
         return new NotesAdapter.NotesViewHolder(itemView);
 
@@ -230,7 +222,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
-                listener.ocCheckedClickListener(noteItem.getId(), isChecked);
+                listener.onCheckedClickListener(noteItem.getId(), isChecked);
                 noteItem.setChecked(isChecked);
             }
         });

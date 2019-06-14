@@ -55,7 +55,7 @@ public class CommonValues
     }};
     public static final HashMap<CategoryType, String> COMING_SOON_FEATURES_DATES = new HashMap<CategoryType, String>() {{
         put(CategoryType.TRAVEL, "15/04/2019 00:00:00");
-        put(CategoryType.RECIPES, "15/06/2019 00:00:00");
+        put(CategoryType.RECIPES, "15/08/2019 00:00:00");
     }};
     public static final HashMap<CategoryType, String> FEATURE_AVAILABLE_PREF_NAME = new HashMap<CategoryType, String>() {{
         put(CategoryType.TRAVEL, TRAVEL_FEATURE_AVAILABLE);

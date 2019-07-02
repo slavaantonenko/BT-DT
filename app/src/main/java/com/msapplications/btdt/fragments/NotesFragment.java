@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.os.ConfigurationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -57,7 +58,6 @@ public class NotesFragment extends AbstractFragmentItems implements NotesEditor
     public static NotesFragment newInstance(int categoryID, int recipeID)
     {
         Bundle args = new Bundle();
-        args.putString(CommonValues.FRAGMENT_TITLE, "title");
         args.putInt(CommonValues.CATEGORY_ID_EXTRA, categoryID);
         args.putInt(CommonValues.RECIPE_ID_EXTRA, recipeID);
         return createInstanceWithBundle(args);
@@ -88,7 +88,7 @@ public class NotesFragment extends AbstractFragmentItems implements NotesEditor
         View view =  inflater.inflate(R.layout.fragment_notes, container, false);
         recyclerView = view.findViewById(R.id.rvNotes);
 
-        if (onFragmentInteractionListener != null)
+        if (onFragmentInteractionListener != null && title != null)
             onFragmentInteractionListener.onFragmentInteraction(title);
 
         return view;

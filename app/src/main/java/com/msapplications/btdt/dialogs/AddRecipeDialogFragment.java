@@ -100,7 +100,7 @@ public class AddRecipeDialogFragment extends DialogFragment
                 ingredientViewModel.insert(newEmptyItem);
 
                 NoteItem newMethodline = new NoteItem(0,recipeCategoryID, recipeID, 0);
-                newEmptyItem.setText("");
+                newMethodline.setText(" ");
                 noteItemViewModel.insert(newMethodline);
 
                 dismiss();

@@ -2,6 +2,7 @@ package com.msapplications.btdt.room_storage;
 
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
+import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
@@ -23,7 +24,7 @@ import com.msapplications.btdt.room_storage.travel.CountryDao;
 
 // version = 1 is CinemaHall hall and row in int and not String.
 @Database(entities = {Cinema.class, CinemaHall.class, CountryModel.class, NoteItem.class, Category.class,
-        Recipe.class, RecipeIngredient.class}, version = 11)
+        Recipe.class, RecipeIngredient.class}, version = 12)
 public abstract class RoomDatabase extends android.arch.persistence.room.RoomDatabase
 {
     public abstract CinemaDao cinemaDao();
@@ -65,9 +66,12 @@ public abstract class RoomDatabase extends android.arch.persistence.room.RoomDat
         }
     };
 
-    static final Migration MIGRATION_11_12 = new Migration(10, 11) {
+    static final Migration MIGRATION_11_12 = new Migration(11, 12) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE recipes_table ADD COLUMN recipe_image VARCHAR");
+            database.execSQL("UPDATE recipes_table SET recipe_image=''");
+
 //            int a = -1;
 //            database.execSQL("UPDATE note_item_table SET recipeID=: -1");
 //            database.execSQL("ALTER TABLE recipes_table ADD COLUMN id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL");

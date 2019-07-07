@@ -47,6 +47,10 @@ public class RecipeRepository {
 
     public int recipeNameExists(String name) { return recipeDao.recipeNameExists(name); }
 
+    public void setImage(int id, String imageUri) {
+        recipeDao.setImage(id, imageUri);
+    }
+
     private static class renameAsyncTask extends AsyncTask<Recipe, Void, Void>
     {
         private RecipeDao asyncTaskDao;

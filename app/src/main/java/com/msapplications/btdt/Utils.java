@@ -6,8 +6,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.annotation.DimenRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -33,6 +37,7 @@ import com.msapplications.btdt.interfaces.Renamable;
 import com.msapplications.btdt.objects.Category;
 import com.msapplications.btdt.objects.CategoryType;
 import com.msapplications.btdt.objects.itemTypes.NoteItem;
+import com.msapplications.btdt.objects.itemTypes.recipes.Recipe;
 import com.msapplications.btdt.room_storage.ViewModelDeletable;
 import com.msapplications.btdt.room_storage.category.CategoryViewModel;
 import com.msapplications.btdt.room_storage.cinema.CinemaHallsViewModel;
@@ -260,6 +265,20 @@ public class Utils
         float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
         int noOfColumns = (int) (dpWidth / 100);
         return noOfColumns;
+    }
+
+    public static Bitmap getRecipeImage(String imageUri, Activity activity)
+    {
+        Bitmap bitmap = BitmapFactory.decodeResource(activity.getResources(), R.drawable.recipe_default);
+
+        try {
+            Uri mUri = Uri.parse(imageUri);
+            bitmap = MediaStore.Images.Media.getBitmap(activity.getContentResolver(), mUri);
+
+        } catch(Exception e) {
+            return bitmap; //return default
+        }
+        return bitmap;
     }
 
     /**

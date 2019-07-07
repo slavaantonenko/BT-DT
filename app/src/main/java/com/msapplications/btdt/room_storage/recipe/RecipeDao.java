@@ -33,4 +33,7 @@ public interface RecipeDao {
 
     @Query("SELECT COUNT(recipe_name) FROM recipes_table WHERE recipe_name=:name")
     int recipeNameExists(String name);
+
+    @Query("UPDATE recipes_table SET recipe_image=:imageUri where id=:id")
+    void setImage(int id, String imageUri);
 }

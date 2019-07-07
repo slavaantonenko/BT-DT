@@ -1,6 +1,8 @@
 package com.msapplications.btdt.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
@@ -13,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.msapplications.btdt.R;
+import com.msapplications.btdt.Utils;
 import com.msapplications.btdt.interfaces.OnMenuItemClickListener;
 import com.msapplications.btdt.interfaces.OnObjectMenuClickListener;
 import com.msapplications.btdt.interfaces.OnRecipeClickListener;
@@ -25,11 +28,13 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
     private OnObjectMenuClickListener recipeMenuClickListener;
     private OnMenuItemClickListener menuItemClickListener;
     private OnRecipeClickListener onRecipeClickListener;
+    private Activity activity;
 
     private int adapterPosition = -1;
 
     public RecipesAdapter(Fragment fragment)
     {
+        activity = fragment.getActivity();
         recipeMenuClickListener = (OnObjectMenuClickListener) fragment;
         menuItemClickListener = (OnMenuItemClickListener) fragment;
         onRecipeClickListener = (OnRecipeClickListener) fragment;
@@ -51,12 +56,12 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
             overflow.setOnClickListener(this);
             cvRecipe = view.findViewById(R.id.recipe_card);
             cvRecipe.setOnClickListener(this);
-
         }
 
         public void onBindViewHolder(Recipe recipe, final int position) {
             recipeTitle.setText(recipe.getName());
             btnColor.setBackgroundColor(recipe.getColor());
+            preview.setImageBitmap(Utils.getRecipeImage(recipe.getImageURi(), activity));
         }
 
         @Override

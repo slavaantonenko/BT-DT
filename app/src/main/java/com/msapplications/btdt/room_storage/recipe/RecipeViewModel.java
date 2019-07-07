@@ -45,4 +45,8 @@ public class RecipeViewModel extends AndroidViewModel implements ViewModelRenama
     public void rename(Renamable category) { repository.rename((Recipe)category); }
 
     public int nameExists(String name) { return repository.recipeNameExists(name); }
+
+    public void setImage(int id, String imageUri) {
+        repository.setImage(id, imageUri);
+    }
 }

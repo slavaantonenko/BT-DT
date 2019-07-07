@@ -25,6 +25,9 @@ public class Recipe implements Renamable
     @ColumnInfo(name = "recipe_color")
     int color;
 
+    @ColumnInfo(name = "recipe_image")
+    String imageURi;
+
     // Constructor
     public Recipe(int id, String name, int color)
     {
@@ -39,6 +42,15 @@ public class Recipe implements Renamable
         id = in.readInt();
         name = in.readString();
         color = in.readInt();
+    }
+
+
+    public String getImageURi() {
+        return imageURi;
+    }
+
+    public void setImageURi(String imageURi) {
+        this.imageURi = imageURi;
     }
 
     public static final Parcelable.Creator<Recipe> CREATOR = new Parcelable.Creator<Recipe>()

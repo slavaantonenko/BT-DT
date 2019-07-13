@@ -50,7 +50,7 @@
 
     <string-array name="category_types">
         <item>Note</item>
-        <!--<item>Recipes</item>-->
+        <item>Recipes</item>
         <item>Cinema Seats</item>
         <item>Travel</item>
     </string-array>

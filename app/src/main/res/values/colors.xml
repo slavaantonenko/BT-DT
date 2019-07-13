@@ -40,6 +40,8 @@
     <color name="atc_titles">#424242</color>
     <color name="atc_divider_line">#E0E0E0</color>
 
+    <color name="fr_titles">#424242</color>
+
     <color name="note_bottom_toolbar">@android:color/white</color> <!--#FF000000-->
 
     <!-- Highlight country -->

@@ -1,5 +1,6 @@
 package com.msapplications.btdt.adapters;
 
+import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
@@ -24,10 +25,12 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     ArrayList<RecipeIngredient> notes;
     NotesEditor listener;
     int currentIndex=-1;
+    private Context context;
 
 
-    public IngredientsAdapter(NotesEditor listener) {
+    public IngredientsAdapter(Context context, NotesEditor listener) {
         this.listener = listener;
+        this.context =  context;
     }
 
     public void setIngredients(List<RecipeIngredient> ingredients, int notifyFromIndex, boolean isRemoved) {
@@ -99,6 +102,8 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         currentEditText.setRawInputType(InputType.TYPE_CLASS_TEXT);
 
         currentEditText.setText(ingredient.getText());
+
+//        currentEditText.setText(context.getString(R.string.bullet, ingredient.getText()));
 
         currentEditText.setOnFocusChangeListener(new View.OnFocusChangeListener()
         {

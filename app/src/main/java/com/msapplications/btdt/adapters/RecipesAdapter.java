@@ -44,14 +44,12 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
             implements PopupMenu.OnMenuItemClickListener, View.OnClickListener{
         public TextView recipeTitle;
         public ImageView preview, overflow;
-        public Button btnColor;
         public CardView cvRecipe;
 
         public ViewHolder(View view) {
             super(view);
             recipeTitle = view.findViewById(R.id.recipe_title);
             preview = view.findViewById(R.id.recipe_preview);
-            btnColor = view.findViewById(R.id.btn_color_recipe);
             overflow = view.findViewById(R.id.overflow);
             overflow.setOnClickListener(this);
             cvRecipe = view.findViewById(R.id.recipe_card);
@@ -60,8 +58,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
 
         public void onBindViewHolder(Recipe recipe, final int position) {
             recipeTitle.setText(recipe.getName());
-            btnColor.setBackgroundColor(recipe.getColor());
-            preview.setImageBitmap(Utils.getRecipeImage(recipe.getImageURi(), activity));
+            Utils.getRecipeImage(recipe.getImageURi(), preview);
         }
 
         @Override

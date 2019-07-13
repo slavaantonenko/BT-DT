@@ -110,6 +110,7 @@ public class NewCategoryDialogFragment extends DialogFragment
                     case (CommonValues.RECIPES):
                         etNewCategoryName.setText(CommonValues.RECIPES);
                         etNewCategoryName.setEnabled(false);
+                        break;
                     default:
                         etNewCategoryName.setText("");
                         etNewCategoryName.setEnabled(true);

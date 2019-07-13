@@ -30,6 +30,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.google.android.gms.common.util.Predicate;
@@ -45,6 +46,7 @@ import com.msapplications.btdt.room_storage.cinema.CinemaHallsViewModel;
 import com.msapplications.btdt.room_storage.cinema.CinemaViewModel;
 import com.msapplications.btdt.room_storage.note.NoteItemViewModel;
 import com.msapplications.btdt.room_storage.recipe.RecipeViewModel;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -267,19 +269,14 @@ public class Utils
         recipeViewModel.deleteRecipe(id);
     }
 
-    //TODO use picasso
-    public static Bitmap getRecipeImage(String imageUri, Activity activity)
+    public static void getRecipeImage(String imageUri, ImageView preview)
     {
-        Bitmap bitmap = BitmapFactory.decodeResource(activity.getResources(), R.drawable.recipe_default);
-
         try {
             Uri mUri = Uri.parse(imageUri);
-            bitmap = MediaStore.Images.Media.getBitmap(activity.getContentResolver(), mUri);
-
+            Picasso.get().load(mUri).into(preview);
         } catch(Exception e) {
-            return bitmap; //return default
+            Picasso.get().load(R.drawable.recipe_default).into(preview);
         }
-        return bitmap;
     }
 
     /**

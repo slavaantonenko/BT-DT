@@ -5,52 +5,28 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
-import android.text.Html;
-import android.util.JsonReader;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.gson.Gson;
-import com.google.maps.android.data.geojson.GeoJsonLayer;
-import com.google.maps.android.data.geojson.GeoJsonPolygonStyle;
 import com.msapplications.btdt.R;
-import com.msapplications.btdt.Utils;
-import com.msapplications.btdt.objects.itemTypes.travel.CountriesCoordinates;
-import com.msapplications.btdt.objects.itemTypes.travel.CountriesCoordinatesResults;
 import com.msapplications.btdt.objects.itemTypes.travel.CountryModel;
 import com.msapplications.btdt.room_storage.travel.CountryViewModel;
 
-import org.json.JSONException;
-
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 ///**

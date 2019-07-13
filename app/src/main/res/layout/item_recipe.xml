@@ -5,30 +5,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/recipe_card"
     android:layout_width="200dp"
-    android:layout_height="200dp">
+    android:layout_height="200dp"
+    android:layout_marginTop="5dp">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/cl_recipe_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/recipe_preview"
             android:layout_width="match_parent"
             android:layout_height="160dp"
             android:src="@drawable/recipe_default"
             android:scaleType="center"
-            android:fitsSystemWindows="true"/>
-
-        <Button
-            android:id="@+id/btn_color_recipe"
-            android:layout_width="@dimen/btn_size_recipe"
-            android:layout_height="@dimen/btn_size_recipe"
-            android:clickable="false"
-            android:layout_margin="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:background="@color/colorPrimary"/>
+            android:fitsSystemWindows="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/recipe_title"
@@ -37,7 +30,7 @@
             android:textSize="@dimen/tv_recipe_name"
             android:textStyle="bold"
             android:layout_margin="5dp"
-            app:layout_constraintStart_toEndOf="@id/btn_color_recipe"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:text="pizza"/>
 

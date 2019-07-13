@@ -2,6 +2,7 @@ package com.msapplications.btdt.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.msapplications.btdt.R;
 import com.msapplications.btdt.interfaces.OnCountryClickListener;
 import com.msapplications.btdt.objects.itemTypes.travel.CountryModel;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -45,10 +47,21 @@ public class TravelListAdapter extends RecyclerView.Adapter<TravelListAdapter.Vi
             ivBeenThere.setOnClickListener(this);
         }
 
-        private void onBindViewHolder(CountryModel country)
+        private void onBindViewHolder(final CountryModel country)
         {
             tvCountryName.setText(country.getName());
-            picasso.load(country.getImage()).fit().into(ivCountryImage);
+            picasso.load(country.getImage()).fit().error(R.drawable.travel_default).into(ivCountryImage, new Callback()
+            {
+                @Override
+                public void onSuccess() {
+                    Log.i("Picasso success", country.getName() + " downloaded image succeeded");
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    Log.e("Picasso failed", "Failed load image for " + country.getName() + " " + e.getMessage());
+                }
+            });
 
             if (country.isBeenThere()) {
                 ivCountryImage.setAlpha(0.5f);

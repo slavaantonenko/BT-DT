@@ -29,11 +29,10 @@ public class Recipe implements Renamable
     String imageURi;
 
     // Constructor
-    public Recipe(int id, String name, int color)
+    public Recipe(int id, String name)
     {
         this.id = id;
         this.name = name;
-        this.color = color;
     }
 
 
@@ -41,7 +40,6 @@ public class Recipe implements Renamable
     {
         id = in.readInt();
         name = in.readString();
-        color = in.readInt();
     }
 
 
@@ -75,6 +73,5 @@ public class Recipe implements Renamable
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(id);
         parcel.writeString(name);
-        parcel.writeInt(color);
     }
 }

@@ -6,14 +6,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_recipe"
     android:windowSoftInputMode="adjustPan"
     tools:context=".fragments.RecipeFragment">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="300dp"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -61,10 +60,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ingredients"
-                android:textSize="25sp"
+                android:textSize="18sp"
+                android:textColor="@color/fr_titles"
                 android:layout_marginTop="5dp"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@id/ingredients_frame"
                 android:textStyle="bold"/>
         
             <FrameLayout
@@ -72,21 +72,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_margin="10dp"
-                android:background="@android:color/white"
+                android:background="#FFF9C4"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_ingredients"
-                >
-            </FrameLayout>
+                app:layout_constraintTop_toBottomOf="@id/tv_ingredients" />
         
             <TextView
                 android:id="@+id/tv_method"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/method"
-                android:textSize="25sp"
+                android:textSize="18sp"
+                android:textColor="@color/fr_titles"
                 android:layout_marginTop="5dp"
                 app:layout_constraintTop_toBottomOf="@id/ingredients_frame"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@id/method_frame"
                 android:textStyle="bold"/>
         
             <FrameLayout
@@ -94,11 +93,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:layout_margin="10dp"
-                android:background="@android:color/white"
+                android:background="#FFF9C4"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_method"
-                >
-            </FrameLayout>
+                app:layout_constraintTop_toBottomOf="@id/tv_method" />
 
         </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.NestedScrollView>

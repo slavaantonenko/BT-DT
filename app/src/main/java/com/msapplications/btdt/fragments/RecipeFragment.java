@@ -26,6 +26,7 @@ import com.msapplications.btdt.Utils;
 import com.msapplications.btdt.objects.itemTypes.recipes.Recipe;
 import com.msapplications.btdt.room_storage.category.CategoryViewModel;
 import com.msapplications.btdt.room_storage.recipe.RecipeViewModel;
+import com.squareup.picasso.Picasso;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -96,7 +97,7 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
         int recipesCategoryId = categoryViewModel.getIdByName(CommonValues.RECIPES);
 
         Recipe recipe = recipeViewModel.getRecipe(recipeID);
-        recipeImage.setImageBitmap(Utils.getRecipeImage(recipe.getImageURi(), getActivity()));
+        Utils.getRecipeImage(recipe.getImageURi(), recipeImage);
 
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
@@ -111,8 +112,11 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        startActivityForResult(new Intent(Intent.ACTION_OPEN_DOCUMENT,
-                android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+        Intent intent = new Intent();
+        intent.setAction(android.content.Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), GET_FROM_GALLERY);
     }
 
     @Override
@@ -123,18 +127,8 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
         //Detects request codes
         if(requestCode==GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
             Uri selectedImage = data.getData();
-            Bitmap bitmap = null;
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
-                recipeImage.setImageBitmap(bitmap);
-                recipeViewModel.setImage(recipeID, selectedImage.toString());
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            Picasso.get().load(selectedImage).into(recipeImage);
+            recipeViewModel.setImage(recipeID, selectedImage.toString());
         }
     }
 }

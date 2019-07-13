@@ -88,10 +88,8 @@ public class AddRecipeDialogFragment extends DialogFragment
                     return;
                 }
 
-                int color = Utils.randomColor(getContext());
-
                 getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, new Intent());
-                recipeViewModel.insert(new Recipe(0, recipeName, color));
+                recipeViewModel.insert(new Recipe(0, recipeName));
                 int recipeID = recipeViewModel.getRecipeIdByName(recipeName);
                 int recipeCategoryID = categoryViewModel.getIdByName(CommonValues.RECIPES);
 

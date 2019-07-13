@@ -76,7 +76,7 @@ public class IngredientsFragment extends Fragment implements NotesEditor
             ingredientViewModel = ViewModelProviders.of(this).get(IngredientViewModel.class);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(thisFragment.getContext());
             recyclerView.setLayoutManager(layoutManager);
-            adapter = new IngredientsAdapter(this );
+            adapter = new IngredientsAdapter(getContext(), this);
             recyclerView.setAdapter(adapter);
             RecipeIngredient recipeIngredient = new RecipeIngredient(0, recipeID, 0);
             recipeIngredient.setText("");
@@ -102,7 +102,7 @@ public class IngredientsFragment extends Fragment implements NotesEditor
     public void OnEnterKeyClicked(int id, int newLineNumber, EditText editText, boolean isCheckBox)
     {
 //        ingredients.get(position).setText(editText.getText().toString());
-        ingredientViewModel.updateText(id, editText.getText().toString());
+        ingredientViewModel.updateText(id, editText.getText().toString().substring(2));
         ingredientViewModel.increaseLineNumbers(newLineNumber, recipeID);
         RecipeIngredient newIngredient = new RecipeIngredient(0, recipeID, newLineNumber);
         newIngredient.setText("");

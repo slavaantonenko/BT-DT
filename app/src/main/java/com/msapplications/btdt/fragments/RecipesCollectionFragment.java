@@ -190,6 +190,7 @@ public class RecipesCollectionFragment extends Fragment
         PopupMenu popup = new PopupMenu(getContext(), view);
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.category_menu, popup.getMenu());
+        popup.getMenu().findItem(R.id.action_choose_color).setVisible(false);
         popup.setOnMenuItemClickListener((RecipesAdapter.ViewHolder)recyclerViewRecipe.findViewHolderForAdapterPosition(position));
         popup.show();
     }

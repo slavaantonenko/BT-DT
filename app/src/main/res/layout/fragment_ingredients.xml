@@ -5,6 +5,8 @@
     android:id="@+id/notesFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
     tools:context=".fragments.NotesFragment">
 
     <android.support.v7.widget.RecyclerView

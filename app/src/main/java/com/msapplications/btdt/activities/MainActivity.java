@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
 
         CategoryType type = adapter.getItem(position).getType();
 
-        if (type.equals(CategoryType.CINEMA_SEATS) || type.equals(CategoryType.TRAVEL))
+        if (type.equals(CategoryType.CINEMA_SEATS) || type.equals(CategoryType.TRAVEL) || type.equals(CategoryType.RECIPES))
             popup.getMenu().findItem(R.id.action_rename).setEnabled(false);
 
         popup.show();

@@ -47,6 +47,8 @@ public abstract class RoomDatabase extends android.arch.persistence.room.RoomDat
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             RoomDatabase.class, "room_database")
                             .allowMainThreadQueries()
+                            .addMigrations()
+                            .addMigrations(MIGRATION_10_11)
                             .addMigrations(MIGRATION_11_12)
                             .build();
             }
@@ -55,28 +57,40 @@ public abstract class RoomDatabase extends android.arch.persistence.room.RoomDat
         return INSTANCE;
     }
 
-    static final Migration MIGRATION_9_10 = new Migration(9, 10) {
-        @Override
-        public void migrate(SupportSQLiteDatabase database) {
-            // Since we didn't alter the table, there's nothing else to do here.
-            database.execSQL("ALTER TABLE recipes_table ADD COLUMN id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL");
-            database.execSQL("ALTER TABLE recipes_table ADD COLUMN recipe_name VARCHAR(255) NOT NULL");
-            database.execSQL("ALTER TABLE recipes_table ADD COLUMN recipe_color INT(2) DEFAULT 1");
-
-        }
-    };
+//    static final Migration MIGRATION_9_10 = new Migration(9, 10) {
+//        @Override
+//        public void migrate(SupportSQLiteDatabase database) {
+//            // Since we didn't alter the table, there's nothing else to do here.
+//            database.execSQL("ALTER TABLE recipes_table ADD COLUMN id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL");
+//            database.execSQL("ALTER TABLE recipes_table ADD COLUMN recipe_name VARCHAR(255) NOT NULL");
+//            database.execSQL("ALTER TABLE recipes_table ADD COLUMN recipe_color INT(2) DEFAULT 1");
+//
+//        }
+//    };
 
     static final Migration MIGRATION_11_12 = new Migration(11, 12) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
-            database.execSQL("ALTER TABLE recipes_table ADD COLUMN recipe_image VARCHAR");
-            database.execSQL("UPDATE recipes_table SET recipe_image=''");
-
-//            int a = -1;
-//            database.execSQL("UPDATE note_item_table SET recipeID=: -1");
+//            database.execSQL("ALTER TABLE note_item_table ADD COLUMN recipeID INTEGER DEFAULT -1 NOT NULL");
+            database.execSQL("CREATE TABLE recipes_table (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)");
 //            database.execSQL("ALTER TABLE recipes_table ADD COLUMN id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL");
-//            database.execSQL("ALTER TABLE recipes_table ADD COLUMN recipe_name VARCHAR(255) NOT NULL");
-//            database.execSQL("ALTER TABLE recipes_table ADD COLUMN recipe_color INT(2) DEFAULT 1");
+            database.execSQL("ALTER TABLE recipes_table ADD COLUMN recipe_name VARCHAR(255)");
+            database.execSQL("ALTER TABLE recipes_table ADD COLUMN recipe_color INTEGER NOT NULL DEFAULT 1");
+            database.execSQL("ALTER TABLE recipes_table ADD COLUMN recipe_image VARCHAR(255) DEFAULT ''");
+
+
+            database.execSQL("CREATE TABLE ingredient_item_table (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)");
+            database.execSQL("ALTER TABLE ingredient_item_table ADD COLUMN recipe_id INTEGER NOT NULL DEFAULT -1");
+            database.execSQL("ALTER TABLE ingredient_item_table ADD COLUMN text VARCHAR(255)");
+            database.execSQL("ALTER TABLE ingredient_item_table ADD COLUMN line_number INTEGER NOT NULL DEFAULT -1");
+
+        }
+    };
+
+    static final Migration MIGRATION_10_11 = new Migration(10, 11) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE note_item_table ADD COLUMN recipeID INTEGER DEFAULT -1 NOT NULL");
         }
     };
 }

@@ -9,17 +9,22 @@
         android:id="@+id/checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:button="@drawable/custom_checkbox" />
+        android:button="@drawable/custom_checkbox"
+        android:background="@null"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <EditText android:id="@+id/etNote"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
         android:gravity="top"
-        android:background="@null"
         android:inputType="textMultiLine"
         android:focusable="true"
         android:clickable="true"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/checkbox" />
+        app:layout_constraintStart_toEndOf="@id/checkbox"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

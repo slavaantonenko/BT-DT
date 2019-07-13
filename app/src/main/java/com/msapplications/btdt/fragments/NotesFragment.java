@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.os.ConfigurationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,6 +33,7 @@ import java.util.List;
 
 public class NotesFragment extends AbstractFragmentItems implements NotesEditor
 {
+    private ConstraintLayout clTextEditorToolbar;
     private String title = "";
     private int recipeId = -1;
     private ArrayList<NoteItem> notes = null;
@@ -98,8 +100,8 @@ public class NotesFragment extends AbstractFragmentItems implements NotesEditor
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-        if(categoryID != -1) {
-
+        if (categoryID != -1)
+        {
             noteItemViewModel = ViewModelProviders.of(this).get(NoteItemViewModel.class);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(thisFragment.getContext());
             recyclerView.setLayoutManager(layoutManager);
@@ -108,9 +110,14 @@ public class NotesFragment extends AbstractFragmentItems implements NotesEditor
 
 
             LiveData<List<NoteItem>> listLiveData = noteItemViewModel.getNoteItems(categoryID);
+
             if(recipeId != -1) {
                 listLiveData = noteItemViewModel.getRecipeNoteItems(categoryID, recipeId);
+                clTextEditorToolbar = view.findViewById(R.id.text_editor);
+                clTextEditorToolbar.setVisibility(View.GONE);
+//                clTextEditorToolbar.setBackgroundColor(ContextCompact.getColor(getContext(), android.R.color.transparent));
             }
+
             listLiveData.observe(this, new Observer<List<NoteItem>>() {
                 @Override
                 public void onChanged(@Nullable final List<NoteItem> noteItems) {
@@ -121,7 +128,6 @@ public class NotesFragment extends AbstractFragmentItems implements NotesEditor
                     }
                 }
             });
-
         }
     }
 

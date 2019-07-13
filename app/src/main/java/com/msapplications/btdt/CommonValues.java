@@ -18,6 +18,9 @@ public class CommonValues
     public static final String CATEGORY_ID_EXTRA = "CategoryID";
     public static final String CATEGORY_NAME_EXTRA = "CategoryName";
     public static final String COUNTRY_EXTRA = "Country";
+    public static final ArrayList<String> DISABLE_COUNTRIES_HIGHLIGHT = new ArrayList<String>(){{
+        add("Israel");
+    }};
 
     // Fragments
     public static final String NOTES_FRAGMENT = "NotesFragment";
@@ -43,8 +46,6 @@ public class CommonValues
     public static final int ADD_RECIPE_REQUEST_CODE = 3;
     public static final String RECIPE_ID_EXTRA = "RecipeID";
 
-
-
     // Global Strings
     public static final String NOTE = "Note";
     public static final String RECIPES = "Recipes";
@@ -62,7 +63,7 @@ public class CommonValues
     }};
     public static final HashMap<CategoryType, String> COMING_SOON_FEATURES_DATES = new HashMap<CategoryType, String>() {{
         put(CategoryType.TRAVEL, "15/04/2019 00:00:00");
-        put(CategoryType.RECIPES, "15/08/2019 00:00:00");
+        put(CategoryType.RECIPES, "15/06/2019 00:00:00");
     }};
     public static final HashMap<CategoryType, String> FEATURE_AVAILABLE_PREF_NAME = new HashMap<CategoryType, String>() {{
         put(CategoryType.TRAVEL, TRAVEL_FEATURE_AVAILABLE);

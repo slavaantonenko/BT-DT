@@ -6,15 +6,26 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <EditText android:id="@+id/etIngredient"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tv_bullet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bullet"
+        android:textSize="25sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/etIngredient"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="top"
         android:inputType="textMultiLine"
         android:focusable="true"
         android:clickable="true"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/bullet"
-        app:layout_constraintLeft_toRightOf="@id/checkbox" />
+        app:layout_constraintStart_toEndOf="@id/tv_bullet"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

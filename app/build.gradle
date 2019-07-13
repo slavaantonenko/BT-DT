@@ -6,7 +6,7 @@ android {
         applicationId "com.msapplications.btdt"
         minSdkVersion 23
         targetSdkVersion 28
-        versionCode 8
+        versionCode 9
         versionName "1.2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 

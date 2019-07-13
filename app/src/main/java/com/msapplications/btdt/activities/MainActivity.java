@@ -20,9 +20,6 @@ import android.view.View;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-//import com.android.colorpicker.ColorPickerDialog;
-//import com.android.colorpicker.ColorPickerPalette;
-//import com.android.colorpicker.ColorPickerSwatch;
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.adapters.CategoriesAdapter;
 import com.msapplications.btdt.dialogs.ChooseColorDialogFragment;
@@ -73,13 +70,11 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
             @Override
             public void onChanged(@Nullable final List<Category> categories)
             {
-                int position = adapter.adapterPosition();
-
-                if (position > -1)
-                    adapter.setCategory(categoryViewModel.getCategory(adapter.getItem(position).getId()));
-                else
+                if (adapter.getItemCount() != categories.size())
                     // Update the cached copy of the categories in the adapter.
                     adapter.setCategories(categories);
+                else
+                    adapter.setCategory(categoryViewModel.getCategory(adapter.getItem(adapter.adapterPosition()).getId()));
             }
         });
 
@@ -123,7 +118,6 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
                 dialogFragment.show(ft, CommonValues.NEW_CATEGORY_DIALOG_FRAGMENT_TAG);
             }
         };
-
     }
 
     @Override
@@ -214,6 +208,12 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.category_menu, popup.getMenu());
         popup.setOnMenuItemClickListener((CategoriesAdapter.ViewHolder)recyclerView.findViewHolderForAdapterPosition(position));
+
+        CategoryType type = adapter.getItem(position).getType();
+
+        if (type.equals(CategoryType.CINEMA_SEATS) || type.equals(CategoryType.TRAVEL))
+            popup.getMenu().findItem(R.id.action_rename).setEnabled(false);
+
         popup.show();
     }
 

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/itl_height"
+    android:layout_margin="@dimen/itl_margin"
+    android:clickable="true"
+    android:focusable="true"
+    tools:cardBackgroundColor="@color/colorPrimary"
+    card_view:cardElevation="@dimen/itl_card_elevation"
+    card_view:cardCornerRadius="@dimen/card_view_corner_radius">
+
+    <android.support.constraint.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/ivCountryImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tvTravelListCountry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/itl_tv_margin"
+            tools:text="Germany"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/itl_tv_size"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <ImageView
+            android:id="@+id/ivRemoveFromTravelList"
+            android:layout_width="@dimen/itl_iv_size"
+            android:layout_height="@dimen/itl_iv_size"
+            android:layout_marginBottom="@dimen/itl_ivr_margin_bottom"
+            android:layout_marginEnd="@dimen/itl_ivr_margin_end"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_delete" />
+
+        <ImageView
+            android:id="@+id/ivBeenThere"
+            android:layout_width="@dimen/itl_iv_size"
+            android:layout_height="@dimen/itl_iv_size"
+            android:layout_marginEnd="@dimen/itl_ivb_margin_end"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="@id/ivRemoveFromTravelList"
+            app:layout_constraintEnd_toStartOf="@id/ivRemoveFromTravelList"
+            app:srcCompat="@drawable/ic_flight_take_off" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>

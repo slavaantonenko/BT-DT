@@ -32,6 +32,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.google.android.gms.common.util.Predicate;
 import com.msapplications.btdt.dialogs.RenameCategoryDialogFragment;
 import com.msapplications.btdt.interfaces.Renamable;
 import com.msapplications.btdt.objects.Category;
@@ -54,7 +55,10 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+
+import okhttp3.internal.Util;
 
 public class Utils
 {
@@ -227,6 +231,7 @@ public class Utils
         categoryViewModel.insert(newCategory);
         int categoryID = categoryViewModel.getIdByName(newCategory.getName());
 
+        // TODO Check
 //        if(CategoryType.NOTES.equals(type)) {
             NoteItemViewModel noteItemViewModel = ViewModelProviders.of(activity).get(NoteItemViewModel.class);
             NoteItem newEmptyItem = new NoteItem(0, categoryID, 0);
@@ -254,19 +259,15 @@ public class Utils
         viewModelDeletable.deleteCategory(id);
     }
 
+    public static int calculateNoOfColumns(Resources resources, int itemWidth) {
+        return resources.getDisplayMetrics().widthPixels / itemWidth;
+    }
+
     public static void deleteRecipe(RecipeViewModel recipeViewModel, int id) {
         recipeViewModel.deleteRecipe(id);
     }
 
-
-    public static int calculateNoOfColumns(Context context)
-    {
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-        int noOfColumns = (int) (dpWidth / 100);
-        return noOfColumns;
-    }
-
+    //TODO use picasso
     public static Bitmap getRecipeImage(String imageUri, Activity activity)
     {
         Bitmap bitmap = BitmapFactory.decodeResource(activity.getResources(), R.drawable.recipe_default);
@@ -303,15 +304,9 @@ public class Utils
             int position = parent.getChildAdapterPosition(view); // item position
             int column = position % spanCount; // item column
 
-            if (includeEdge)
-            {
+            if (includeEdge) {
                 outRect.left = spacing - column * spacing / spanCount; // spacing - column * ((1f / spanCount) * spacing)
                 outRect.right = (column + 1) * spacing / spanCount; // (column + 1) * ((1f / spanCount) * spacing)
-
-                if (position < spanCount) // top edge
-                    outRect.top = spacing;
-
-                outRect.bottom = spacing; // item bottom
             }
             else
             {
@@ -348,8 +343,8 @@ public class Utils
         }
     }
 
-    public static class ItemOffsetDecoration extends RecyclerView.ItemDecoration {
-
+    public static class ItemOffsetDecoration extends RecyclerView.ItemDecoration
+    {
         private int mItemOffset;
 
         public ItemOffsetDecoration(int itemOffset) {
@@ -369,12 +364,18 @@ public class Utils
     }
 
     /*
-     * Converting dp to pixel
+     * Converting dp to pixels
      */
-    public static int dpToPx(Resources resources, int dp)
-    {
+    public static int dpToPx(Resources resources, int dp) {
         Resources r = resources;
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
+    }
+
+    /*
+     * Convert pixels to dp.
+     */
+    public static int pxToDP(Resources resources, int px) {
+        return Math.round(px / resources.getDisplayMetrics().density);
     }
 
     /////////////////////////////////////// SharedPreferences /////////////////////////////////////////////////
@@ -390,5 +391,16 @@ public class Utils
     public static boolean getBooleanFromCache(Context context, String prefName, boolean defaultValue) {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getBoolean(prefName, defaultValue);
+    }
+
+
+    public static <T> List<T> filter(List<T> target, Predicate<T> predicate) {
+        List<T> result = new ArrayList<T>();
+        for (T element: target) {
+            if (predicate.apply(element)) {
+                result.add(element);
+            }
+        }
+        return result;
     }
 }

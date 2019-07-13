@@ -35,6 +35,11 @@
     <color name="dislike_red">#d50000</color>
     <color name="like_green">#00c853</color>
 
+    <color name="activity_travel_country_icons">#757575</color>
+    <color name="travel_been_there">#616161</color>
+    <color name="atc_titles">#424242</color>
+    <color name="atc_divider_line">#E0E0E0</color>
+
     <color name="note_bottom_toolbar">@android:color/white</color> <!--#FF000000-->
 
     <!-- Highlight country -->

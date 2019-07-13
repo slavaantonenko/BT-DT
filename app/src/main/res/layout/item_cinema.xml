@@ -12,17 +12,15 @@
         android:layout_width="@dimen/ic_logo_width"
         android:layout_height="@dimen/ic_logo_height"
         android:adjustViewBounds="true"
-        android:focusableInTouchMode="false"
-        android:padding="@dimen/ic_logo_padding"
         tools:src="@drawable/cinema_city" />
 
     <TextView
         android:id="@+id/tvCinemaName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ic_tv_margin_start"
         android:textSize="@dimen/ic_tvcn_text_size"
         android:textColor="@android:color/black"
-        android:textStyle="bold"
         tools:text="@string/ic_tvcn_sample"
         app:layout_constraintBottom_toTopOf="@id/guideline"
         app:layout_constraintStart_toEndOf="@id/ivCinemaLogo" />
@@ -31,6 +29,7 @@
         android:id="@+id/tvCinemaCity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ic_tv_margin_start"
         android:textSize="@dimen/ic_tvcc_text_size"
         android:textColor="@android:color/black"
         tools:text="@string/ic_tvcc_sample"
@@ -43,8 +42,8 @@
         android:layout_height="@dimen/ic_icons_size"
         android:layout_marginEnd="@dimen/ic_add_seat_margin_end"
         android:background="@android:color/transparent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline"
+        app:layout_constraintBottom_toBottomOf="@id/guideline"
         app:layout_constraintEnd_toStartOf="@id/ibDeleteCinema"
         app:srcCompat="@drawable/ic_add_circle" />
 
@@ -54,9 +53,9 @@
         android:layout_height="@dimen/ic_icons_size"
         android:layout_marginEnd="@dimen/ic_delete_seat_margin_end"
         android:background="@android:color/transparent"
+        app:layout_constraintTop_toTopOf="@id/guideline"
+        app:layout_constraintBottom_toBottomOf="@id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:srcCompat="@drawable/ic_delete_black" />
 
     <android.support.constraint.Guideline

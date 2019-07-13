@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/svCountry"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/atc_padding_bottom"
+    tools:context=".activities.TravelCountryActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--<com.google.android.gms.maps.SupportMapFragment-->
+        <fragment
+            android:id="@+id/mapCountry"
+            android:name="com.msapplications.btdt.fragments.CustomMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/atc_fragment_height" />
+
+        <ImageView
+            android:id="@+id/ivCountryFlag"
+            android:layout_width="@dimen/atc_iv_size"
+            android:layout_height="@dimen/atc_iv_size"
+            android:layout_marginStart="@dimen/atc_iv_margin_start"
+            android:adjustViewBounds="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_flag_sample" />
+
+        <ImageView
+            android:id="@+id/ivCountryClose"
+            android:layout_width="@dimen/atc_iv_size"
+            android:layout_height="@dimen/atc_iv_size"
+            android:layout_marginEnd="@dimen/atc_iv_margin_start"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_close" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabCountry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/atc_fab_margin_end"
+            android:scaleType="center"
+            app:backgroundTint="@color/colorAccent"
+            app:elevation="@dimen/atc_fab_elevation"
+            app:layout_constraintBottom_toBottomOf="@id/mapCountry"
+            app:layout_constraintEnd_toEndOf="@id/mapCountry"
+            app:layout_constraintTop_toBottomOf="@id/mapCountry"
+            app:srcCompat="@drawable/ic_flight_take_off" />
+
+        <FrameLayout
+            android:id="@+id/flCountryName"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/atc_frame_layout_country_height"
+            android:background="@color/colorPrimary"
+            app:layout_constraintTop_toBottomOf="@id/mapCountry">
+
+            <TextView
+                android:id="@+id/tvCountryName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|start"
+                android:layout_marginStart="@dimen/atc_tvcn_margin_start"
+                android:text="@string/atc_tvcn"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/atc_tvcn_text_size" />
+        </FrameLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/clOverview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="@dimen/atc_clo_padding"
+            app:layout_constraintTop_toBottomOf="@id/flCountryName">
+
+            <ImageView
+                android:id="@+id/ivOverview"
+                android:layout_width="@dimen/atc_ivo_size"
+                android:layout_height="@dimen/atc_ivo_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/ic_info" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/atc_tv_overview_margin_start"
+                android:text="@string/atc_tv_overview"
+                android:textColor="@color/atc_titles"
+                android:textSize="@dimen/atc_tv_info_text_size"
+                app:layout_constraintBottom_toBottomOf="@id/ivOverview"
+                app:layout_constraintStart_toEndOf="@id/ivOverview"
+                app:layout_constraintTop_toTopOf="@id/ivOverview" />
+
+            <ImageView
+                android:id="@+id/ivExpandOverview"
+                android:layout_width="@dimen/atc_iveo_size"
+                android:layout_height="@dimen/atc_iveo_size"
+                app:layout_constraintBottom_toBottomOf="@id/ivOverview"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/ivOverview"
+                app:srcCompat="@drawable/ic_collapse" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <net.cachapa.expandablelayout.ExpandableLayout
+            android:id="@+id/elOverview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="@dimen/atc_el_padding"
+            android:paddingEnd="@dimen/atc_el_padding"
+            android:paddingBottom="@dimen/atc_el_padding"
+            app:el_duration="200"
+            app:el_expanded="false"
+            app:layout_constraintTop_toBottomOf="@id/clOverview">
+
+            <include layout="@layout/country_overview" />
+
+        </net.cachapa.expandablelayout.ExpandableLayout>
+
+        <View
+            android:id="@+id/viewOverviewDividerLine"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/atc_divider_line_height"
+            android:background="@color/atc_divider_line"
+            app:layout_constraintTop_toBottomOf="@id/elOverview" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/clWhenToTravel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="@dimen/atc_el_padding"
+            app:layout_constraintTop_toBottomOf="@id/viewOverviewDividerLine">
+
+            <ImageView
+                android:id="@+id/ivWhenToTravel"
+                android:layout_width="@dimen/atc_ivtt_size"
+                android:layout_height="@dimen/atc_ivtt_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/ic_tips" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/atc_tv_when_to_travel_margin_start"
+                android:text="@string/atc_tv_when_to_travel"
+                android:textColor="@color/atc_titles"
+                android:textSize="@dimen/atc_tv_info_text_size"
+                app:layout_constraintBottom_toBottomOf="@id/ivWhenToTravel"
+                app:layout_constraintStart_toEndOf="@id/ivWhenToTravel"
+                app:layout_constraintTop_toTopOf="@id/ivWhenToTravel" />
+
+            <ImageView
+                android:id="@+id/ivExpandWhenToTravel"
+                android:layout_width="@dimen/atc_ivwtt_size"
+                android:layout_height="@dimen/atc_ivwtt_size"
+                app:layout_constraintBottom_toBottomOf="@id/ivWhenToTravel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/ivWhenToTravel"
+                app:srcCompat="@drawable/ic_collapse" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <net.cachapa.expandablelayout.ExpandableLayout
+            android:id="@+id/elWhenToTravel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="@dimen/atc_el_padding"
+            android:paddingEnd="@dimen/atc_el_padding"
+            android:paddingBottom="@dimen/atc_el_padding"
+            app:el_duration="200"
+            app:el_expanded="false"
+            app:layout_constraintTop_toBottomOf="@id/clWhenToTravel">
+
+            <include layout="@layout/country_when_to_travel" />
+
+        </net.cachapa.expandablelayout.ExpandableLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/atc_divider_line_height"
+            android:background="@color/atc_divider_line"
+            app:layout_constraintTop_toBottomOf="@id/elWhenToTravel" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>

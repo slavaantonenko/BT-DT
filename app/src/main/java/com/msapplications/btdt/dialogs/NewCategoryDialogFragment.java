@@ -6,10 +6,12 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -21,6 +23,9 @@ import com.msapplications.btdt.R;
 import com.msapplications.btdt.Utils;
 import com.msapplications.btdt.objects.CategoryType;
 import com.msapplications.btdt.room_storage.category.CategoryViewModel;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class NewCategoryDialogFragment extends DialogFragment
 {
@@ -84,6 +89,8 @@ public class NewCategoryDialogFragment extends DialogFragment
         final Spinner spCategoryType = view.findViewById(R.id.spCategoryType);
         final Button btnSaveCategory = view.findViewById(R.id.btnSaveCategory);
 
+        spCategoryType.setAdapter(getSpinnerEntries(view));
+
         spCategoryType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             @Override
@@ -94,12 +101,18 @@ public class NewCategoryDialogFragment extends DialogFragment
                 {
                     case (CommonValues.CINEMA_SEATS):
                         etNewCategoryName.setText(CommonValues.CINEMA_SEATS);
+                        etNewCategoryName.setEnabled(false);
                         break;
                     case (CommonValues.TRAVEL):
                         etNewCategoryName.setText(CommonValues.TRAVEL);
+                        etNewCategoryName.setEnabled(false);
                         break;
+                    case (CommonValues.RECIPES):
+                        etNewCategoryName.setText(CommonValues.RECIPES);
+                        etNewCategoryName.setEnabled(false);
                     default:
                         etNewCategoryName.setText("");
+                        etNewCategoryName.setEnabled(true);
                 }
             }
 
@@ -142,6 +155,27 @@ public class NewCategoryDialogFragment extends DialogFragment
                 dismiss();
             }
         });
+    }
+
+    private ArrayAdapter<CharSequence> getSpinnerEntries(View view)
+    {
+        String[] categories = getResources().getStringArray(R.array.category_types);
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(view.getContext(), android.R.layout.simple_spinner_item, new ArrayList(Arrays.asList(categories)));
+
+        for (int i = 0; i < adapter.getCount(); i++)
+        {
+            CharSequence category = adapter.getItem(i);
+            CategoryType categoryType = getSelectedType(category.toString());
+            if (categoryType != CategoryType.NOTES) {
+                if (categoryViewModel.categoryTypeExists(getSelectedType(category.toString()).getCode())  > 0) {
+                    adapter.remove(category);
+                    i--;
+                }
+            }
+        }
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        return adapter;
     }
 
     private CategoryType getSelectedType(String typeName)

@@ -59,9 +59,9 @@ public abstract class RoomDatabase extends android.arch.persistence.room.RoomDat
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             // Since we didn't alter the table, there's nothing else to do here.
-//            database.execSQL("ALTER TABLE recipes_table ADD COLUMN id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL");
-//            database.execSQL("ALTER TABLE recipes_table ADD COLUMN recipe_name VARCHAR(255) NOT NULL");
-//            database.execSQL("ALTER TABLE recipes_table ADD COLUMN recipe_color INT(2) DEFAULT 1");
+            database.execSQL("ALTER TABLE recipes_table ADD COLUMN id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL");
+            database.execSQL("ALTER TABLE recipes_table ADD COLUMN recipe_name VARCHAR(255) NOT NULL");
+            database.execSQL("ALTER TABLE recipes_table ADD COLUMN recipe_color INT(2) DEFAULT 1");
 
         }
     };
@@ -77,7 +77,6 @@ public abstract class RoomDatabase extends android.arch.persistence.room.RoomDat
 //            database.execSQL("ALTER TABLE recipes_table ADD COLUMN id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL");
 //            database.execSQL("ALTER TABLE recipes_table ADD COLUMN recipe_name VARCHAR(255) NOT NULL");
 //            database.execSQL("ALTER TABLE recipes_table ADD COLUMN recipe_color INT(2) DEFAULT 1");
-
         }
     };
 }

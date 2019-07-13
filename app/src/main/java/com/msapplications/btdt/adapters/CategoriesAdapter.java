@@ -1,11 +1,13 @@
 package com.msapplications.btdt.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.graphics.drawable.Animatable2;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -49,7 +51,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
     private OnObjectMenuClickListener categoryMenuClickListener;
     private OnMenuItemClickListener menuItemClickListener;
     private int adapterPosition = -1;
-    private int viewPositionAtCreation = -1;
+//    private int viewPositionAtCreation = -1;
 
     public CategoriesAdapter(Context context)
     {
@@ -65,7 +67,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
         public TextView title, tvNewFeatureTitle;
         public ImageView overflow, lock;
         public CardView cvCategory, cvNewFeatureCountDown;
-        public CountdownView mCvCountdownView; //for future features
+        public CountdownView countdownView; // For future features
         public KonfettiView kvFeatureAvailable;
 
         public ViewHolder(View view)
@@ -77,22 +79,23 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
             cvCategory.setOnClickListener(this);
             overflow.setOnClickListener(this);
 
-            if (CommonValues.COMING_SOON_FEATURES.contains(getItem(viewPositionAtCreation).getType()))
-            {
-                tvNewFeatureTitle = view.findViewById(R.id.tvNewFeatureTitle);
-                mCvCountdownView = view.findViewById(R.id.countDownNewFeature);
-                cvNewFeatureCountDown = view.findViewById(R.id.cvNewFeatureCountDown);
-                lock = view.findViewById(R.id.ivLock);
-                kvFeatureAvailable = view.findViewById(R.id.kvFeatureAvailable);
-            }
+            // For future features
+            tvNewFeatureTitle = view.findViewById(R.id.tvNewFeatureTitle);
+            countdownView = view.findViewById(R.id.countDownNewFeature);
+            cvNewFeatureCountDown = view.findViewById(R.id.cvNewFeatureCountDown);
+            lock = view.findViewById(R.id.ivLock);
+            kvFeatureAvailable = view.findViewById(R.id.kvFeatureAvailable);
         }
 
-        public void onBindViewHolder(Category category, final int position)
+        public void onBindViewHolder(Category category)
         {
-            final CategoryType type = getItem(position).getType();
+            final CategoryType type = getItem(getAdapterPosition()).getType();
             final String prefName = CommonValues.FEATURE_AVAILABLE_PREF_NAME.get(type);
 
+            Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/ARLRDBD.ttf");
+            title.setTypeface(font);
             title.setText(category.getName());
+
             cvCategory.setCardBackgroundColor(category.getBackgroundColor());
             StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) cvCategory.getLayoutParams();
             layoutParams.height = getCardViewHeight(type, prefName);
@@ -103,18 +106,30 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
                 // Future feature
                 try
                 {
-                    Date currentDate = Calendar.getInstance().getTime();
-                    String date = CommonValues.COMING_SOON_FEATURES_DATES.get(type);
-                    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                    long diff = formatter.parse(date).getTime() - formatter.parse(formatter.format(currentDate)).getTime();
-
-                    if (diff >= 0)
+                    if (calculateTimeDifference(type) >= 0)
                     {
-                        mCvCountdownView.start(diff);
-                        cvNewFeatureCountDown.setVisibility(View.VISIBLE);
                         tvNewFeatureTitle.setText(category.getName());
+                        lock.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_lock));
+                        cvNewFeatureCountDown.setVisibility(View.VISIBLE);
 
-                        mCvCountdownView.setOnCountdownEndListener(new CountdownView.OnCountdownEndListener() {
+                        countdownView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener()
+                        {
+                            @Override
+                            public void onViewAttachedToWindow(View v)
+                            {
+                                try {
+                                    countdownView.start(calculateTimeDifference(type));
+                                }
+                                catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void onViewDetachedFromWindow(View v) {}
+                        });
+
+                        countdownView.setOnCountdownEndListener(new CountdownView.OnCountdownEndListener() {
                             @Override
                             public void onEnd(CountdownView cv)
                             {
@@ -131,25 +146,29 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
                         tvNewFeatureTitle.setText(category.getName());
                         featureAvailableAnimation(cvNewFeatureCountDown, kvFeatureAvailable, lock, prefName);
                     }
+                    else
+                        cvNewFeatureCountDown.setVisibility(View.GONE); // Feature was already opened.
                 }
                 catch (Exception e) {
                     e.printStackTrace();
                 }
             }
+            else
+                cvNewFeatureCountDown.setVisibility(View.INVISIBLE);
 
-            viewPositionAtCreation = -1;
         }
 
         @Override
         public void onClick(View view)
         {
+            adapterPosition = getAdapterPosition();
+
             switch (view.getId())
             {
                 case (R.id.cvCategory):
                     if (categoryClickListener == null)
                         return;
 
-                    adapterPosition = getAdapterPosition();
                     categoryClickListener.onCategoryClick(view);
                     break;
                 case (R.id.overflow):
@@ -176,15 +195,14 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        viewPositionAtCreation = viewType;
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.category_card, parent, false);
         return new ViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.onBindViewHolder(categoriesList.get(position), position);
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+        holder.onBindViewHolder(categoriesList.get(position));
     }
 
     @Override
@@ -290,5 +308,21 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
             });
             animatedVectorDrawable.start();
         }
+    }
+
+    private long calculateTimeDifference(CategoryType type)
+    {
+        try
+        {
+            Date currentDate = Calendar.getInstance().getTime();
+            String date = CommonValues.COMING_SOON_FEATURES_DATES.get(type);
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            return formatter.parse(date).getTime() - formatter.parse(formatter.format(currentDate)).getTime();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 }

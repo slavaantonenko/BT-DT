@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvNativeName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/co_margin_top"
+        android:layout_marginStart="@dimen/co_margin_start"
+        android:text="@string/co_tv_native_name"
+        android:textSize="@dimen/atc_tv_text_size"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvNativeNameValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="@string/co_tv_native_name_value"
+        android:textSize="@dimen/atc_tv_text_size"
+        app:layout_constraintTop_toTopOf="@id/tvNativeName"
+        app:layout_constraintStart_toEndOf="@id/tvNativeName"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvCapitalCity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/co_tv_capital_city"
+        android:textSize="@dimen/atc_tv_text_size"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/tvNativeNameValue"
+        app:layout_constraintStart_toStartOf="@id/tvNativeName" />
+
+    <TextView
+        android:id="@+id/tvCapitalCityName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="@string/co_tv_capital_city_name"
+        android:textSize="@dimen/atc_tv_text_size"
+        app:layout_constraintTop_toTopOf="@id/tvCapitalCity"
+        app:layout_constraintStart_toEndOf="@id/tvCapitalCity"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvLanguage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/co_tv_language"
+        android:textSize="@dimen/atc_tv_text_size"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/tvCapitalCityName"
+        app:layout_constraintStart_toStartOf="@id/tvNativeName" />
+
+    <TextView
+        android:id="@+id/tvLanguageName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="@string/co_tv_language_name"
+        android:textSize="@dimen/atc_tv_text_size"
+        app:layout_constraintTop_toTopOf="@id/tvLanguage"
+        app:layout_constraintStart_toEndOf="@id/tvLanguage"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvNativeLanguage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/co_tv_native_language"
+        android:textSize="@dimen/atc_tv_text_size"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/tvLanguageName"
+        app:layout_constraintStart_toStartOf="@id/tvNativeName" />
+
+    <TextView
+        android:id="@+id/tvNativeLanguageName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="@string/co_tv_native_language_name"
+        android:textSize="@dimen/atc_tv_text_size"
+        app:layout_constraintTop_toTopOf="@id/tvNativeLanguage"
+        app:layout_constraintStart_toEndOf="@id/tvNativeLanguage"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvRegion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/co_tv_region"
+        android:textSize="@dimen/atc_tv_text_size"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/tvNativeLanguageName"
+        app:layout_constraintStart_toStartOf="@id/tvNativeName" />
+
+    <TextView
+        android:id="@+id/tvRegionName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="@string/co_tv_region_name"
+        android:textSize="@dimen/atc_tv_text_size"
+        app:layout_constraintTop_toTopOf="@id/tvRegion"
+        app:layout_constraintStart_toEndOf="@id/tvRegion"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvArea"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/co_tv_area"
+        android:textSize="@dimen/atc_tv_text_size"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/tvRegionName"
+        app:layout_constraintStart_toStartOf="@id/tvNativeName" />
+
+    <TextView
+        android:id="@+id/tvAreaSize"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="@string/co_tv_area_size"
+        android:textSize="@dimen/atc_tv_text_size"
+        app:layout_constraintTop_toTopOf="@id/tvArea"
+        app:layout_constraintStart_toEndOf="@id/tvArea"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvPopulation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/co_tv_population"
+        android:textSize="@dimen/atc_tv_text_size"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/tvAreaSize"
+        app:layout_constraintStart_toStartOf="@id/tvNativeName" />
+
+    <TextView
+        android:id="@+id/tvPopulationSize"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="@string/co_tv_population_size"
+        android:textSize="@dimen/atc_tv_text_size"
+        app:layout_constraintTop_toTopOf="@id/tvPopulation"
+        app:layout_constraintStart_toEndOf="@id/tvPopulation"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvCurrency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/co_tv_currency"
+        android:textSize="@dimen/atc_tv_text_size"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/tvPopulationSize"
+        app:layout_constraintStart_toStartOf="@id/tvNativeName" />
+
+    <TextView
+        android:id="@+id/tvCurrencyValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="@string/co_tv_currency_value"
+        android:textSize="@dimen/atc_tv_text_size"
+        app:layout_constraintTop_toTopOf="@id/tvCurrency"
+        app:layout_constraintStart_toEndOf="@id/tvCurrency"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTimeZone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/co_tv_time_zone"
+        android:textSize="@dimen/atc_tv_text_size"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/tvCurrencyValue"
+        app:layout_constraintStart_toStartOf="@id/tvNativeName" />
+
+    <TextView
+        android:id="@+id/tvTimeZoneValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="@string/co_tv_time_zone_value"
+        android:textSize="@dimen/atc_tv_text_size"
+        app:layout_constraintTop_toTopOf="@id/tvTimeZone"
+        app:layout_constraintStart_toEndOf="@id/tvTimeZone"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvCallingCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/co_tv_calling_code"
+        android:textSize="@dimen/atc_tv_text_size"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/tvTimeZoneValue"
+        app:layout_constraintStart_toStartOf="@id/tvNativeName" />
+
+    <TextView
+        android:id="@+id/tvCallingCodeValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="@string/co_tv_calling_code_value"
+        android:textSize="@dimen/atc_tv_text_size"
+        app:layout_constraintTop_toTopOf="@id/tvCallingCode"
+        app:layout_constraintStart_toEndOf="@id/tvCallingCode"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvCountryCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/co_tv_country_code"
+        android:textSize="@dimen/atc_tv_text_size"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/tvCallingCodeValue"
+        app:layout_constraintStart_toStartOf="@id/tvNativeName" />
+
+    <TextView
+        android:id="@+id/tvCountryCodeValues"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="@string/co_tv_country_code_values"
+        android:textSize="@dimen/atc_tv_text_size"
+        app:layout_constraintTop_toTopOf="@id/tvCountryCode"
+        app:layout_constraintStart_toEndOf="@id/tvCountryCode"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

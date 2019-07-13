@@ -11,17 +11,14 @@ public class RestClientManager
 {
     private static CountryService countryService;
 
-    public static CountryService getCountryServiceInstance(final Context context)
+    public static CountryService getCountryServiceInstance(String url)
     {
-        if (countryService == null)
-        {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(CountryService.BASE_API_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
-            countryService = retrofit.create(CountryService.class);
-        }
+        countryService = retrofit.create(CountryService.class);
 
         return countryService;
     }

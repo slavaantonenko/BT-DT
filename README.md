@@ -9,7 +9,7 @@ Min SDK: 23<br>
 * customized notes for every other wish-list or goals the user wants to create.
 * keeping track of the best and worst seats cinema halls and special built-in list. (Available only in Israel at the moment)
 * unique design for travelers with travel wish lists and “been there” maps.
-* improved design for keeping all recipes in one place  - COMING SOON.
+* improved design for keeping all recipes in one place.
 
 Room database - used for storing all info added by the user within the app. 
 

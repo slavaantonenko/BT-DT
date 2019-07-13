@@ -6,8 +6,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.annotation.DimenRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -26,18 +30,23 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.google.android.gms.common.util.Predicate;
 import com.msapplications.btdt.dialogs.RenameCategoryDialogFragment;
+import com.msapplications.btdt.interfaces.Renamable;
 import com.msapplications.btdt.objects.Category;
 import com.msapplications.btdt.objects.CategoryType;
 import com.msapplications.btdt.objects.itemTypes.NoteItem;
+import com.msapplications.btdt.objects.itemTypes.recipes.Recipe;
 import com.msapplications.btdt.room_storage.ViewModelDeletable;
 import com.msapplications.btdt.room_storage.category.CategoryViewModel;
 import com.msapplications.btdt.room_storage.cinema.CinemaHallsViewModel;
 import com.msapplications.btdt.room_storage.cinema.CinemaViewModel;
 import com.msapplications.btdt.room_storage.note.NoteItemViewModel;
+import com.msapplications.btdt.room_storage.recipe.RecipeViewModel;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -218,24 +227,33 @@ public class Utils
     //add new category to db
     public static void newCategory(FragmentActivity activity, Context context, String newName, CategoryType type)
     {
-        int[] categoryBackground = context.getResources().getIntArray(R.array.categories_background);
-        Random random = new Random();
-        int randomNum = random.nextInt(categoryBackground.length);
-
-        Category newCategory = new Category(0, newName, type, categoryBackground[randomNum]);
+        int randomColor = randomColor(context);
+        Category newCategory = new Category(0, newName, type, randomColor);
         CategoryViewModel categoryViewModel = ViewModelProviders.of(activity).get(CategoryViewModel.class);
         categoryViewModel.insert(newCategory);
         int categoryID = categoryViewModel.getIdByName(newCategory.getName());
 
-        NoteItemViewModel noteItemViewModel = ViewModelProviders.of(activity).get(NoteItemViewModel.class);
-        NoteItem newEmptyItem = new NoteItem(0, categoryID, 0);
-        noteItemViewModel.insert(newEmptyItem);
+        // TODO Check
+//        if(CategoryType.NOTES.equals(type)) {
+            NoteItemViewModel noteItemViewModel = ViewModelProviders.of(activity).get(NoteItemViewModel.class);
+            NoteItem newEmptyItem = new NoteItem(0, categoryID, 0);
+            newEmptyItem.setText("");
+            noteItemViewModel.insert(newEmptyItem);
+//        }
     }
 
-    public static void renameCategory(FragmentManager fragmentManager, Category category)
+    public static int randomColor(Context context) {
+        int[] categoryBackground = context.getResources().getIntArray(R.array.categories_background);
+        Random random = new Random();
+        int randomNum = random.nextInt(categoryBackground.length);
+
+        return categoryBackground[randomNum];
+    }
+
+    public static void renameCategory(FragmentManager fragmentManager, Renamable renamable)
     {
         FragmentTransaction ft = fragmentManager.beginTransaction().addToBackStack(null);
-        RenameCategoryDialogFragment dialogFragment = new RenameCategoryDialogFragment().newInstance(category);
+        RenameCategoryDialogFragment dialogFragment = new RenameCategoryDialogFragment().newInstance(renamable);
         dialogFragment.show(ft, CommonValues.RENAME_CATEGORY_DIALOG_FRAGMENT_TAG);
     }
 
@@ -244,7 +262,21 @@ public class Utils
     }
 
     public static int calculateNoOfColumns(Resources resources, int itemWidth) {
-        return resources.getDisplayMetrics().widthPixels/ itemWidth;
+        return resources.getDisplayMetrics().widthPixels / itemWidth;
+    }
+
+    public static void deleteRecipe(RecipeViewModel recipeViewModel, int id) {
+        recipeViewModel.deleteRecipe(id);
+    }
+
+    public static void getRecipeImage(String imageUri, ImageView preview)
+    {
+        try {
+            Uri mUri = Uri.parse(imageUri);
+            Picasso.get().load(mUri).into(preview);
+        } catch(Exception e) {
+            Picasso.get().load(R.drawable.recipe_default).into(preview);
+        }
     }
 
     /**

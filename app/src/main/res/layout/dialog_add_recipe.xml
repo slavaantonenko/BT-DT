@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dialog_padding">
+
+    <TextView
+        android:id="@+id/tvNewRecipeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dnc_tv_nr_title"
+        android:textSize="@dimen/dialog_title_size"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/etNewRecipeName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dnc_tv_margin_top"
+        android:textSize="@dimen/dnc_et_ncn_text_size"
+        android:maxLength="25"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:lines="1"
+        android:inputType="text"
+        android:hint="@string/dialog_category_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvNewRecipeTitle" />
+
+    <Button
+        android:id="@+id/btnSaveRecipe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_save_button"
+        android:textColor="@color/dialogs_buttons"
+        android:background="@android:color/transparent"
+        android:layout_marginTop="@dimen/dnc_btn_margin_top"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etNewRecipeName" />
+
+
+</android.support.constraint.ConstraintLayout>

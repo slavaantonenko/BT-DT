@@ -26,7 +26,7 @@ import com.msapplications.btdt.dialogs.ChooseColorDialogFragment;
 import com.msapplications.btdt.dialogs.NewCategoryDialogFragment;
 import com.msapplications.btdt.dialogs.RenameCategoryDialogFragment;
 import com.msapplications.btdt.interfaces.OnCategoryClickListener;
-import com.msapplications.btdt.interfaces.OnCategoryMenuClickListener;
+import com.msapplications.btdt.interfaces.OnObjectMenuClickListener;
 import com.msapplications.btdt.interfaces.OnMenuItemClickListener;
 import com.msapplications.btdt.R;
 import com.msapplications.btdt.Utils;
@@ -42,7 +42,7 @@ import java.util.List;
 Main activity, shows all categories of the user
  */
 public class MainActivity extends AppCompatActivity implements OnFloatingActionClick, OnCategoryClickListener,
-        OnCategoryMenuClickListener, OnMenuItemClickListener, RenameCategoryDialogFragment.OnRenameListener
+        OnObjectMenuClickListener, OnMenuItemClickListener, RenameCategoryDialogFragment.OnRenameListener
 {
     private RecyclerView recyclerView;
     private CategoriesAdapter adapter;
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
     }
 
     @Override
-    public void onCategoryMenuClick(View view, int position) {
+    public void onObjectMenuClick(View view, int position) {
         showPopupMenu(view, position);
     }
 
@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
 
         CategoryType type = adapter.getItem(position).getType();
 
-        if (type.equals(CategoryType.CINEMA_SEATS) || type.equals(CategoryType.TRAVEL))
+        if (type.equals(CategoryType.CINEMA_SEATS) || type.equals(CategoryType.TRAVEL) || type.equals(CategoryType.RECIPES))
             popup.getMenu().findItem(R.id.action_rename).setEnabled(false);
 
         popup.show();

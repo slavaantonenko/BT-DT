@@ -17,7 +17,10 @@
             android:id="@+id/mapCountry"
             android:name="com.msapplications.btdt.fragments.CustomMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/atc_fragment_height" />
+            android:layout_height="@dimen/atc_fragment_height"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <ImageView
             android:id="@+id/ivCountryFlag"
@@ -82,8 +85,9 @@
                 android:id="@+id/ivOverview"
                 android:layout_width="@dimen/atc_ivo_size"
                 android:layout_height="@dimen/atc_ivo_size"
-                app:layout_constraintStart_toStartOf="parent"
-                app:srcCompat="@drawable/ic_info" />
+                app:srcCompat="@drawable/ic_info"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -142,8 +146,9 @@
                 android:id="@+id/ivWhenToTravel"
                 android:layout_width="@dimen/atc_ivtt_size"
                 android:layout_height="@dimen/atc_ivtt_size"
-                app:layout_constraintStart_toStartOf="parent"
-                app:srcCompat="@drawable/ic_tips" />
+                app:srcCompat="@drawable/ic_tips"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
 
             <TextView
                 android:layout_width="wrap_content"

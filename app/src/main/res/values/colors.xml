@@ -5,6 +5,7 @@
     <color name="colorAccent">#f73378</color>
     <color name="viewBackground">#f1f5f8</color>
     <color name="cc_category_title">#4c4c4c</color>
+    <color name="bg_recipe">#ffdbef</color>
 
     <array name="categories_background">
         <item>#FF9100</item>
@@ -38,6 +39,8 @@
     <color name="travel_been_there">#616161</color>
     <color name="atc_titles">#424242</color>
     <color name="atc_divider_line">#E0E0E0</color>
+
+    <color name="fr_titles">#424242</color>
 
     <color name="note_bottom_toolbar">@android:color/white</color> <!--#FF000000-->
 

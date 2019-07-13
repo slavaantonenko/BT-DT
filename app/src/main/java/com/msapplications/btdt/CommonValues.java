@@ -18,10 +18,13 @@ public class CommonValues
     public static final String CATEGORY_ID_EXTRA = "CategoryID";
     public static final String CATEGORY_NAME_EXTRA = "CategoryName";
     public static final String COUNTRY_EXTRA = "Country";
+    public static final ArrayList<String> DISABLE_COUNTRIES_HIGHLIGHT = new ArrayList<String>(){{
+        add("Israel");
+    }};
 
     // Fragments
     public static final String NOTES_FRAGMENT = "NotesFragment";
-    public static final String RECIPES_FRAGMENT = "RecipesFragment";
+    public static final String RECIPES_FRAGMENT = "RecipesCollectionFragment";
     public static final String CINEMA_SEATS_FRAGMENT = "CinemaSeatsFragment";
     public static final String FRAGMENT_TITLE = "FragmentTitle";
     public static final String ADD_CINEMA_DIALOG_FRAGMENT_TAG = "AddCinemaDialogFragment";
@@ -29,14 +32,19 @@ public class CommonValues
     public static final String NEW_CATEGORY_DIALOG_FRAGMENT_TAG = "NewCategoryDialogFragment";
     public static final String RENAME_CATEGORY_DIALOG_FRAGMENT_TAG = "RenameCategoryDialogFragment";
     public static final String CHOOSE_COLOR_DIALOG_FRAGMENT_TAG = "ChooseColorDialogFragment";
+    public static final String ADD_RECIPE_DIALOG_FRAGMENT_TAG = "AddRecipeDialogFragment";
     public static final String CINEMA_HALL_BUNDLE = "CinemaHall";
     public static final String CINEMA_INFO_BUNDLE = "CinemaInfo";
     public static final String CINEMA_HALL_ACTION_BUNDLE = "CinemaHallAction";
+    public static final String RECIPE_FRAGMENT = "RecipeFragment";
+    public static final String RECIPE_INGREDIENTS = "RecipeIngredients";
     public static final String CATEGORY_BUNDLE = "Category";
     public static final int ADD_CINEMA_REQUEST_CODE = 1;
     public static final int EDIT_HALL_REQUEST_CODE = 2;
     public static final int RENAME_CATEGORY_RESULT_CODE = 1;
     public static final int ADDED_TO_TRAVEL_LIST = 1;
+    public static final int ADD_RECIPE_REQUEST_CODE = 3;
+    public static final String RECIPE_ID_EXTRA = "RecipeID";
 
     // Global Strings
     public static final String NOTE = "Note";
@@ -55,7 +63,7 @@ public class CommonValues
     }};
     public static final HashMap<CategoryType, String> COMING_SOON_FEATURES_DATES = new HashMap<CategoryType, String>() {{
         put(CategoryType.TRAVEL, "15/04/2019 00:00:00");
-        put(CategoryType.RECIPES, "15/08/2019 00:00:00");
+        put(CategoryType.RECIPES, "15/06/2019 00:00:00");
     }};
     public static final HashMap<CategoryType, String> FEATURE_AVAILABLE_PREF_NAME = new HashMap<CategoryType, String>() {{
         put(CategoryType.TRAVEL, TRAVEL_FEATURE_AVAILABLE);

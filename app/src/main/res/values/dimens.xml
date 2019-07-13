@@ -141,6 +141,11 @@
     <dimen name="itl_ivr_margin_end">20dp</dimen>
     <dimen name="itl_ivb_margin_end">30dp</dimen>
 
+    <!-- Recipes -->
+    <dimen name="btn_size_recipe">25dp</dimen>
+    <dimen name="tv_recipe_name">25sp</dimen>
+
+
     <dimen name="activity_padding_horizontal">16dp</dimen>
     <dimen name="thumbnail">90dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->

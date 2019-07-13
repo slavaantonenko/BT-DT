@@ -25,6 +25,13 @@
     <string name="ic_tvcn_sample">Cinema City</string>
     <string name="ic_tvcc_sample">Rishon Lezion</string>
 
+    <!-- Recipes -->
+    <string name="dnc_tv_nr_title">Create New Recipe</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="method">Method</string>
+    <string name="bullet">• </string>
+
+
     <!-- Menus -->
     <string name="select_category_color">Select your color:</string>
     <string name="menu_category_rename">Rename</string>
@@ -38,12 +45,12 @@
     <string name="dnc_et_hint">Name</string>
     <string name="dnc_btn">Save</string>
     <string name="name_empty_error">Name can not be empty</string>
-    <string name="category_exist_error">Category name already exists</string>
+    <string name="name_exist_error">This name already exists</string>
     <string name="category_renamed">Category renamed</string>
 
     <string-array name="category_types">
         <item>Note</item>
-        <!--<item>Recipes</item>-->
+        <item>Recipes</item>
         <item>Cinema Seats</item>
         <item>Travel</item>
     </string-array>

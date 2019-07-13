@@ -110,6 +110,7 @@ public class NewCategoryDialogFragment extends DialogFragment
                     case (CommonValues.RECIPES):
                         etNewCategoryName.setText(CommonValues.RECIPES);
                         etNewCategoryName.setEnabled(false);
+                        break;
                     default:
                         etNewCategoryName.setText("");
                         etNewCategoryName.setEnabled(true);
@@ -132,8 +133,8 @@ public class NewCategoryDialogFragment extends DialogFragment
                     return;
                 }
 
-                if (categoryViewModel.categoryNameExists(newName) > 0) {
-                    etNewCategoryName.setError(getString(R.string.category_exist_error));
+                if (categoryViewModel.nameExists(newName) > 0) {
+                    etNewCategoryName.setError(getString(R.string.name_exist_error));
                     return;
                 }
 

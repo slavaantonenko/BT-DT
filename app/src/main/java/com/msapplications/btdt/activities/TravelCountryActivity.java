@@ -188,7 +188,7 @@ public class TravelCountryActivity extends AppCompatActivity  implements OnMapRe
                 @Override
                 public void onCameraIdle()
                 {
-                    if (map.getCameraPosition().zoom > 7)
+                    if (map.getCameraPosition().zoom > 7 || CommonValues.DISABLE_COUNTRIES_HIGHLIGHT.contains(country.getName()))
                         setPolygonStyle(layer, android.R.color.transparent, android.R.color.transparent, 0F);
                     else
                         setPolygonStyle(layer, R.color.highlightCountry, R.color.highlightCountry, 2F);

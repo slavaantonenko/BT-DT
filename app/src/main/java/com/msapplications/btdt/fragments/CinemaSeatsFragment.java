@@ -133,7 +133,6 @@ public class CinemaSeatsFragment extends Fragment implements OnFloatingActionCli
         onFragmentInteractionListener = null;
     }
 
-
     public View.OnClickListener onFabClick()
     {
         return new View.OnClickListener()

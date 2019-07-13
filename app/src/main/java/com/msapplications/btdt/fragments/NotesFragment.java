@@ -1,5 +1,6 @@
 package com.msapplications.btdt.fragments;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -8,6 +9,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.os.ConfigurationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,7 +33,9 @@ import java.util.List;
 
 public class NotesFragment extends AbstractFragmentItems implements NotesEditor
 {
+    private ConstraintLayout clTextEditorToolbar;
     private String title = "";
+    private int recipeId = -1;
     private ArrayList<NoteItem> notes = null;
     private Fragment thisFragment = this;
     private RecyclerView recyclerView;
@@ -46,19 +51,35 @@ public class NotesFragment extends AbstractFragmentItems implements NotesEditor
 
     public static NotesFragment newInstance(String title, int categoryID)
     {
-        NotesFragment fragment = new NotesFragment();
         Bundle args = new Bundle();
         args.putString(CommonValues.FRAGMENT_TITLE, title);
         args.putInt(CommonValues.CATEGORY_ID_EXTRA, categoryID);
-        fragment.setArguments(args);
+        return createInstanceWithBundle(args);
+    }
+
+    public static NotesFragment newInstance(int categoryID, int recipeID)
+    {
+        Bundle args = new Bundle();
+        args.putInt(CommonValues.CATEGORY_ID_EXTRA, categoryID);
+        args.putInt(CommonValues.RECIPE_ID_EXTRA, recipeID);
+        return createInstanceWithBundle(args);
+    }
+
+    private static NotesFragment createInstanceWithBundle(Bundle bundle) {
+        NotesFragment fragment = new NotesFragment();
+        fragment.setArguments(bundle);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null)
+        if (getArguments() != null) {
             title = getArguments().getString(CommonValues.FRAGMENT_TITLE);
+
+            if(getArguments().containsKey(CommonValues.RECIPE_ID_EXTRA))
+                recipeId = getArguments().getInt(CommonValues.RECIPE_ID_EXTRA);
+        }
     }
 
     @Override
@@ -69,7 +90,7 @@ public class NotesFragment extends AbstractFragmentItems implements NotesEditor
         View view =  inflater.inflate(R.layout.fragment_notes, container, false);
         recyclerView = view.findViewById(R.id.rvNotes);
 
-        if (onFragmentInteractionListener != null)
+        if (onFragmentInteractionListener != null && title != null)
             onFragmentInteractionListener.onFragmentInteraction(title);
 
         return view;
@@ -79,15 +100,25 @@ public class NotesFragment extends AbstractFragmentItems implements NotesEditor
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-        if(categoryID != -1) {
-
+        if (categoryID != -1)
+        {
             noteItemViewModel = ViewModelProviders.of(this).get(NoteItemViewModel.class);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(thisFragment.getContext());
             recyclerView.setLayoutManager(layoutManager);
             adapter = new NotesAdapter(this, noteItemViewModel);
             recyclerView.setAdapter(adapter);
 
-            noteItemViewModel.getNoteItems(categoryID).observe(this, new Observer<List<NoteItem>>() {
+
+            LiveData<List<NoteItem>> listLiveData = noteItemViewModel.getNoteItems(categoryID);
+
+            if(recipeId != -1) {
+                listLiveData = noteItemViewModel.getRecipeNoteItems(categoryID, recipeId);
+                clTextEditorToolbar = view.findViewById(R.id.text_editor);
+                clTextEditorToolbar.setVisibility(View.GONE);
+//                clTextEditorToolbar.setBackgroundColor(ContextCompact.getColor(getContext(), android.R.color.transparent));
+            }
+
+            listLiveData.observe(this, new Observer<List<NoteItem>>() {
                 @Override
                 public void onChanged(@Nullable final List<NoteItem> noteItems) {
                     if(updateAdapter) {
@@ -97,7 +128,6 @@ public class NotesFragment extends AbstractFragmentItems implements NotesEditor
                     }
                 }
             });
-
         }
     }
 
@@ -109,6 +139,8 @@ public class NotesFragment extends AbstractFragmentItems implements NotesEditor
         noteItemViewModel.updateText(id, editText.getText().toString());
         noteItemViewModel.increaseLineNumbers(newLineNumber, categoryID);
         NoteItem newNoteItem = new NoteItem(0, categoryID, newLineNumber);
+        if(recipeId != -1 )
+            newNoteItem = new NoteItem(0, categoryID,recipeId, newLineNumber);
         newNoteItem.setCheckBox(isCheckBox);
         noteItemViewModel.insert(newNoteItem);
         updateAdapter = true;
@@ -136,7 +168,7 @@ public class NotesFragment extends AbstractFragmentItems implements NotesEditor
     }
 
     @Override
-    public void ocCheckedClickListener(int noteItemId, boolean newValue) {
+    public void onCheckedClickListener(int noteItemId, boolean newValue) {
         noteItemViewModel.updateChecked(noteItemId, newValue);
     }
 

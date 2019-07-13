@@ -11,9 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.colorpicker.ColorPickerDialog;
-import com.android.colorpicker.ColorPickerPalette;
-import com.android.colorpicker.ColorPickerSwatch;
+//import com.android.colorpicker.ColorPickerDialog;
+//import com.android.colorpicker.ColorPickerPalette;
+//import com.android.colorpicker.ColorPickerSwatch;
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.R;
 import com.msapplications.btdt.Utils;
@@ -60,7 +60,7 @@ public class ChooseColorDialogFragment extends DialogFragment
         if (category == null)
             return;
 
-        initializeDialog(view);
+        //initializeDialog(view);
     }
 
     @Override
@@ -80,22 +80,22 @@ public class ChooseColorDialogFragment extends DialogFragment
         }
     }
 
-    private void initializeDialog(View view)
-    {
-        ColorPickerPalette colorPickerPalette = view.findViewById(R.id.colorPickerPalette);
-
-        int[] categoryBackgroundColors = getResources().getIntArray(R.array.categories_background);
-        colorPickerPalette.init(categoryBackgroundColors.length, 5, new ColorPickerSwatch.OnColorSelectedListener()
-        {
-            @Override
-            public void onColorSelected(int color) {
-                categoryViewModel.updateColor(color, category.getId());
-                dismiss();
-            }
-        });
-
-        colorPickerPalette.drawPalette(categoryBackgroundColors, category.getBackgroundColor());
-        colorPickerPalette.measure(0,0);
-        colorPickerPaletteWidth = colorPickerPalette.getMeasuredWidth();
-    }
+//    private void initializeDialog(View view)
+//    {
+//        ColorPickerPalette colorPickerPalette = view.findViewById(R.id.colorPickerPalette);
+//
+//        int[] categoryBackgroundColors = getResources().getIntArray(R.array.categories_background);
+//        colorPickerPalette.init(categoryBackgroundColors.length, 5, new ColorPickerSwatch.OnColorSelectedListener()
+//        {
+//            @Override
+//            public void onColorSelected(int color) {
+//                categoryViewModel.updateColor(color, category.getId());
+//                dismiss();
+//            }
+//        });
+//
+//        colorPickerPalette.drawPalette(categoryBackgroundColors, category.getBackgroundColor());
+//        colorPickerPalette.measure(0,0);
+//        colorPickerPaletteWidth = colorPickerPalette.getMeasuredWidth();
+//    }
 }

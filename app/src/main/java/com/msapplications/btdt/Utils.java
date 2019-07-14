@@ -46,6 +46,7 @@ import com.msapplications.btdt.room_storage.cinema.CinemaHallsViewModel;
 import com.msapplications.btdt.room_storage.cinema.CinemaViewModel;
 import com.msapplications.btdt.room_storage.note.NoteItemViewModel;
 import com.msapplications.btdt.room_storage.recipe.RecipeViewModel;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -273,7 +274,7 @@ public class Utils
     {
         try {
             Uri mUri = Uri.parse(imageUri);
-            Picasso.get().load(mUri).into(preview);
+            Picasso.get().load(mUri).fit().error(R.drawable.recipe_default).into(preview);
         } catch(Exception e) {
             Picasso.get().load(R.drawable.recipe_default).into(preview);
         }

@@ -59,6 +59,10 @@ public class ListActivity extends AppCompatActivity
         if (menuItem != null)
             menuItem.setVisible(false);
 
+        if (categoryName.equals(CommonValues.CINEMA_SEATS) || categoryName.equals(CommonValues.TRAVEL)
+                || categoryName.equals(CommonValues.RECIPES))
+            menu.findItem(R.id.action_rename).setEnabled(false);
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -71,17 +75,21 @@ public class ListActivity extends AppCompatActivity
                 this.finish();
                 return true;
             case R.id.action_rename:
-                Utils.renameCategory(getSupportFragmentManager(), categoryViewModel.getCategory(categoryID));
+                if(categoryTypeCode != CategoryType.RECIPES.getCode()) {
+                    Utils.renameCategory(getSupportFragmentManager(), categoryViewModel.getCategory(categoryID));
+                    return true;
+                }
                 break;
             case R.id.action_delete:
                 if (CategoryType.CINEMA_SEATS.equals(categoryTypeCode)) {
                     CinemaViewModel cinemaViewModel = ViewModelProviders.of(this).get(CinemaViewModel.class);
                     Utils.deleteCategory(cinemaViewModel, 0);
+                    return true;
                 }
 
                 Utils.deleteCategory(categoryViewModel, categoryID);
                 this.finish();
-                break;
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

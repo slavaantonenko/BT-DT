@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,6 +24,9 @@ import android.widget.ImageView;
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.R;
 import com.msapplications.btdt.Utils;
+import com.msapplications.btdt.adapters.RecipesAdapter;
+import com.msapplications.btdt.interfaces.OnMenuItemClickListener;
+import com.msapplications.btdt.interfaces.OnObjectMenuClickListener;
 import com.msapplications.btdt.objects.itemTypes.recipes.Recipe;
 import com.msapplications.btdt.room_storage.category.CategoryViewModel;
 import com.msapplications.btdt.room_storage.recipe.RecipeViewModel;
@@ -37,7 +41,8 @@ import java.io.IOException;
  * Use the {@link RecipeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RecipeFragment extends Fragment implements View.OnClickListener {
+public class RecipeFragment extends Fragment implements View.OnClickListener
+{
     private String title = "";
     private int recipeID;
     private RecipeViewModel recipeViewModel;
@@ -77,6 +82,8 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
         }
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(title);
+        setHasOptionsMenu(true);
+
     }
 
     @Override
@@ -130,5 +137,49 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
                     .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE).into(recipeImage);
             recipeViewModel.setImage(recipeID, selectedImage.toString());
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        Recipe recipe = recipeViewModel.getRecipe(recipeID);
+
+        switch (menuItem.getItemId())
+        {
+            case R.id.action_rename:
+                Utils.renameCategory(getActivity().getSupportFragmentManager(), recipe);
+                break;
+            case R.id.action_delete:
+                Utils.deleteRecipe(recipeViewModel, recipe.getId());
+                return true;
+            default:
+        }
+
+        return super.onOptionsItemSelected(menuItem);
+    }
+
+//    @Override
+//    public void onObjectMenuClick(View view, int position) {
+//        PopupMenu popup = new PopupMenu(getContext(), view);
+//        MenuInflater inflater = popup.getMenuInflater();
+//        inflater.inflate(R.menu.category_menu, popup.getMenu());
+//        popup.getMenu().findItem(R.id.action_choose_color).setVisible(false);
+//        popup.getMenu().findItem(R.id.action_rename).setEnabled(true);
+//
+//
+//        popup.setOnMenuItemClickListener(this);
+//        popup.show();
+//    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
+        menu.clear();
+        inflater.inflate(R.menu.category_menu, menu);
+
+        MenuItem menuItem = menu.findItem(R.id.action_choose_color);
+        if (menuItem != null)
+            menuItem.setVisible(false);
+
+        super.onCreateOptionsMenu(menu,inflater);
     }
 }

@@ -1,7 +1,5 @@
 package com.msapplications.btdt.rest;
 
-import android.content.Context;
-
 import com.msapplications.btdt.interfaces.CountryService;
 
 import retrofit2.Retrofit;

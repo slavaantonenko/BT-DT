@@ -13,17 +13,13 @@ import android.widget.EditText;
 
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.R;
-import com.msapplications.btdt.Utils;
 import com.msapplications.btdt.objects.itemTypes.NoteItem;
-import com.msapplications.btdt.objects.itemTypes.cinema.Cinema;
 import com.msapplications.btdt.objects.itemTypes.recipes.Recipe;
 import com.msapplications.btdt.objects.itemTypes.recipes.RecipeIngredient;
 import com.msapplications.btdt.room_storage.category.CategoryViewModel;
 import com.msapplications.btdt.room_storage.ingredient.IngredientViewModel;
 import com.msapplications.btdt.room_storage.note.NoteItemViewModel;
 import com.msapplications.btdt.room_storage.recipe.RecipeViewModel;
-
-import java.util.OptionalDouble;
 
 import static android.app.Activity.RESULT_OK;
 

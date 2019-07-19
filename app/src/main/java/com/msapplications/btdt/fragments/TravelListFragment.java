@@ -2,48 +2,29 @@ package com.msapplications.btdt.fragments;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.R;
 import com.msapplications.btdt.Utils;
-import com.msapplications.btdt.activities.TravelActivity;
 import com.msapplications.btdt.activities.TravelCountryActivity;
-import com.msapplications.btdt.adapters.CountriesAdapter;
 import com.msapplications.btdt.adapters.TravelListAdapter;
-import com.msapplications.btdt.interfaces.CountryService;
-import com.msapplications.btdt.interfaces.OnCompleteLoadCountriesListener;
 import com.msapplications.btdt.interfaces.OnCountryClickListener;
-import com.msapplications.btdt.objects.itemTypes.travel.CountriesContent;
-import com.msapplications.btdt.objects.itemTypes.travel.Country;
-import com.msapplications.btdt.objects.itemTypes.travel.CountryImage;
 import com.msapplications.btdt.objects.itemTypes.travel.CountryModel;
-import com.msapplications.btdt.objects.itemTypes.travel.CountryModelConverter;
-import com.msapplications.btdt.rest.RestClientManager;
-import com.msapplications.btdt.room_storage.RoomDatabase;
 import com.msapplications.btdt.room_storage.travel.CountryViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class TravelListFragment extends Fragment implements OnCountryClickListener
 {

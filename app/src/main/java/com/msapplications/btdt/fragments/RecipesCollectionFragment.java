@@ -167,6 +167,9 @@ public class RecipesCollectionFragment extends Fragment
 
         switch (menuItem.getItemId())
         {
+            case android.R.id.home:
+                getActivity().getSupportFragmentManager().popBackStack();
+                return true;
             case R.id.action_rename:
                 Utils.renameCategory(getActivity().getSupportFragmentManager(), recipe);
                 break;
@@ -177,6 +180,19 @@ public class RecipesCollectionFragment extends Fragment
         }
 
         return false;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId())
+        {
+            case android.R.id.home:
+                getActivity().getSupportFragmentManager().popBackStack();
+                return true;
+            default:
+        }
+
+        return super.onOptionsItemSelected(menuItem);
     }
 
     @Override

@@ -2,17 +2,13 @@ package com.msapplications.btdt.fragments;
 
 import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,17 +20,11 @@ import android.widget.ImageView;
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.R;
 import com.msapplications.btdt.Utils;
-import com.msapplications.btdt.adapters.RecipesAdapter;
-import com.msapplications.btdt.interfaces.OnMenuItemClickListener;
-import com.msapplications.btdt.interfaces.OnObjectMenuClickListener;
 import com.msapplications.btdt.objects.itemTypes.recipes.Recipe;
 import com.msapplications.btdt.room_storage.category.CategoryViewModel;
 import com.msapplications.btdt.room_storage.recipe.RecipeViewModel;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -145,11 +135,15 @@ public class RecipeFragment extends Fragment implements View.OnClickListener
 
         switch (menuItem.getItemId())
         {
+            case android.R.id.home:
+                getActivity().getSupportFragmentManager().popBackStack();
+                return true;
             case R.id.action_rename:
                 Utils.renameCategory(getActivity().getSupportFragmentManager(), recipe);
                 break;
             case R.id.action_delete:
-                Utils.deleteRecipe(recipeViewModel, recipe.getId());
+                Utils.deleteRecipe(recipeViewModel, recipeID);
+                getActivity().getSupportFragmentManager().popBackStack();
                 return true;
             default:
         }

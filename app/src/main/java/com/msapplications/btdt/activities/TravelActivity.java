@@ -1,15 +1,14 @@
 package com.msapplications.btdt.activities;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -54,6 +53,8 @@ public class TravelActivity extends AppCompatActivity //implements TravelCountri
     private TabLayout tabLayout;
     private ProgressBar pbTravel;
 
+    private Call<List<Country>> call;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -79,6 +80,14 @@ public class TravelActivity extends AppCompatActivity //implements TravelCountri
         tabLayout = findViewById(R.id.tabs);
 
         loadCountries(this);
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        if (call != null)
+            call.cancel();
+        super.onDestroy();
     }
 
     @Override
@@ -165,7 +174,9 @@ public class TravelActivity extends AppCompatActivity //implements TravelCountri
         if (CountriesContent.COUNTRIES.size() == 0)
         {
             CountryService countryService = RestClientManager.getCountryServiceInstance(CountryService.BASE_API_URL);
-            countryService.getCountries().enqueue(new Callback<List<Country>>()
+            call = countryService.getCountries();
+
+            call.enqueue(new Callback<List<Country>>()
             {
                 @Override
                 public void onResponse(Call<List<Country>> call, Response<List<Country>> response)
@@ -182,7 +193,7 @@ public class TravelActivity extends AppCompatActivity //implements TravelCountri
 
                 @Override
                 public void onFailure(Call<List<Country>> call, Throwable t) {
-                    Log.i("failure", t.getMessage());
+                    Log.e("failure", t.getMessage());
                 }
             });
         }

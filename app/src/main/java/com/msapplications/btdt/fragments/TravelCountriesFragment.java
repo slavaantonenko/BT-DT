@@ -22,13 +22,14 @@ import com.msapplications.btdt.R;
 import com.msapplications.btdt.Utils;
 import com.msapplications.btdt.activities.TravelCountryActivity;
 import com.msapplications.btdt.adapters.CountriesAdapter;
-//import com.msapplications.btdt.interfaces.OnCompleteLoadCountriesListener;
 import com.msapplications.btdt.interfaces.OnCountryClickListener;
 import com.msapplications.btdt.objects.itemTypes.travel.CountriesContent;
 import com.msapplications.btdt.objects.itemTypes.travel.CountryModel;
 import com.msapplications.btdt.room_storage.travel.CountryViewModel;
 
 import java.util.List;
+
+//import com.msapplications.btdt.interfaces.OnCompleteLoadCountriesListener;
 
 ///**
 // * A simple {@link Fragment} subclass.

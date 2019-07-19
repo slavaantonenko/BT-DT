@@ -24,11 +24,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.msapplications.btdt.CommonValues;
+import com.msapplications.btdt.R;
 import com.msapplications.btdt.Utils;
 import com.msapplications.btdt.interfaces.OnCategoryClickListener;
-import com.msapplications.btdt.interfaces.OnObjectMenuClickListener;
 import com.msapplications.btdt.interfaces.OnMenuItemClickListener;
-import com.msapplications.btdt.R;
+import com.msapplications.btdt.interfaces.OnObjectMenuClickListener;
 import com.msapplications.btdt.objects.Category;
 import com.msapplications.btdt.objects.CategoryType;
 

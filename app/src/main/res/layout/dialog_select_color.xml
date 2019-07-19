@@ -12,6 +12,7 @@
         android:text="@string/dsc_title_select_color"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/dialog_title_size"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.android.colorpicker.ColorPickerPalette

@@ -16,23 +16,24 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuInflater;
-import android.view.View;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.msapplications.btdt.CommonValues;
+import com.msapplications.btdt.R;
+import com.msapplications.btdt.Utils;
 import com.msapplications.btdt.adapters.CategoriesAdapter;
 import com.msapplications.btdt.dialogs.ChooseColorDialogFragment;
 import com.msapplications.btdt.dialogs.NewCategoryDialogFragment;
 import com.msapplications.btdt.dialogs.RenameCategoryDialogFragment;
 import com.msapplications.btdt.interfaces.OnCategoryClickListener;
-import com.msapplications.btdt.interfaces.OnObjectMenuClickListener;
-import com.msapplications.btdt.interfaces.OnMenuItemClickListener;
-import com.msapplications.btdt.R;
-import com.msapplications.btdt.Utils;
 import com.msapplications.btdt.interfaces.OnFloatingActionClick;
+import com.msapplications.btdt.interfaces.OnMenuItemClickListener;
+import com.msapplications.btdt.interfaces.OnObjectMenuClickListener;
 import com.msapplications.btdt.objects.Category;
 import com.msapplications.btdt.objects.CategoryType;
+import com.msapplications.btdt.room_storage.RoomDatabase;
 import com.msapplications.btdt.room_storage.category.CategoryViewModel;
 import com.msapplications.btdt.room_storage.cinema.CinemaViewModel;
 
@@ -86,6 +87,13 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(onFabClick()); //add new category button
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+       RoomDatabase.closeConnection();
+       super.onDestroy();
     }
 
     @Override

@@ -26,6 +26,7 @@ public class RenameCategoryDialogFragment extends DialogFragment
     private ViewModelRenamable viewModelRenamable;
     private Renamable renamableObject;
     private OnRenameListener onRenameListener;
+    private boolean renameToolbar;
 
     public RenameCategoryDialogFragment() {
         // Required empty public constructor
@@ -38,11 +39,12 @@ public class RenameCategoryDialogFragment extends DialogFragment
      * @param renamable renamableObject object.
      * @return A new instance of fragment CheckListFragment.
      */
-    public static RenameCategoryDialogFragment newInstance(Renamable renamable)
+    public static RenameCategoryDialogFragment newInstance(Renamable renamable, boolean renameToolbar)
     {
         RenameCategoryDialogFragment fragment = new RenameCategoryDialogFragment();
         Bundle args = new Bundle();
         args.putParcelable(CommonValues.CATEGORY_BUNDLE, renamable);
+        args.putBoolean(CommonValues.RENAME_TOOLBAR_BUNDLE, renameToolbar);
         fragment.setArguments(args);
         return fragment;
     }
@@ -54,6 +56,8 @@ public class RenameCategoryDialogFragment extends DialogFragment
 
         if (getArguments() != null) {
             renamableObject = getArguments().getParcelable(CommonValues.CATEGORY_BUNDLE);
+            renameToolbar = getArguments().getBoolean(CommonValues.RENAME_TOOLBAR_BUNDLE);
+
         }
     }
 
@@ -121,21 +125,25 @@ public class RenameCategoryDialogFragment extends DialogFragment
             @Override
             public void onClick(View v)
             {
-                EditText newName = view.findViewById(R.id.etRenameCategory);
+                EditText newNameET = view.findViewById(R.id.etRenameCategory);
+                String newName = newNameET.getText().toString();
 
-                if (newName.getText().toString().isEmpty()) {
-                    newName.setError(getString(R.string.name_empty_error));
+                if (newName.isEmpty()) {
+                    newNameET.setError(getString(R.string.name_empty_error));
                     return;
                 }
 
-                if (viewModelRenamable.nameExists(newName.getText().toString()) > 0) {
-                    newName.setError(getString(R.string.name_exist_error));
+                if (viewModelRenamable.nameExists(newName) > 0) {
+                    newNameET.setError(getString(R.string.name_exist_error));
                     return;
                 }
 
-                renamableObject.setName(newName.getText().toString());
+                renamableObject.setName(newName);
                 viewModelRenamable.rename(renamableObject);
-                onRenameListener.onRename(newName.getText().toString());
+
+                if(renameToolbar)
+                    onRenameListener.onRename(newName);
+
                 dismiss();
             }
         });

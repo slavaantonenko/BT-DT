@@ -15,25 +15,24 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.msapplications.btdt.CommonValues;
+import com.msapplications.btdt.R;
 import com.msapplications.btdt.adapters.CinemaHallsAdapter;
+import com.msapplications.btdt.adapters.CinemasAdapter;
+import com.msapplications.btdt.dialogs.AddCinemaDialogFragment;
 import com.msapplications.btdt.dialogs.AddEditHallDialogFragment;
 import com.msapplications.btdt.interfaces.OnCinemaClickListener;
 import com.msapplications.btdt.interfaces.OnCinemaHallLongClickListener;
 import com.msapplications.btdt.interfaces.OnCinemaOptionClickListener;
+import com.msapplications.btdt.interfaces.OnFloatingActionClick;
+import com.msapplications.btdt.objects.itemTypes.cinema.Cinema;
 import com.msapplications.btdt.objects.itemTypes.cinema.CinemaHall;
 import com.msapplications.btdt.room_storage.cinema.CinemaHallsViewModel;
 import com.msapplications.btdt.room_storage.cinema.CinemaViewModel;
-import com.msapplications.btdt.CommonValues;
-import com.msapplications.btdt.R;
-import com.msapplications.btdt.adapters.CinemasAdapter;
-import com.msapplications.btdt.dialogs.AddCinemaDialogFragment;
-import com.msapplications.btdt.interfaces.OnFloatingActionClick;
-import com.msapplications.btdt.objects.itemTypes.cinema.Cinema;
 
 import java.util.List;
 

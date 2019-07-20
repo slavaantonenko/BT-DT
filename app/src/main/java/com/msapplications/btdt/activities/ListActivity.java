@@ -2,21 +2,22 @@ package com.msapplications.btdt.activities;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.msapplications.btdt.CommonValues;
+import com.msapplications.btdt.R;
 import com.msapplications.btdt.Utils;
 import com.msapplications.btdt.dialogs.RenameCategoryDialogFragment;
-import com.msapplications.btdt.fragments.NotesFragment;
-import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.fragments.CinemaSeatsFragment;
+import com.msapplications.btdt.fragments.NotesFragment;
 import com.msapplications.btdt.fragments.RecipesCollectionFragment;
-import com.msapplications.btdt.R;
 import com.msapplications.btdt.objects.CategoryType;
+import com.msapplications.btdt.room_storage.RoomDatabase;
 import com.msapplications.btdt.room_storage.category.CategoryViewModel;
 import com.msapplications.btdt.room_storage.cinema.CinemaViewModel;
 
@@ -59,6 +60,10 @@ public class ListActivity extends AppCompatActivity
         if (menuItem != null)
             menuItem.setVisible(false);
 
+        if (categoryName.equals(CommonValues.CINEMA_SEATS) || categoryName.equals(CommonValues.TRAVEL)
+                || categoryName.equals(CommonValues.RECIPES))
+            menu.findItem(R.id.action_rename).setEnabled(false);
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -68,20 +73,30 @@ public class ListActivity extends AppCompatActivity
         switch (item.getItemId())
         {
             case android.R.id.home: // Click on back button
+                if (CategoryType.RECIPES.getCode() == categoryTypeCode && getSupportFragmentManager().getBackStackEntryCount() == 1)
+                    return false;
+
                 this.finish();
                 return true;
             case R.id.action_rename:
-                Utils.renameCategory(getSupportFragmentManager(), categoryViewModel.getCategory(categoryID));
+                if(categoryTypeCode != CategoryType.RECIPES.getCode()) {
+                    Utils.renameCategory(getSupportFragmentManager(), categoryViewModel.getCategory(categoryID), true);
+                    return true;
+                }
                 break;
             case R.id.action_delete:
-                if (CategoryType.CINEMA_SEATS.equals(categoryTypeCode)) {
+                if (CategoryType.CINEMA_SEATS.getCode() == categoryTypeCode) {
                     CinemaViewModel cinemaViewModel = ViewModelProviders.of(this).get(CinemaViewModel.class);
                     Utils.deleteCategory(cinemaViewModel, 0);
+                    return true;
                 }
+
+                if (CategoryType.RECIPES.getCode() == categoryTypeCode)
+                    return false;
 
                 Utils.deleteCategory(categoryViewModel, categoryID);
                 this.finish();
-                break;
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

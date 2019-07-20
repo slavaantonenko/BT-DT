@@ -14,11 +14,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
-import com.msapplications.btdt.room_storage.cinema.CinemaViewModel;
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.MyLocation;
 import com.msapplications.btdt.R;
 import com.msapplications.btdt.objects.itemTypes.cinema.Cinema;
+import com.msapplications.btdt.room_storage.cinema.CinemaViewModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;

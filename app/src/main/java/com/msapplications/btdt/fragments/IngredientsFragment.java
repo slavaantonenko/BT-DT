@@ -2,8 +2,6 @@ package com.msapplications.btdt.fragments;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,12 +15,9 @@ import android.widget.EditText;
 import com.msapplications.btdt.CommonValues;
 import com.msapplications.btdt.R;
 import com.msapplications.btdt.adapters.IngredientsAdapter;
-import com.msapplications.btdt.adapters.NotesAdapter;
 import com.msapplications.btdt.interfaces.NotesEditor;
-import com.msapplications.btdt.objects.itemTypes.NoteItem;
 import com.msapplications.btdt.objects.itemTypes.recipes.RecipeIngredient;
 import com.msapplications.btdt.room_storage.ingredient.IngredientViewModel;
-import com.msapplications.btdt.room_storage.note.NoteItemViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,7 +97,7 @@ public class IngredientsFragment extends Fragment implements NotesEditor
     public void OnEnterKeyClicked(int id, int newLineNumber, EditText editText, boolean isCheckBox)
     {
 //        ingredients.get(position).setText(editText.getText().toString());
-        ingredientViewModel.updateText(id, editText.getText().toString().substring(2));
+        ingredientViewModel.updateText(id, editText.getText().toString());
         ingredientViewModel.increaseLineNumbers(newLineNumber, recipeID);
         RecipeIngredient newIngredient = new RecipeIngredient(0, recipeID, newLineNumber);
         newIngredient.setText("");

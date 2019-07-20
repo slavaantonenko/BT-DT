@@ -1,6 +1,8 @@
 package com.msapplications.btdt.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import com.msapplications.btdt.R;
 import com.msapplications.btdt.interfaces.OnCountryClickListener;
 import com.msapplications.btdt.objects.itemTypes.travel.CountryModel;
 import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -50,7 +53,8 @@ public class TravelListAdapter extends RecyclerView.Adapter<TravelListAdapter.Vi
         private void onBindViewHolder(final CountryModel country)
         {
             tvCountryName.setText(country.getName());
-            picasso.load(country.getImage()).fit().error(R.drawable.travel_default).into(ivCountryImage, new Callback()
+            picasso.load(country.getImage()).fit().error(R.drawable.travel_default)
+                    .networkPolicy(NetworkPolicy.NO_CACHE).into(ivCountryImage, new Callback()
             {
                 @Override
                 public void onSuccess() {
@@ -59,17 +63,24 @@ public class TravelListAdapter extends RecyclerView.Adapter<TravelListAdapter.Vi
 
                 @Override
                 public void onError(Exception e) {
+                    tvCountryName.setTextColor(ContextCompat.getColor(context, R.color.travel_been_there));
+                    ivBeenThere.setImageDrawable(context.getDrawable(R.drawable.ic_flight_land));
+                    ivRemoveFromTravelList.setImageDrawable(context.getDrawable(R.drawable.ic_delete_gray));
                     Log.e("Picasso failed", "Failed load image for " + country.getName() + " " + e.getMessage());
                 }
             });
 
             if (country.isBeenThere()) {
                 ivCountryImage.setAlpha(0.5f);
+                tvCountryName.setTextColor(ContextCompat.getColor(context, R.color.travel_been_there));
                 ivBeenThere.setImageDrawable(context.getDrawable(R.drawable.ic_flight_land));
+                ivRemoveFromTravelList.setImageDrawable(context.getDrawable(R.drawable.ic_delete_gray));
             }
             else {
                 ivCountryImage.setAlpha(1f);
+                tvCountryName.setTextColor(Color.WHITE);
                 ivBeenThere.setImageDrawable(context.getDrawable(R.drawable.ic_flight_take_off));
+                ivRemoveFromTravelList.setImageDrawable(context.getDrawable(R.drawable.ic_delete));
             }
 
         }

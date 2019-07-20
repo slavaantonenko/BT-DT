@@ -143,7 +143,7 @@
 
     <!-- Recipes -->
     <dimen name="btn_size_recipe">25dp</dimen>
-    <dimen name="tv_recipe_name">25sp</dimen>
+    <dimen name="tv_recipe_name">20sp</dimen>
 
 
     <dimen name="activity_padding_horizontal">16dp</dimen>

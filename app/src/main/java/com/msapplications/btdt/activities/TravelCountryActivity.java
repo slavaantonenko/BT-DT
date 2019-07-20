@@ -1,13 +1,12 @@
 package com.msapplications.btdt.activities;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -18,7 +17,6 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -36,6 +34,7 @@ import com.msapplications.btdt.interfaces.OnFloatingActionClick;
 import com.msapplications.btdt.objects.itemTypes.travel.CountryImagesList;
 import com.msapplications.btdt.objects.itemTypes.travel.CountryModel;
 import com.msapplications.btdt.rest.RestClientManager;
+import com.msapplications.btdt.room_storage.RoomDatabase;
 import com.msapplications.btdt.room_storage.travel.CountryViewModel;
 import com.squareup.picasso.Picasso;
 
@@ -64,6 +63,8 @@ public class TravelCountryActivity extends AppCompatActivity  implements OnMapRe
     private FloatingActionButton fabCountry;
     private TextView tvCountryName, tvNativeNameValue, tvCapitalCityName, tvLanguageName, tvNativeLanguageName, tvRegionName,
             tvAreaSize, tvPopulationSize, tvCurrencyValue, tvTimeZoneValue, tvCallingCodeValue, tvCountryCodeValues, tvWhenToTravel;
+
+    private Call<CountryImagesList> call;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -108,6 +109,14 @@ public class TravelCountryActivity extends AppCompatActivity  implements OnMapRe
         countryViewModel = ViewModelProviders.of(this).get(CountryViewModel.class);
         fabCountry.setOnClickListener(onFabClick());
         ivCountryClose.setOnClickListener(onCountryCloseClick());
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        if (call != null)
+            call.cancel();
+        super.onDestroy();
     }
 
     /**
@@ -289,7 +298,9 @@ public class TravelCountryActivity extends AppCompatActivity  implements OnMapRe
         if (country.getImage() == null)
         {
             CountryService countryService = RestClientManager.getCountryServiceInstance(CountryService.BASE_IMAGES_API_URL);
-            countryService.getCountryImages(searchParameter).enqueue(new Callback<CountryImagesList>()
+            call = countryService.getCountryImages(searchParameter);
+
+            call.enqueue(new Callback<CountryImagesList>()
             {
                 @Override
                 public void onResponse(Call<CountryImagesList> call, Response<CountryImagesList> response)
@@ -307,7 +318,7 @@ public class TravelCountryActivity extends AppCompatActivity  implements OnMapRe
                 @Override
                 public void onFailure(Call<CountryImagesList> call, Throwable t)
                 {
-                    Log.i("failure", t.getMessage());
+                    Log.e("failure", t.getMessage());
                 }
             });
         }

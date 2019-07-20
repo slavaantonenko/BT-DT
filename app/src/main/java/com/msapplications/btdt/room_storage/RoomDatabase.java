@@ -57,6 +57,11 @@ public abstract class RoomDatabase extends android.arch.persistence.room.RoomDat
         return INSTANCE;
     }
 
+    public static void closeConnection() {
+        if (INSTANCE != null && INSTANCE.isOpen())
+            INSTANCE.close();
+    }
+
 //    static final Migration MIGRATION_9_10 = new Migration(9, 10) {
 //        @Override
 //        public void migrate(SupportSQLiteDatabase database) {

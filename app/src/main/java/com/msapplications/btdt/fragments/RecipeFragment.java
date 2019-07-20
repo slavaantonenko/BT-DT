@@ -2,12 +2,9 @@ package com.msapplications.btdt.fragments;
 
 import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -26,17 +23,16 @@ import com.msapplications.btdt.Utils;
 import com.msapplications.btdt.objects.itemTypes.recipes.Recipe;
 import com.msapplications.btdt.room_storage.category.CategoryViewModel;
 import com.msapplications.btdt.room_storage.recipe.RecipeViewModel;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link RecipeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RecipeFragment extends Fragment implements View.OnClickListener {
+public class RecipeFragment extends Fragment implements View.OnClickListener
+{
     private String title = "";
     private int recipeID;
     private RecipeViewModel recipeViewModel;
@@ -76,6 +72,8 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
         }
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(title);
+        setHasOptionsMenu(true);
+
     }
 
     @Override
@@ -113,9 +111,8 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         Intent intent = new Intent();
-        intent.setAction(android.content.Intent.ACTION_GET_CONTENT);
+        intent.setAction(Intent.ACTION_OPEN_DOCUMENT); //use this action for permissions
         intent.setType("image/*");
-
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), GET_FROM_GALLERY);
     }
 
@@ -123,12 +120,60 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-
         //Detects request codes
-        if(requestCode==GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
+        if(requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
             Uri selectedImage = data.getData();
-            Picasso.get().load(selectedImage).into(recipeImage);
+            Picasso.get().load(selectedImage).error(R.drawable.recipe_default)
+                    .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE).into(recipeImage);
             recipeViewModel.setImage(recipeID, selectedImage.toString());
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        Recipe recipe = recipeViewModel.getRecipe(recipeID);
+
+        switch (menuItem.getItemId())
+        {
+            case android.R.id.home:
+                getActivity().getSupportFragmentManager().popBackStack();
+                return true;
+            case R.id.action_rename:
+                Utils.renameCategory(getActivity().getSupportFragmentManager(), recipe, true);
+                break;
+            case R.id.action_delete:
+                Utils.deleteRecipe(recipeViewModel, recipeID);
+                getActivity().getSupportFragmentManager().popBackStack();
+                return true;
+            default:
+        }
+
+        return super.onOptionsItemSelected(menuItem);
+    }
+
+//    @Override
+//    public void onObjectMenuClick(View view, int position) {
+//        PopupMenu popup = new PopupMenu(getContext(), view);
+//        MenuInflater inflater = popup.getMenuInflater();
+//        inflater.inflate(R.menu.category_menu, popup.getMenu());
+//        popup.getMenu().findItem(R.id.action_choose_color).setVisible(false);
+//        popup.getMenu().findItem(R.id.action_rename).setEnabled(true);
+//
+//
+//        popup.setOnMenuItemClickListener(this);
+//        popup.show();
+//    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
+        menu.clear();
+        inflater.inflate(R.menu.category_menu, menu);
+
+        MenuItem menuItem = menu.findItem(R.id.action_choose_color);
+        if (menuItem != null)
+            menuItem.setVisible(false);
+
+        super.onCreateOptionsMenu(menu,inflater);
     }
 }

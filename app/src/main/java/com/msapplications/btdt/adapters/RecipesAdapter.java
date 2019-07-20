@@ -1,8 +1,6 @@
 package com.msapplications.btdt.adapters;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
@@ -11,15 +9,16 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.msapplications.btdt.R;
 import com.msapplications.btdt.Utils;
 import com.msapplications.btdt.interfaces.OnMenuItemClickListener;
 import com.msapplications.btdt.interfaces.OnObjectMenuClickListener;
 import com.msapplications.btdt.interfaces.OnRecipeClickListener;
 import com.msapplications.btdt.objects.itemTypes.recipes.Recipe;
+
 import java.util.ArrayList;
 import java.util.List;
 

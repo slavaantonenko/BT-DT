@@ -167,23 +167,33 @@ public class RecipesCollectionFragment extends Fragment
 
         switch (menuItem.getItemId())
         {
+            case android.R.id.home:
+                getActivity().getSupportFragmentManager().popBackStack();
+                return true;
             case R.id.action_rename:
-                Utils.renameCategory(getFragmentManager(), recipe);
-                return true;
-
-            case R.id.action_choose_color:
-//                FragmentTransaction ft = getSupportFragmentManager().beginTransaction().addToBackStack(null);
-//                ChooseColorDialogFragment dialogFragment = new ChooseColorDialogFragment().newInstance(category);
-//                dialogFragment.show(ft, CommonValues.CHOOSE_COLOR_DIALOG_FRAGMENT_TAG);
-                return true;
-
+                Utils.renameCategory(getActivity().getSupportFragmentManager(), recipe, false);
+                break;
             case R.id.action_delete:
                 Utils.deleteRecipe(recipeViewModel, recipe.getId());
                 return true;
             default:
         }
 
-        return false;    }
+        return false;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId())
+        {
+            case android.R.id.home:
+                getActivity().getSupportFragmentManager().popBackStack();
+                return true;
+            default:
+        }
+
+        return super.onOptionsItemSelected(menuItem);
+    }
 
     @Override
     public void onObjectMenuClick(View view, int position) {
@@ -191,6 +201,7 @@ public class RecipesCollectionFragment extends Fragment
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.category_menu, popup.getMenu());
         popup.getMenu().findItem(R.id.action_choose_color).setVisible(false);
+
         popup.setOnMenuItemClickListener((RecipesAdapter.ViewHolder)recyclerViewRecipe.findViewHolderForAdapterPosition(position));
         popup.show();
     }

@@ -80,7 +80,7 @@ public class ListActivity extends AppCompatActivity
                 return true;
             case R.id.action_rename:
                 if(categoryTypeCode != CategoryType.RECIPES.getCode()) {
-                    Utils.renameCategory(getSupportFragmentManager(), categoryViewModel.getCategory(categoryID));
+                    Utils.renameCategory(getSupportFragmentManager(), categoryViewModel.getCategory(categoryID), true);
                     return true;
                 }
                 break;

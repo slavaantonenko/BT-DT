@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements OnFloatingActionC
         switch (menuItem.getItemId())
         {
             case R.id.action_rename:
-                Utils.renameCategory(getSupportFragmentManager(), category);
+                Utils.renameCategory(getSupportFragmentManager(), category, true);
                 return true;
 
             case R.id.action_choose_color:

@@ -139,7 +139,7 @@ public class RecipeFragment extends Fragment implements View.OnClickListener
                 getActivity().getSupportFragmentManager().popBackStack();
                 return true;
             case R.id.action_rename:
-                Utils.renameCategory(getActivity().getSupportFragmentManager(), recipe);
+                Utils.renameCategory(getActivity().getSupportFragmentManager(), recipe, true);
                 break;
             case R.id.action_delete:
                 Utils.deleteRecipe(recipeViewModel, recipeID);

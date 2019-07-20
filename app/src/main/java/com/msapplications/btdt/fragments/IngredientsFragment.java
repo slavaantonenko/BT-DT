@@ -97,7 +97,7 @@ public class IngredientsFragment extends Fragment implements NotesEditor
     public void OnEnterKeyClicked(int id, int newLineNumber, EditText editText, boolean isCheckBox)
     {
 //        ingredients.get(position).setText(editText.getText().toString());
-        ingredientViewModel.updateText(id, editText.getText().toString().substring(2));
+        ingredientViewModel.updateText(id, editText.getText().toString());
         ingredientViewModel.increaseLineNumbers(newLineNumber, recipeID);
         RecipeIngredient newIngredient = new RecipeIngredient(0, recipeID, newLineNumber);
         newIngredient.setText("");

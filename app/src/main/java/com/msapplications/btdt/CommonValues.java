@@ -39,6 +39,8 @@ public class CommonValues
     public static final String RECIPE_FRAGMENT = "RecipeFragment";
     public static final String RECIPE_INGREDIENTS = "RecipeIngredients";
     public static final String CATEGORY_BUNDLE = "Category";
+    public static final String RENAME_TOOLBAR_BUNDLE = "RenameToolbar";
+
     public static final int ADD_CINEMA_REQUEST_CODE = 1;
     public static final int EDIT_HALL_REQUEST_CODE = 2;
     public static final int RENAME_CATEGORY_RESULT_CODE = 1;

@@ -171,7 +171,7 @@ public class RecipesCollectionFragment extends Fragment
                 getActivity().getSupportFragmentManager().popBackStack();
                 return true;
             case R.id.action_rename:
-                Utils.renameCategory(getActivity().getSupportFragmentManager(), recipe);
+                Utils.renameCategory(getActivity().getSupportFragmentManager(), recipe, false);
                 break;
             case R.id.action_delete:
                 Utils.deleteRecipe(recipeViewModel, recipe.getId());

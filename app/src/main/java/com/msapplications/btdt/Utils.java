@@ -251,10 +251,10 @@ public class Utils
         return categoryBackground[randomNum];
     }
 
-    public static void renameCategory(FragmentManager fragmentManager, Renamable renamable)
+    public static void renameCategory(FragmentManager fragmentManager, Renamable renamable, boolean renameToolbar)
     {
         FragmentTransaction ft = fragmentManager.beginTransaction().addToBackStack(null);
-        RenameCategoryDialogFragment dialogFragment = new RenameCategoryDialogFragment().newInstance(renamable);
+        RenameCategoryDialogFragment dialogFragment = new RenameCategoryDialogFragment().newInstance(renamable, renameToolbar);
         dialogFragment.show(ft, CommonValues.RENAME_CATEGORY_DIALOG_FRAGMENT_TAG);
     }
 

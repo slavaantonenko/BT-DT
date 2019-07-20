@@ -74,6 +74,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
             editText = view.findViewById(R.id.etNote);
             checkbox = view.findViewById(R.id.checkbox);
             editText.setOnKeyListener(this);
+
+            editText.setBackground(null);
         }
 
         public int getIndex() {
